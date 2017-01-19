@@ -1,0 +1,5 @@
+<tabset *nfIf="tabs" [justified]="true">
+    <tab *ngFor="let tab of tabs" [heading]="tab.title" [active]="tab.active" (select)="tab.active = true" (deselect)="tab.active = false" [routerLink]="['/conferences', tab._id]]">
+        <router-outlet></router-outlet>
+    </tab>
+</tabset>

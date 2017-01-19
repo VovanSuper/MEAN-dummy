@@ -1,0 +1,14 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <ul>
+        <li *ngFor="let conf of conferences | async">
+          <a [routerLink]="[conf?['_id']]">{{conf?.name}}</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
