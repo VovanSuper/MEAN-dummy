@@ -37,9 +37,12 @@ It creates client project distribution and starts expressjs server serving the w
 
 ##Main idea
 
+To build fullstack express/angular(2) app with build system for client (Angular) application, ES6 based server application; 
 This is a simple demonstrator project - fully handmade (i.e, no CLIs/generators used) MEAN project with Web apis' exposed for
 handmade client app consuming the web api. Build system consists in Gulp tasks utilizing webpack and typescript/angular2-templates loaders
 for building of the app;
+To start building process `gulp` command (should have all npm packages intalled); after build complets - `index.html` and 
+app bundle are created in `dist` directory; web api server serving on port 8080;
 
 ####Redistribution
 
