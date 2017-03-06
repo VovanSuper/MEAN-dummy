@@ -1,10 +1,16 @@
 {
-  "name": "Events-manager",
-  "author": "Vladimir Ovsyukov <vovansuper@mail.ru>",
+  "name": "events-manager",
+  "author": {
+    "name": "Vladimir Ovsyukov",
+    "email": "vovansuper@mail.ru"
+  },
   "version": "0.0.2",
   "description": "A primitive sample app using express and Angular for displaying Events.",
   "main": "app.js",
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VovanSuper/MEAN-dummy.git"
+  },
   "keywords": [
     "Angular",
     "webpack",
@@ -28,6 +34,7 @@
     "async": "~0.2.8",
     "babel-polyfill": "^6.20.0",
     "bcrypt": "^0.8.7",
+    "bcryptjs": "^2.4.3",
     "bluebird": "^3.4.6",
     "body-parser": "^1.15.2",
     "config": "^1.21.0",
@@ -59,6 +66,7 @@
     "concurrently": "^3.1.0",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
+    "gulp-cli": "^1.2.2",
     "gulp-env": "^0.4.0",
     "gulp-mocha": "^3.0.1",
     "gulp-nodemon": "^2.2.1",
