@@ -8,7 +8,6 @@ module.exports = app => {
       name: 'EventsMan'
     });
   }
-  app.basePath = process.cwd();
   app.Logger = Logger;
 
 };
