@@ -10,4 +10,4 @@ consign()
   .then('boot.js')
   .into(app);
 
-exports = module.exports = app;
+//module.exports = app;

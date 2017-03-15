@@ -35,6 +35,6 @@ import { ApiService } from './shared';
     APP_ROUTING
   ],
   providers: [ ApiService ],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

@@ -4,9 +4,7 @@ import cors            from 'cors';
 import favicon         from 'serve-favicon';
 import path            from 'path';
 import config          from 'config';
-
 let log = console.log;
-
 
 module.exports = app => {
   app.basePath = process.cwd();

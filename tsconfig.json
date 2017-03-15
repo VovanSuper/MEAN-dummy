@@ -1,13 +1,12 @@
 {
-  "compilerOptions" : {
+  "compilerOptions": {
     "module": "commonjs",
-    "target" : "es5",
+    "target": "es5",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "sourceMap": true,
-    "outDir": "./dist",
-    "rootDir": "./client"
-  },
-  "exclude" : [ "node_modules", "dist"  ]
+    "experimentalDecorators": true
+    // "sourceMap": true,
+    // "outDir": "./dist",
+    // "rootDir": "./client"
+  }
 }

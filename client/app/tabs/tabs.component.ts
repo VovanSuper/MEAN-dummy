@@ -25,7 +25,7 @@ export class TabularComponent implements AfterContentInit, OnInit, OnDestroy {
         this.tabs.push({
           heading: ev.name,
           id: ev._id,
-          content: ev.content || ""
+          content: ev.content || ''
         })
       })
     });

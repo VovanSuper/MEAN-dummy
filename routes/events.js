@@ -17,10 +17,10 @@ exports = module.exports = app => {
 
   let updateUsers = (postUId, event, resp) => {
     Users.findByIdAndUpdate(postUId, {
-        $addToSet: {
-          events: event['_id']
-        }
-      }, {
+      $addToSet: {
+        events: event['_id']
+      }
+    }, {
         new: true
       },
       (err, user) => {
@@ -91,23 +91,23 @@ exports = module.exports = app => {
     });
 
   eventsRouter.param('id', (req, resp, next, id) => {
-      Events.findById(id, '-__v')
-        .populate('users')
-        .then((ev) => {
-          if (!ev)
-            return resp.status(404).json({
-              operationStatus: `No Event with id: ${id}`
-            });
-          req.event = ev;
-          next();
-        })
-        .catch((err) => {
-          return resp.status(412).json({
-            operationStatus: `No event with id: ${id}`,
-            err: err
+    Events.findById(id, '-__v')
+      .populate('users')
+      .then((ev) => {
+        if (!ev)
+          return resp.status(404).json({
+            operationStatus: `No Event with id: ${id}`
           });
+        req.event = ev;
+        next();
+      })
+      .catch((err) => {
+        return resp.status(412).json({
+          operationStatus: `No event with id: ${id}`,
+          err: err
         });
-    })
+      });
+  })
     .route('/:id')
     .get((req, resp) => {
       let item = req.event;

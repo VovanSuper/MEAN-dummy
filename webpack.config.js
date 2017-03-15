@@ -1,11 +1,13 @@
 'use strict';
 const webpack = require('webpack'),
-  //closureCompilerPlugin = require('webpack-closure-compiler'),
-  V8LazyParseWebpackPlugin = require('v8-lazy-parse-webpack-plugin');
+  V8LazyParseWebpackPlugin = require('v8-lazy-parse-webpack-plugin'),
+  htmlWebpackPlugin = require('html-webpack-plugin'),
+  scriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+
 
 
 module.exports = {
-  //entry: 'src/mail.ts',
+
   output: {
     // path: 'dist',
     filename: 'app.bundle.js'
@@ -24,13 +26,16 @@ module.exports = {
   },
   devtool: 'source-map',
   plugins: [
-  //   // new closureCompilerPlugin({
-  //   //   compiler: {
-  //   //     compilation_level: 'ADVANCED',
-  //   //     debug: true
-  //   //   },
-  //   //   jsCompiler: true
-  //   // })
+    new htmlWebpackPlugin({
+      cache: true,
+      hash: true,
+      favicon: 'client/favicon.ico',
+      xhtml: true,
+      template: 'client/index.html'
+    }),
+    new scriptExtHtmlWebpackPlugin({
+      defaultAttribute: 'async'
+    }),
     new V8LazyParseWebpackPlugin(),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
