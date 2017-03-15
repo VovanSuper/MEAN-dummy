@@ -12,7 +12,7 @@ export class ConferencesComponent implements OnInit {
   constructor(public apiService: ApiService) { }
 
   ngOnInit() {
-    this.conferences = this.apiService.getEvents();
+    this.apiService.getEvents().then( evs =>  this.conferences = evs);
   }
 
 }

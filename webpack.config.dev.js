@@ -27,9 +27,9 @@ module.exports = {
     new htmlWebpackPlugin({
       cache: false,
       hash: false,
-      favicon: 'client/favicon.ico',
+      favicon: './client/favicon.ico',
       xhtml: true,
-      template: 'client/index.html'
+      template: './client/index.html'
     }),
     new scriptExtHtmlWebpackPlugin({
       defaultAttribute: 'async'

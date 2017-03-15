@@ -21,7 +21,7 @@ let gulp  = require('gulp'),
     webpackfile : (env === 'prod') ? './webpack.config.js' : './webpack.config.dev.js'
   }
 
-gulp.task('bundle', ['clean'], function () {
+gulp.task('bundle', function () {
   log(chalk.bgWhite.black.italic('Bundling for ' + env));
   log(chalk.bgWhite.green.bold('Using ' + path.basename(paths.webpackfile)));
   
@@ -30,17 +30,12 @@ gulp.task('bundle', ['clean'], function () {
     .pipe(gulp.dest(paths.dist));
 });
 
-
-gulp.task('cp:static', function () {
-  return gulp.src([path.join(paths.src, 'index.html'), path.join(paths.src, 'favicon.ico')])
-    .pipe(gulp.dest(paths.dist));
-});
-
+// gulp.task('cp:static', function () {
+//   return gulp.src([path.join(paths.src, 'index.html'), path.join(paths.src, 'favicon.ico')])
+//     .pipe(gulp.dest(paths.dist));
+// });
 
 gulp.task('clean', function (cb) {
-  fs.stat(paths.dist, function (err, stats) { 
-    if (err) return cb();
-  });
   del([paths.dist], { force: true });
   cb();
 });
@@ -79,7 +74,7 @@ gulp.task('tests', function () {
 
 
 
-gulp.task('nodemon', function () {
+gulp.task('nodemon', ['clean', 'bundle'], function () {
   var stream = nodemon({
     exec: 'babel-node',
     watch: ['app.js', 'gulpfile.js', 'boot.js', 'db.js', './routes', './models', './libs', './utils', './client'],
@@ -112,4 +107,4 @@ gulp.task('nodemon', function () {
     });
 });
 
-gulp.task('default', ['bundle', 'nodemon']);
+gulp.task('default', ['nodemon']);

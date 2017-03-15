@@ -10,7 +10,7 @@ import { ApiService } from '../shared';
   `]
 })
 export class TabularComponent implements AfterContentInit, OnInit, OnDestroy {
-  subc: Subscription;
+  
   public tabs: any[] = []
 
   constructor(private apiService: ApiService) { }
@@ -19,7 +19,7 @@ export class TabularComponent implements AfterContentInit, OnInit, OnDestroy {
     this.tabs[0].active = true;
   }
   ngOnInit() {
-    this.subc = this.apiService.getEvents().subscribe(resp => {
+    this.apiService.getEvents().then(resp => {
       let events = resp as any[];
       events.forEach(ev => {
         this.tabs.push({
@@ -31,7 +31,7 @@ export class TabularComponent implements AfterContentInit, OnInit, OnDestroy {
     });
   }
   ngOnDestroy() {
-    this.subc.unsubscribe();
+    
   }
 
 }
