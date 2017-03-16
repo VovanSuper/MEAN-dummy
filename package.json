@@ -24,9 +24,9 @@
     "test": "gulp tests"
   },
   "dependencies": {
-    "@angular/common": "~2.2.2",
+    "@angular/common": "^2.2.4",
     "@angular/compiler": "^2.2.2",
-    "@angular/core": "^2.2.3",
+    "@angular/core": "^2.4.9",
     "@angular/forms": "^2.2.3",
     "@angular/http": "^2.2.3",
     "@angular/platform-browser": "^2.2.3",
@@ -55,8 +55,9 @@
     "zone.js": "^0.7.5"
   },
   "devDependencies": {
-    "@types/core-js": "^0.9.35",
+    "@types/core-js": "^0.9.37",
     "angular2-template-loader": "^0.6.0",
+    "awesome-typescript-loader": "^3.1.2",
     "babel-cli": "^6.16.0",
     "babel-polyfill": "*",
     "babel-preset-es2015": "^6.5.0",
@@ -84,9 +85,9 @@
     "ts-loader": "^1.3.3",
     "ts-node": "1.2.1",
     "tslint": "3.13.0",
-    "typescript": "^2.1.5",
+    "typescript": "^2.1.0",
     "v8-lazy-parse-webpack-plugin": "^0.3.0",
-    "webpack": "^1.14.0",
+    "webpack": "^1.4.1",
     "webpack-closure-compiler": "^2.1.2",
     "webpack-stream": "^3.2.0"
   }

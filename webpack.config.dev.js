@@ -4,24 +4,29 @@ const webpack = require('webpack'),
   scriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 
 module.exports = {
-  
+
   output: {
-    filename: '[name].bundle.js',
-    sourceMapFilename: '[name].bundle.map'
+    filename: 'app.bundle.js',
+    sourceMapFilename: 'app.bundle.map'
   },
-  devtool: '#sourcemap',
+  devtool: 'source-map',
   module: {
     loaders: [{
+      test: /\.component\.ts$/,
+      loader: 'awesome-typescript!angular2-template'
+    },
+    {
       test: /\.ts$/,
-      loader: 'ts!angular2-template',
-      exclude: [/node_modules/]
-    }, {
+      loader: 'awesome-typescript',
+      exclude: /\.component\.ts$/
+    },
+    {
       test: /\.(html|css)$/,
       loader: 'raw-loader'
     }]
   },
   resolve: {
-    extensions: ['', '.js', '.ts']
+    extensions: ['', '.js', '.ts', '.html', '.css']
   },
   plugins: [
     new htmlWebpackPlugin({

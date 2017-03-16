@@ -14,6 +14,7 @@ let gulp  = require('gulp'),
   spawn   = require('child_process').spawn,
   log     = console.log,
   bunyan,
+  
   env     = gutil.env.type || 'dev',
   paths   = {
     src         : path.join(__dirname, 'client'),
@@ -21,10 +22,24 @@ let gulp  = require('gulp'),
     webpackfile : (env === 'prod') ? './webpack.config.js' : './webpack.config.dev.js'
   }
 
-gulp.task('bundle', function () {
+
+gulp.task('clean', function (cb) {
+  fs.stat(paths.dist, function (err, stats) {
+    if (err) {
+      cb();
+      return;
+    } else {
+      del([paths.dist], { force: true });
+      cb();
+    }
+  })
+});
+
+
+gulp.task('bundle', ['clean'], function () {
   log(chalk.bgWhite.black.italic('Bundling for ' + env));
   log(chalk.bgWhite.green.bold('Using ' + path.basename(paths.webpackfile)));
-  
+
   return gulp.src(path.join(paths.src, 'main.ts'))
     .pipe(webpack(require(paths.webpackfile)))
     .pipe(gulp.dest(paths.dist));
@@ -34,13 +49,6 @@ gulp.task('bundle', function () {
 //   return gulp.src([path.join(paths.src, 'index.html'), path.join(paths.src, 'favicon.ico')])
 //     .pipe(gulp.dest(paths.dist));
 // });
-
-gulp.task('clean', function (cb) {
-  del([paths.dist], { force: true });
-  cb();
-});
-
-
 
 gulp.task('tests:w', function () {
   gulpEnv.set({
@@ -74,7 +82,7 @@ gulp.task('tests', function () {
 
 
 
-gulp.task('nodemon', ['clean', 'bundle'], function () {
+gulp.task('nodemon', ['bundle'], function () {
   var stream = nodemon({
     exec: 'babel-node',
     watch: ['app.js', 'gulpfile.js', 'boot.js', 'db.js', './routes', './models', './libs', './utils', './client'],
