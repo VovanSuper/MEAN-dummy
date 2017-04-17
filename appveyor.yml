@@ -13,8 +13,7 @@ init:
 environment:
   matrix:
     - nodejs_version: "0.10"
-    - nodejs_version: "4"
-    - nodejs_version: "6"
+    - nodejs_version: "4.x.x x64"
 
 services:
   - mongodb
@@ -22,11 +21,12 @@ services:
 install:
   - ps: Install-Product node $env:nodejs_version
   - npm install
+  - cmd: echo \"installed node and npm\"
 
-# Post-install test scripts.
 test_script:
   - node --version
   - npm --version
+  - npm test
 
 # Don't actually build.
 build: off
