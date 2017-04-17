@@ -1,6 +1,7 @@
 # MEAN-dummy sample project
 
-[![Build status](https://ci.appveyor.com/api/projects/status/9mv40h2tvau296e7/branch/master?svg=true?retina=true)](https://ci.appveyor.com/project/vladimir-ovsyukov/mean-dummy/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/77owkcg4w5vfr552/branch/master?svg=true&retina=true)](https://ci.appveyor.com/project/vladimir-ovsyukov/mean-dummy-b3k2e/branch/master)
+
 
 
 
