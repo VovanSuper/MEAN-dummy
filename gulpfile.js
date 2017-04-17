@@ -26,7 +26,7 @@ const gulp = require('gulp'),
     appDist: path.join(__dirname, 'wwwroot'),
     webpackfile: (env === 'prod' || env === 'production') ? './webpack.config.js' : './webpack.config.dev.js'
   };
-let bunyan;
+let bunyan = null;
 
 const cleanAssets = (path, cb) => {
   del.sync(path, { force: true });
@@ -109,7 +109,7 @@ gulp.task('compile', ['clean:wwwroot'], (cb) => {
   cb();
 });
 
-gulp.task('compileBundle:prod', ['compile', 'bundle'] );
+gulp.task('compileBundle:prod', ['compile', 'bundle']);
 
 gulp.task('nodemon:dev', ['bundle'], () => {
 
@@ -122,7 +122,9 @@ gulp.task('nodemon:dev', ['bundle'], () => {
   })
     .on('readable', () => {
       // free memory 
-      bunyan && bunyan.kill();
+      if (bunyan) {
+        bunyan && bunyan.kill()
+      }
       bunyan = spawn('./node_modules/bunyan/bin/bunyan', [
         '--output', 'short',
         '--color'
