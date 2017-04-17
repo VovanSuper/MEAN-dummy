@@ -1,23 +1,33 @@
-'use strict';
+require('babel-register');
+
 const webpack = require('webpack'),
+  path = require('path'),
   V8LazyParseWebpackPlugin = require('v8-lazy-parse-webpack-plugin'),
   htmlWebpackPlugin = require('html-webpack-plugin'),
-  scriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+  scriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin'),
+  fileCopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   output: {
     // path: 'dist',
-    filename: 'app.bundle.js'
+    filename: '[name].bundle.js'
   },
   module: {
     loaders: [
       {
         test: /\.component\.ts$/,
+        include: [
+          path.resolve(__dirname, 'client')
+        ],
         loader: 'awesome-typescript!angular2-template'
       },
       {
         test: /\.ts$/,
         loader: 'awesome-typescript',
+        include: [
+          path.resolve(__dirname, 'client'),
+          path.resolve(__dirname, 'node_modules')
+        ],
         exclude: /\.component\.ts$/
       }, {
         test: /\.(html|css)$/,
@@ -45,7 +55,6 @@ module.exports = {
     new webpack.optimize.UglifyJsPlugin({
       beautify: false,
       comments: false,
-
       sourceMap: true,
       compress: {
         sequences: true,

@@ -1,4 +1,4 @@
-import * as bunyan from 'bunyan';
+import bunyan from 'bunyan';
 
 let Logger = null;
 
@@ -8,6 +8,5 @@ module.exports = app => {
       name: 'EventsMan'
     });
   }
-  app.Logger = Logger;
-
+  return Logger;
 };

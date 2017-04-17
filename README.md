@@ -1,5 +1,9 @@
 # MEAN-dummy sample project
 
+[![Build status](https://ci.appveyor.com/api/projects/status/9mv40h2tvau296e7/branch/master?svg=true?retina=true)](https://ci.appveyor.com/project/vladimir-ovsyukov/mean-dummy/branch/master)
+
+
+
 ### A dummy (a very basic) MEAN (MongoDB, Express4, @Angular(2), Node.js) project 
 
 by Vladimir Ovsyukov <<vovansuper@mail.ru>>

@@ -7,8 +7,9 @@ import config          from 'config';
 let log = console.log;
 
 module.exports = app => {
-  app.basePath = process.cwd();
-  app.set('port', config.get('base.port') || 8080)
+  app.basePath = path.resolve(__dirname, '..');
+  
+  app.set('port', process.env.PORT || config.get('base.port'))
     .use(favicon(path.join(app.basePath, 'dist/favicon.ico')))
     .use(express.static(path.join(app.basePath, 'dist')))
     .use(cors())
@@ -16,7 +17,7 @@ module.exports = app => {
     .use(bodyParser.urlencoded({ extended: false }))
     .use((req, resp, next) => {
       if(req.body.id) delete req.body.id;
-      log('Request:  ' + req.method + ' ' + req.url );
+      log(`Requested :  ${req.method} - ${req.url}` );
       console.dir(req.body);
       next();
     });

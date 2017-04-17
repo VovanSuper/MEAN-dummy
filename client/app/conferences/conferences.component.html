@@ -3,7 +3,7 @@
     <div class="col-md-6">
       <ul>
         <li *ngFor="let conf of conferences | async">
-          <a [routerLink]="[conf?['_id']]">{{conf?.name}}</a>
+          <a [routerLink]="[conf['_id']]">{{conf?.name}}</a>
         </li>
       </ul>
     </div>

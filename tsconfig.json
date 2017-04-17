@@ -5,12 +5,13 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "skipLibCheck": true,    
+    "skipLibCheck": true,
     "lib": [
-      "dom", "es2015"
-    ],
-    "declaration": true,
-    "declarationDir": "./",
-    "rootDir": "./client"
+      "dom",
+      "es2015"
+    ]
+    // "declaration": true,
+    // "declarationDir": "./",
+    // "rootDir": "./client"
   }
 }
