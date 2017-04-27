@@ -7,25 +7,19 @@ sudo: false
 #   - apt-get install g++-6 -y
 #   - apt-get install build-essentials -y
 #   - update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-6
-# addons:
-#   apt:
-#     sources:
-#     - deadsnakes
-#     - sourceline: 'ppa:ubuntu-toolchain-r/test'
-#     - sourceline: 'deb https://packagecloud.io/chef/stable/ubuntu/precise main'
-#       key_url: 'https://packagecloud.io/gpg.key'
-#     packages:
-#     - gcc-6
-#     - g++-6
-#     - cmake
-# services:
-#   - mongodb
-# env:
-#   - CXX=g++-6
 addons:
   apt:
     sources:
-    - ubuntu-toolchain-r-test
+    - deadsnakes
+    - sourceline: 'ppa:ubuntu-toolchain-r/test'
+    - sourceline: 'deb https://packagecloud.io/chef/stable/ubuntu/precise main'
+      key_url: 'https://packagecloud.io/gpg.key'
     packages:
     - gcc-6
     - g++-6
+    - cmake
+    - buil-essentials
+services:
+  - mongodb
+env:
+  - CXX=g++-6

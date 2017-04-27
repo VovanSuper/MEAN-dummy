@@ -27,7 +27,7 @@ test_script:
   - npm --version
 
 artifacts:
-  - path: wwwroot/**
+  - path: wwwroot
     name: appDeploy
 
 
