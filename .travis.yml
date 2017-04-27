@@ -1,21 +1,21 @@
 language: node_js
-sudo: false
-before_install:
-  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo apt-get update -y
-  - sudo apt-get install gcc-4.8 -y
-addons:
-  apt:
-    sources:
-    - deadsnakes
-    - sourceline: 'ppa:ubuntu-toolchain-r/test'
-    - sourceline: 'deb https://packagecloud.io/chef/stable/ubuntu/precise main'
-      key_url: 'https://packagecloud.io/gpg.key'
-    packages:
-    - gcc-4.8
-    - g++-4.8
-    - cmake
-services:
-  - mongodb
-env:
-  - CXX=g++-4.8
+# sudo: false
+# before_install:
+#   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+#   - sudo apt-get update -y
+#   - sudo apt-get install gcc-4.8 -y
+# addons:
+#   apt:
+#     sources:
+#     - deadsnakes
+#     - sourceline: 'ppa:ubuntu-toolchain-r/test'
+#     - sourceline: 'deb https://packagecloud.io/chef/stable/ubuntu/precise main'
+#       key_url: 'https://packagecloud.io/gpg.key'
+#     packages:
+#     - gcc-4.8
+#     - g++-4.8
+#     - cmake
+# services:
+#   - mongodb
+# env:
+#   - CXX=g++-4.8
