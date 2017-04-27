@@ -1,12 +1,12 @@
 language: node_js
 sudo: false
 before_install:
-  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo apt-get update -y
-  - sudo apt-get install gcc-6 -y
-  - sudo apt-get install g++-6 -y
-  - sudo apt-get install build-essentials -y
-  - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-6
+  - add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - apt-get update -y
+  - apt-get install gcc-6 -y
+  - apt-get install g++-6 -y
+  - apt-get install build-essentials -y
+  - update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-6
 # addons:
 #   apt:
 #     sources:
