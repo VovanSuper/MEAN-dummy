@@ -1,8 +1,6 @@
 # MEAN-dummy sample project
 
 [![Build status](https://ci.appveyor.com/api/projects/status/77owkcg4w5vfr552/branch/master?svg=true&retina=true)](https://ci.appveyor.com/project/vladimir-ovsyukov/mean-dummy-b3k2e/branch/master)
-
-
 [![Build Status](https://travis-ci.org/VovanSuper/MEAN-dummy.svg?branch=master)](https://travis-ci.org/VovanSuper/MEAN-dummy)
 
 
