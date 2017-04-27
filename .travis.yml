@@ -1,9 +1,12 @@
 language: node_js
-# sudo: false
-# before_install:
-#   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-#   - sudo apt-get update -y
-#   - sudo apt-get install gcc-4.8 -y
+sudo: false
+before_install:
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - sudo apt-get update -y
+  - sudo apt-get install gcc-6 -y
+  - sudo apt-get install g++-6 -y
+  - sudo apt-get install build-essentials -y
+  - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-6
 # addons:
 #   apt:
 #     sources:
@@ -12,10 +15,10 @@ language: node_js
 #     - sourceline: 'deb https://packagecloud.io/chef/stable/ubuntu/precise main'
 #       key_url: 'https://packagecloud.io/gpg.key'
 #     packages:
-#     - gcc-4.8
-#     - g++-4.8
+#     - gcc-6
+#     - g++-6
 #     - cmake
 # services:
 #   - mongodb
 # env:
-#   - CXX=g++-4.8
+#   - CXX=g++-6
