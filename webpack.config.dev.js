@@ -2,13 +2,14 @@
 const webpack = require('webpack'),
   htmlWebpackPlugin = require('html-webpack-plugin'),
   scriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin'),
+  WebpackMd5Hash = require('webpack-md5-hash'),
   path = require('path');
 
 module.exports = {
 
   output: {
-    filename: '[name].[hash].bundle.js',
-    sourceMapFilename: '[name].[hash].bundle.map'
+    filename: '[name].[chunkhash].bundle.js',
+    sourceMapFilename: '[name].[chunkhash].bundle.map'
   },
   watch: true,
   devtool: 'inline-source-map',
@@ -38,6 +39,10 @@ module.exports = {
     extensions: ['', '.js', '.ts', '.html', '.css']
   },
   plugins: [
+    new WebpackMd5Hash(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'polyfills'
+    }),
     new htmlWebpackPlugin({
       cache: false,
       hash: false,

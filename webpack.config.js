@@ -3,9 +3,9 @@ require('babel-register');
 const webpack = require('webpack'),
   path = require('path'),
   V8LazyParseWebpackPlugin = require('v8-lazy-parse-webpack-plugin'),
+  //ClosureCompilerPlugin = require('webpack-closure-compiler'),
   htmlWebpackPlugin = require('html-webpack-plugin'),
-  scriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin'),
-  fileCopyPlugin = require('copy-webpack-plugin');
+  scriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 
 module.exports = {
   output: {
@@ -44,7 +44,20 @@ module.exports = {
       hash: true,
       favicon: 'client/favicon.ico',
       xhtml: true,
-      template: 'client/index.html'
+      template: 'client/index.html',
+      minify: {
+        collapseWhitespace: true,
+        collapseInlineTagWhitespace: true,
+        keepClosingSlash: true,
+        minifyCss: true,
+        removeComments: true,
+        removeRedundantAttributes: true,
+        removeEmptyAttributes: true,
+        removeOptionalTags: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        useShortDoctype: true
+      }
     }),
     new scriptExtHtmlWebpackPlugin({
       defaultAttribute: 'async'
@@ -52,6 +65,13 @@ module.exports = {
     new V8LazyParseWebpackPlugin(),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
+    // new ClosureCompilerPlugin({
+    //   compiler: {
+
+    //     compilation_level: 'ADVANCED'
+    //   },
+    //   concurrency: 2,
+    // })
     new webpack.optimize.UglifyJsPlugin({
       beautify: false,
       comments: false,

@@ -33,11 +33,6 @@ const cleanAssets = (path, cb) => {
   cb();
 }
 
-const webpackReporter = (err, wpStats) => {
-  if (err) throw new gutil.PluginError('[webpack:error]::', err);
-  log('[webpack]', wpStats.toString('normal'));
-}
-
 gulp.task('clean:client', (cb) => {
   cleanAssets(paths.clientDist, cb);
 });
@@ -51,10 +46,15 @@ gulp.task('bundle', ['clean:client'], (cb) => {
     NODE_ENV: 'production',
     ENV: 'prod'
   });
+  const wpReporter = (err, wpStats) => {
+    if (err) throw new gutil.PluginError('[webpack:error]::', err);
+    log('[webpack]', wpStats.toString('normal'));
+  }
+
   log(chalk.bgWhite.black.italic('Bundling for ' + env));
   log(chalk.bgWhite.green.bold('Using ' + path.basename(paths.webpackfile)));
   gulp.src([path.join(paths.clientSrc, 'main.ts'), path.join(paths.clientSrc, 'polyfills.ts')])
-    .pipe(webpack(require(paths.webpackfile), null, webpackReporter))
+    .pipe(webpack(require(paths.webpackfile), null, wpReporter))
     .pipe(gulp.dest(paths.clientDist));
   cb();
 });
@@ -68,31 +68,26 @@ gulp.task('compile', ['clean:wwwroot'], (cb) => {
   let streams = [];
 
   let compileAppFile = (file, rel) => {
-    log('[compile:Rel]:: ', rel)
     let fullDestPath = path.join(paths.appDist, rel);
-    log('[compile:full_Path]:: ', file);
-    log('[compile:full_Dest]:: ', fullDestPath)
-
     let stream = gulp.src(file)
       .pipe(babel())
       .pipe(debug({
-        title: '[Gulp-Debug]:: '
+        title: '[Gulp-Debug]:: ',
+        minimal: true
       }))
       .pipe(gulp.dest(fullDestPath))
-      .on('finish', () => { log('DONE:: ', file) })
-      .on('error', (err) => { log('[compile_error]::', err) });
+      .on('finish', () => { log('[compile_done]:: ', file) })
+      .on('error', (err) => { log('[compile_error]:: ', err) });
     streams.push(stream);
   }
 
   let traverseAppPaths = (fsEntity, rel = './') => {
-    log('[traverse]:Rel:: ', rel)
     let fullPath = path.join(rel, fsEntity);
     fs.stat(fullPath, (err, stats) => {
       if (err) throw new Error(`Error reading app file :  ${err}`);
-      if (stats.isFile()) {
-        log('[traverse:fullPath]:: ', fullPath)
+      if (stats.isFile())
         compileAppFile(fullPath, rel);
-      } else {
+      else {
         fs.readdir(fullPath, (err, files) => {
           if (err) throw new Error(`Error reading app directory's files :  ${err}`);
           files.forEach(item => traverseAppPaths(item, fsEntity));
@@ -100,11 +95,12 @@ gulp.task('compile', ['clean:wwwroot'], (cb) => {
       }
     })
   }
+
   appFilesPaths.forEach(fsItem => traverseAppPaths(fsItem));
   return merged(streams)
     .pipe(debug({
       title: '[merged_streams]:: ',
-      minimal: false
+      minimal: true
     }));
   cb();
 });

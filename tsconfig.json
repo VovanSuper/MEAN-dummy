@@ -2,7 +2,6 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es5",
-    "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,
@@ -10,8 +9,5 @@
       "dom",
       "es2015"
     ]
-    // "declaration": true,
-    // "declarationDir": "./",
-    // "rootDir": "./client"
   }
 }

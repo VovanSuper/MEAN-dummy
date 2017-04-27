@@ -26,6 +26,18 @@ test_script:
   - node --version
   - npm --version
 
+artifacts:
+  - path: wwwroot/**
+    name: appDeploy
+
+notifications:
+  - provider: GitHubPullRequest
+    auth_token:
+    secure: a1HfoM4ghkJrkePgUskwyS6zOUCFIiAc4toLyMTNPi2AOLZSZ3Xdl0PzM/SbHGYz
+    on_build_success: true
+    on_build_failure: true
+    on_build_status_changed: true
+
 # Don't actually build.
-build: off
+#build: off
   

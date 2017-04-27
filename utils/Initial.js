@@ -18,7 +18,6 @@ module.exports = app => {
     .use((req, resp, next) => {
       if(req.body.id) delete req.body.id;
       log(`Requested :  ${req.method} - ${req.url}` );
-      console.dir(req.body);
       next();
     });
 }

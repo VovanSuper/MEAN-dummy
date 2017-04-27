@@ -1,0 +1,26 @@
+# Dist and configs and data
+app
+wwwroot
+dist
+data
+public
+.vscode
+.vs
+.c9
+.lock-wscript
+.data
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+.git
+CVS
+.svn
+.hg
+.lock-wscript
+.wafpickle-N
+.*.swp
+.DS_Store
+._*
