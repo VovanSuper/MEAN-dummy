@@ -1,1 +1,13 @@
 language: node_js
+sudo: false
+addons:
+  apt:
+    sources:
+    - ununtu-toolchain-r-test
+    packages:
+    - gcc-4.8
+    - g++-4.8
+services:
+  - mongodb
+env:
+  - CXX=g++-4.8
