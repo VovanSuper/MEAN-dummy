@@ -26,9 +26,9 @@ test_script:
   - node --version
   - npm --version
 
-artifacts:
-  - path: wwwroot
-    name: appDeploy
+# artifacts:
+#   - path: wwwroot
+#     name: appDeploy
 
 
 # Don't actually build.
