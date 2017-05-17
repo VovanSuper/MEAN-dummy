@@ -29,6 +29,7 @@
     "start": "npm run start:prepare:prod && nodemon --watch ./wwwroot ./wwwroot/app.js | bunyan --color",
     "start:dev": "gulp --type=development --color | bunyan --color",
     "start:prepare:prod": "gulp --type=production compileBundle:prod --color",
+    "stop": "cross-env \"pkill --signal SIGINT Mean_dummy\"",
     "test": "cross-env ENV=test gulp tests:w --color"
   },
   "dependencies": {

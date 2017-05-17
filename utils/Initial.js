@@ -5,6 +5,7 @@ import favicon         from 'serve-favicon';
 import path            from 'path';
 import config          from 'config';
 let log = console.log;
+process.title = 'Mean_dummy';
 
 module.exports = app => {
   app.basePath = path.resolve(__dirname, '..');
@@ -21,3 +22,4 @@ module.exports = app => {
       next();
     });
 }
+
