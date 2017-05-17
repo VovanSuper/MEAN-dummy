@@ -14,7 +14,6 @@ environment:
   matrix:
     - nodejs_version: "4"
     - nodejs_version: "0.12"
-    - npm_version: "3.7"
 
 platform:
   - x86
@@ -22,7 +21,7 @@ platform:
 
 install:
   - ps: Install-Product node $env:nodejs_version $env:platform
-  - ps: Install-Product npm $env:npm_version
+  - npm update npm -g
   - npm install
   - npm start
   - npm stop
