@@ -8,6 +8,6 @@ export class ApiService {
   constructor(private http: Http) { }
   
   public getEvents() {
-    return this.http.get('events/all').map(result => result.json()).toPromise();
+    return this.http.get('/events/all').map(result => result.json()).toPromise();
   }
 }

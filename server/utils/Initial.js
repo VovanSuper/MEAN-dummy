@@ -6,6 +6,7 @@ import path            from 'path';
 import config          from 'config';
 let log = console.log;
 
+
 module.exports = app => {
   app.basePath = path.resolve(__dirname, '..');
   

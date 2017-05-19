@@ -21,10 +21,7 @@ platform:
 
 install:
   - ps: Install-Product node $env:nodejs_version $env:platform
-  - npm update npm -g
-  - npm install
-  - npm start
-  - npm stop
+  - cmd: npm install
 
 services:
   - mongodb
@@ -32,6 +29,8 @@ services:
 test_script:
   - node --version
   - npm --version
+  - cmd: npm start
+  - cmd: npm stop
 
 # artifacts:
 #   - path: wwwroot

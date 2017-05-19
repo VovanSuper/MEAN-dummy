@@ -6,13 +6,9 @@ import { WorkshopsComponent } from './workshops';
 import { NotfoundComponent } from './notfound';
 
 export const ROUTES_DEFINITION: Routes = [
-  {
-    path: '', component: MainComponent, children: [
-      { path: 'conferences', component: ConferencesComponent, children: [...conferences_routes] },
-      { path: 'workshops', component: WorkshopsComponent },
-      { path: '', redirectTo: 'conferences', pathMatch: 'full' }
-    ]
-  },
+  { path: 'conferences', component: ConferencesComponent, children: [...conferences_routes] },
+  { path: 'workshops', component: WorkshopsComponent },
+  { path: '', redirectTo: 'conferences', pathMatch: 'full' },
   { path: '**', component: NotfoundComponent, pathMatch: 'full' }
 ]
 

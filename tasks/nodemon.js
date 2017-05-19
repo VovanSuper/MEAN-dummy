@@ -1,14 +1,13 @@
 import * as chalk from 'chalk';
-//import nodemon from 'gulp-nodemon';
-import { log } from './helpers/functions';
+import { log }    from './helpers/functions';
 let nodemon = require('gulp-nodemon');
-let bunyan = null;
+let bunyan, stream = null;
 
 module.exports = () => {
-  return () => {
-    let stream = nodemon({
+  return (callback) => {
+    stream = nodemon({
       exec: 'babel-node',
-      watch: ['app.js', 'gulpfile.js', 'boot.js', 'db.js', './routes', './models', './libs', './utils', './client'],
+      watch: ['app.js', 'boot.js', 'db.js', './routes', './models', './libs', './utils', './client'],
       script: 'app',
       ext: 'js html css',
       ignore: ['./node_modules', './mongod', './data', './dist', './wwwroot']
@@ -37,6 +36,7 @@ module.exports = () => {
         log(chalk.bgRed.black.bold('Crached... restatring'));
         stream.emit('restart', 500);
       })
+      .on('end', callback)
       .on('exit', () => {
         log(chalk.bgYellow.black.italic('Exiting nodemon'));
       });
@@ -44,3 +44,4 @@ module.exports = () => {
     return stream;
   }
 }
+process.on('SIGINT', () => { if (stream) stream.emit('exit'); stream.quit(); });
