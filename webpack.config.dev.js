@@ -6,12 +6,12 @@ const webpack = require('webpack'),
   path = require('path');
 
 module.exports = {
-
   output: {
     filename: '[name].[chunkhash].bundle.js',
     sourceMapFilename: '[name].[chunkhash].bundle.map'
   },
   watch: true,
+  progress: true,
   devtool: 'inline-source-map',
   module: {
     loaders: [{
@@ -52,6 +52,11 @@ module.exports = {
     }),
     new scriptExtHtmlWebpackPlugin({
       defaultAttribute: 'async'
+    }),
+    new webpack.DefinePlugin({
+      app: {
+        environment: JSON.stringify('development')
+      }
     })
   ]
 };

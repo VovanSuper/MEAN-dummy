@@ -1,14 +1,14 @@
 import path from 'path';
 
-module.exports = (appRoot, env) => {
+module.exports = (rootPath, env) => {
   return {
-    clientSrc: path.join(appRoot, 'client'),
-    appFilesPaths: ['app.js', 'db.js', 'boot.js', './utils/**/*.js', './routes/**/*.js', './models/**/*.js'],
-    clientDist: (env === 'prod' || env === 'production') ?
-      path.join(appRoot, 'wwwroot/dist') : path.join(appRoot, 'dist'),
-    appDist: 'wwwroot',
-    testsSrc: path.join(appRoot, 'tests'),
+    clientSrc: path.join(rootPath, 'client'),
+    appFilesPaths: ['app.js', 'db.js', 'boot.js', './utils/**/*.js', './routes/**/*.js', './models/**/*.js']
+      .map(i => path.join('./server', i)),
+    clientDist: path.join(rootPath, 'wwwroot/dist'),
+    appDist: path.join(rootPath, 'wwwroot'),
+    testsSrc: path.join(rootPath, 'tests/**/*.spec.js'),
     webpackfile: (env === 'prod' || env === 'production') ?
-      path.resolve(appRoot, './webpack.config.js') : path.resolve(appRoot, './webpack.config.dev.js')
+      path.resolve(rootPath, './webpack.config.js') : path.resolve(rootPath, './webpack.config.dev.js')
   }
 };

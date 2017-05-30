@@ -86,6 +86,7 @@ exports = module.exports = app => {
         });
       });
     })
+
     .get((req, resp) => {
       resp.status(301).redirect('/events/all');
     });
@@ -94,10 +95,7 @@ exports = module.exports = app => {
     Events.findById(id, '-__v')
       .populate('users')
       .then((ev) => {
-        if (!ev)
-          return resp.status(404).json({
-            operationStatus: `No Event with id: ${id}`
-          });
+        if (!ev) throw `No Event with id: ${id}`;
         req.event = ev;
         next();
       })
@@ -108,6 +106,7 @@ exports = module.exports = app => {
         });
       });
   })
+
     .route('/:id')
     .get((req, resp) => {
       let item = req.event;
@@ -118,9 +117,12 @@ exports = module.exports = app => {
         endTime: item.endTime,
         users: attachUsers(item)
       }
-
-      resp.status(200).json(eventPopUsers);
+      resp.status(200).json({
+        operationStatus: 'Found',
+        event: eventPopUsers
+      });
     })
+
     .put((req, resp) => {
       let ev = req.event;
       let postedUsers = req.body.users.trim().split(',');
@@ -131,7 +133,6 @@ exports = module.exports = app => {
       ev.markModified('users');
       ev.markModified('startTime');
       ev.markModified('endTime');
-
       ev.save((err, ev) => {
         if (err)
           return resp.status(404).json({
@@ -148,22 +149,21 @@ exports = module.exports = app => {
         });
       });
     })
+
     .delete((req, resp) => {
-      Events.findById(req.event['_id'], (err, event) => {
+      Events.findByIdAndRemove(req.event['_id'], (err, event) => {
         if (err)
           return resp.status(500).json({
             operationStatus: 'Error deleting Event',
             err: err
           });
-        let delEventUsers = event.users;
-        console.log('DEL Event USErs are: >>> ' + delEventUsers + ' Of type ' + typeof delEventUsers);
 
         resp.status(200).json({
-          operationStatus: `Event ${event['_id']} removed`
+          operationStatus: `Event ${req.event['_id']} removed`
         });
-
       });
     })
+
     .patch((req, resp) => {
       let ev = req.event;
       let postedUsers = req.body.users.trim().split(',');

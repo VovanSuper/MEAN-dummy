@@ -13,22 +13,19 @@ defineTask('appdist:clean', 'cleanDist', { appDist: paths.appDist });
 defineTask('env:prod', 'setEnv', { type: 'production' });
 defineTask('env:dev', 'setEnv', { type: 'development' });
 defineTask('env:test', 'setEnv', { type: 'test' });
-defineTask('tests:w', 'testsWatch', { testsSrc: paths.testsSrc });
+defineTask('tests', 'tests', { testsSrc: paths.testsSrc });
 defineTask('nodemon', 'nodemon');
 defineTask('client:bundle', 'bundleClient', { paths: paths, env: env });
-defineTask('server:compile', 'compileServer', {
-  appFilesPaths: paths.appFilesPaths,
-  appDist: paths.appDist,
-  root: root,
-  env: env
+defineTask('server:compile', 'compileServer', { paths: paths, env: env });
+
+gulp.task('tests:watch', () => {
+  gulp.watch(paths.testsSrc, gulp.series('env:test', 'tests'));
 });
 
 gulp.task('compileBundle:prod', gulp.series(        // gulp --type=production compileBundle:prod
-  'client:clean',                                   // TODO: set up angular PROD compilation
-  'appdist:clean',
+  'appdist:clean',                                  // TODO: set up angular PROD compilation
   'env:prod',
   gulp.parallel('server:compile', 'client:bundle'))
 );
-
 
 gulp.task('default', gulp.series('client:clean', 'env:dev', 'client:bundle', 'nodemon'));

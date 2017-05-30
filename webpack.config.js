@@ -1,5 +1,3 @@
-require('babel-register');
-
 const webpack = require('webpack'),
   path = require('path'),
   V8LazyParseWebpackPlugin = require('v8-lazy-parse-webpack-plugin'),
@@ -39,31 +37,9 @@ module.exports = {
   },
   devtool: 'source-map',
   plugins: [
-    new htmlWebpackPlugin({
-      cache: true,
-      hash: true,
-      favicon: 'client/favicon.ico',
-      xhtml: true,
-      template: 'client/index.html',
-      minify: {
-        collapseWhitespace: true,
-        collapseInlineTagWhitespace: true,
-        keepClosingSlash: true,
-        minifyCss: true,
-        removeComments: true,
-        removeRedundantAttributes: true,
-        removeEmptyAttributes: true,
-        removeOptionalTags: true,
-        removeScriptTypeAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        useShortDoctype: true
-      }
-    }),
-    new scriptExtHtmlWebpackPlugin({
-      defaultAttribute: 'async'
-    }),
     new V8LazyParseWebpackPlugin(),
     new webpack.optimize.DedupePlugin(),
+
     new webpack.optimize.AggressiveMergingPlugin(),
     // new ClosureCompilerPlugin({
     //   compiler: {
@@ -95,6 +71,37 @@ module.exports = {
       },
       output: {
         comments: false
+      }
+    }),
+    new htmlWebpackPlugin({
+      cache: true,
+      hash: true,
+      favicon: 'client/favicon.ico',
+      xhtml: true,
+      template: 'client/index.html',
+      minify: {
+        collapseWhitespace: true,
+        collapseInlineTagWhitespace: true,
+        keepClosingSlash: true,
+        minifyCss: true,
+        removeComments: true,
+        removeRedundantAttributes: true,
+        removeEmptyAttributes: true,
+        removeOptionalTags: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        useShortDoctype: true
+      }
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'polyfills'
+    }),
+    new scriptExtHtmlWebpackPlugin({
+      defaultAttribute: 'async'
+    }),
+    new webpack.DefinePlugin({
+      app: {
+        environment: JSON.stringify('production')
       }
     })
   ]

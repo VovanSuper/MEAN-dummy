@@ -5,12 +5,14 @@ import { Component } from '@angular/core';
   template: `
     <em-header></em-header>
     <div class="container">
-      <h2 class="heading">
+      <h2 class="header">
         Workshops and Conference Agenda
       </h2>
-      <div class="row">
-        <div class="col-md-auto col-xs-12">
-          <router-outlet></router-outlet>
+      <div class="container">
+        <div class="row">
+          <div class="col-10">
+            <router-outlet></router-outlet>
+          </div>
         </div>
       </div>
     </div>

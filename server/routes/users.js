@@ -3,7 +3,7 @@ module.exports = app => {
   const Users = app.db.models.Users;
 
   let attachEvents = (user) => {
-    if (!user) throw Error('Event object is not provided!!!');
+    if (!user) throw new Error('Event object is not provided!!!');
     if (!(user['events']).length) return [];
     return (user['events']).map(ev => {
       return {
@@ -25,6 +25,7 @@ module.exports = app => {
           let users = items.map((user) => {
             return {
               _id: user._id,
+              username: user.username,
               name: user.name,
               email: user.email,
               registered: user.registered,
@@ -33,7 +34,10 @@ module.exports = app => {
             }
           });
 
-          resp.status(200).json(users);
+          resp.status(200).json({
+            operationStatus: 'Ok',
+            users: Object.create({}, items.UserInfo, { events: attachEvents(user) } );
+          });
         })
         .catch((err) => {
           if (err) return resp.status(412).json({
@@ -49,11 +53,13 @@ module.exports = app => {
     })
     .post((req, resp) => {
       let newUser = new Users({
+        username: req.body.username,
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
         registered: req.body.registered,
-        work_place: req.body.work_place
+        work_place: req.body.work_place,
+        events: [...req.body.events]
       });
 
       newUser.save()
@@ -91,16 +97,21 @@ module.exports = app => {
     .route('/:id')
     .get((req, resp) => {
       let usersPopEvents = {
+        username: req.user.username,
         name: req.user.name,
         email: req.user.email,
         registered: req.user.registered,
         work_place: req.user.work_place,
         event: attachEvents(req.user)
       }
-      resp.status(201).json(usersPopEvents);
+      resp.status(200).json({
+        operationStatus: 'Found',
+        users: usersPopEvents
+      });
     })
     .put((req, resp) => {
       let user = req.user;
+      user.username = req.body.username;
       user.name = req.body.name;
       user.email = req.body.email;
       user.password = req.body.password;
@@ -108,6 +119,7 @@ module.exports = app => {
 
       Users.findByIdAndUpdate(req.user['_id'], {
         $set: {
+          username: user.username,
           name: user.name,
           email: user.email,
           password: user.password,
@@ -121,7 +133,7 @@ module.exports = app => {
             operationStatus: `Error updating user ${user['_id']}`,
             err: err
           });
-        resp.status(200).json({
+        resp.status(204).json({
           operationStatus: `Updated user ${user['_id']}`
         });
       });

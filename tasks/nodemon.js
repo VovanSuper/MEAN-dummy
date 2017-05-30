@@ -7,8 +7,8 @@ module.exports = () => {
   return (callback) => {
     stream = nodemon({
       exec: 'babel-node',
-      watch: ['app.js', 'boot.js', 'db.js', './routes', './models', './libs', './utils', './client'],
-      script: 'app',
+      watch: ['app.js', 'boot.js', 'db.js', 'routes', 'models', 'libs', 'utils'].map(i => './server/'+i),
+      script: './server/app.js',
       ext: 'js html css',
       ignore: ['./node_modules', './mongod', './data', './dist', './wwwroot']
     })

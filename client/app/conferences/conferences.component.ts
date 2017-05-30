@@ -2,7 +2,6 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ApiService } from '../shared';
 
 @Component({
-  selector: 'em-conferences',
   templateUrl: './conferences.component.html',
   styleUrls: ['./conferences.component.css']
 })

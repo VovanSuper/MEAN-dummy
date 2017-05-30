@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { ConferenceComponent } from './';
+import { ConferencesComponent, ConferenceComponent } from './';
 
 export const conferences_routes: Routes = [
-  { path: ':name', component: ConferenceComponent },
-  { path: '', component: ConferenceComponent, pathMatch: 'full' }
+  { path: ':id', component: ConferenceComponent, outlet: 'conf' },
+  { path: '', component: ConferenceComponent, pathMatch: 'full', outlet: 'conf' }
 ]

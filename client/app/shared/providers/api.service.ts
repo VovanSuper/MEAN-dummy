@@ -10,4 +10,8 @@ export class ApiService {
   public getEvents() {
     return this.http.get('/events/all').map(result => result.json()).toPromise();
   }
+
+  public getEventById(id: any) {
+    return this.http.get(`/events/${id}`).map(result => result.json()).toPromise();
+  }
 }

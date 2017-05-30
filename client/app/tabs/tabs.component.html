@@ -1,5 +1,6 @@
-<tabset [justified]="true">
-    <tab *ngFor="let tab of tabs | async" [heading]="tab.heading" [active]="tab.active" (select)="tab.active = true" (deselect)="tab.active = false" [routerLink]="['/conferences', tab?.id]">
-        <router-outlet></router-outlet>
-    </tab>
+<tabset type="pills">
+  <tab *ngFor="let tab of tabs" [heading]="tab.heading" [active]="tab.active" (select)="tab.active = true" (deselect)="tab.active = false"
+    [routerLink]="['/conferences', tab.id]">
+    {{tab?.content}}
+  </tab>
 </tabset>

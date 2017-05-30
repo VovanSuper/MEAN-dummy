@@ -8,8 +8,8 @@ let db = null;
 module.exports = app => {
   if (!db) {
     const conf = {
-      host: (process.env.ENV === 'test') ? 'mongodb://localhost:27017/test' : config.get('database.host'),
-      creds: (process.env.ENV === 'test') ? null : config.get('database.creds')
+      host:  config.get('database.host'),        
+      creds: config.get('database.creds')
     };
     mongoose.Promise = require('bluebird');
     mongoose.connect(conf.host);
@@ -19,7 +19,7 @@ module.exports = app => {
       models: {}
     };
 
-    let modelsDir = path.join(app.basePath, 'models');
+    let modelsDir = path.join(app.basePath, './models');
     fs.readdirSync(modelsDir).forEach(fileName => {
       let filePath = path.join(modelsDir, fileName)
       let modelName = fileName.slice(0, fileName.indexOf('.'));

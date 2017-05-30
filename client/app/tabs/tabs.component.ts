@@ -3,7 +3,6 @@ import { ApiService } from '../shared';
 
 @Component({
   selector: 'em-tabs',
-  //changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './tabs.component.html',
   styles: [`
   `]
