@@ -14,5 +14,6 @@ module.exports = (params) => {
       .on('change', () => {
         $.memoryCache.update('tests');
       })
+      .on('end', () => { process.exit(0) });
   }
 }
