@@ -1,4 +1,3 @@
-require('babel-register')();
 
 let path = require('path'),
   expect = require('chai').expect,
@@ -36,15 +35,15 @@ describe('Users route', () => {
     Users.remove({}, (err) => {
       if (err) throw `Error after hook: ${err}`;
 
-      Users.create(users, (err, newUsr) => {
+      Users.collection.insert(users, (err, newUsr) => {
         if (err) return console.dir(err);
-        console.log('Users are created: ' + newUsr.length);
-      }).then(users => {
-        testUserId = users[0]._id;
+        console.log('Users are created: ' + JSON.stringify(newUsr));
+
+        testUserId = newUsr['ops'][0]._id;
         console.log(`Test First event id: ${testUserId}`);
         done();
-      });
     });
+  });
   });
 
   it('should return all users', cb => {
@@ -81,7 +80,7 @@ describe('Users route', () => {
       .end((err, results) => {
         if (err) throw `Error supertest.request: ${err}`;
         expect(results.body).to.exist;
-        
+        expect(results.body.operationStatus).to.exist.and.to.be.equal(`User ${testUserId} removed`)
         cb();
       });
   });

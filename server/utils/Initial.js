@@ -13,7 +13,7 @@ module.exports = app => {
 
   app.set('port', process.env.PORT || config.get('base.port'))
     .use(favicon(path.join(app.rootPath, 'wwwroot/dist/favicon.ico')))
-    .use(express.static(path.join(app.basePath, 'wwwroot/dist')))
+    .use(express.static(path.join(app.rootPath, 'wwwroot/dist')))
     .use(cors())
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({ extended: false }))

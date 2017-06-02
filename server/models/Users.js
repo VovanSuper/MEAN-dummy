@@ -1,5 +1,5 @@
-import bcrypt from 'bcryptjs';
-//import * as bcrypt from 'bcryptjs';
+//import bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcryptjs';
 module.exports = (mongoose) => {
 
   let nonEmpty = (name) => {
@@ -27,7 +27,7 @@ module.exports = (mongoose) => {
     }
   });
 
-  userSchema.virtual('UserInfo').get(() => {
+  userSchema.virtual('userInfo').get(() => {
     return {
       _id: this._id,
       name: this.name,

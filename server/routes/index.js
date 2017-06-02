@@ -1,5 +1,5 @@
 module.exports = app => {
   app.get('/', (req, resp) => {
-    resp.status(200).sendFile(app.basePath, 'dist/index.html');
+    resp.status(200).sendFile(app.rootPath, 'wwwroot/dist/index.html');
   })
 }

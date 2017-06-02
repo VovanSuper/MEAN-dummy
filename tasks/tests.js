@@ -5,6 +5,7 @@ module.exports = (params) => {
     return params.gulp.src(params.testsSrc, { read: false, since: $.memoryCache.lastMtime('tests') })
       .pipe($.memoryCache('tests'))
       .pipe($.mocha({
+        watch: false,
         reporter: 'nyan',
         compilers: {
           js: $.babel
@@ -12,6 +13,6 @@ module.exports = (params) => {
       }))
       .on('change', () => {
         $.memoryCache.update('tests');
-      });
+      })
   }
 }

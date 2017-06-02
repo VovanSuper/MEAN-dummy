@@ -21,26 +21,23 @@ module.exports = app => {
     .get((req, resp) => {
       Users.find({}, '-__v')
         .populate('events')
-        .then((items) => {
-          let users = items.map((user) => {
-            return {
-              _id: user._id,
-              username: user.username,
-              name: user.name,
-              email: user.email,
-              registered: user.registered,
-              work_place: user.work_place,
-              events: attachEvents(user)
-            }
-          });
+        .then(items => {
+          if (!items) throw 'No users found'
+          let users = items.map(user => Object.assign({}, {
+            name: user.name,
+            username: user.username,
+            email: user.email,
+            work_place: user.work_place,
+            registered: user.registered
+          }, { events: attachEvents(user) }));
 
-          resp.status(200).json({
+          return resp.status(200).json({
             operationStatus: 'Ok',
-            users: Object.create({}, items.UserInfo, { events: attachEvents(user) } );
+            users: users
           });
         })
-        .catch((err) => {
-          if (err) return resp.status(412).json({
+        .catch(err => {
+          return resp.status(412).json({
             operationStatus: 'Server error',
             err: err
           });
@@ -70,7 +67,7 @@ module.exports = app => {
           });
         })
         .catch((err) => {
-          if (err) return req.status(412).json({
+          return req.status(412).json({
             operationStatus: 'Error trying to save entity',
             err: err
           });
@@ -78,22 +75,22 @@ module.exports = app => {
     });
 
   usersRouter.param('id', (req, resp, next, id) => {
-      Users.findById(id, '-__v')
-        .populate('events')
-        .then(user => {
-          if (!user)
-            throw `No user present in database with id of ${id}`;
+    Users.findById(id, '-__v')
+      .populate('events')
+      .then(user => {
+        if (!user)
+          throw `No user present in database with id of ${id}`;
 
-          req.user = user;
-          next();
-        })
-        .catch(err => {
-          return resp.status(412).json({
-            operationStatus: `No User with id: ${id}`,
-            err: err
-          });
+        req.user = user;
+        next();
+      })
+      .catch(err => {
+        return resp.status(412).json({
+          operationStatus: `No User with id: ${id}`,
+          err: err
         });
-    })
+      });
+  })
     .route('/:id')
     .get((req, resp) => {
       let usersPopEvents = {
@@ -126,17 +123,17 @@ module.exports = app => {
           work_place: user.work_place
         }
       }, {
-        new: true
-      }, (err, user) => {
-        if (err)
-          return resp.status(500).json({
-            operationStatus: `Error updating user ${user['_id']}`,
-            err: err
+          new: true
+        }, (err, user) => {
+          if (err)
+            return resp.status(500).json({
+              operationStatus: `Error updating user ${user['_id']}`,
+              err: err
+            });
+          resp.status(204).json({
+            operationStatus: `Updated user ${user['_id']}`
           });
-        resp.status(204).json({
-          operationStatus: `Updated user ${user['_id']}`
         });
-      });
     })
     .patch((req, resp) => {
       let user = req.user;
@@ -151,7 +148,7 @@ module.exports = app => {
           });
         })
         .catch((err) => {
-          if (err) return req.status(412).json({
+          return req.status(412).json({
             operationStatus: 'Error trying to save entity',
             err: err
           });

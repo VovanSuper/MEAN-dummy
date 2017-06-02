@@ -1,4 +1,3 @@
-require('babel-register')();
 
 let root = process.cwd(),
   should = require('should'),

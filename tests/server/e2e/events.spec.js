@@ -1,4 +1,3 @@
-require('babel-register')();
 
 let path = require('path'),
   expect = require('chai').expect,
@@ -30,27 +29,26 @@ describe('Events route', () => {
     }];
 
     Events.remove({}, (err) => {
-      if (err) throw `Error after hook: ${err}`;
+      if (err) throw `Error beforeEach hook in events.spec.js : ${err}`;
 
-      Events.create(events, (err, newEvs) => {
+      Events.collection.insert(events, (err, newEvs) => {
         if (err) return console.dir(err);
-        console.log('Events are created: ' + newEvs.length);
-      }).then(events => {
-        testEventId = events[0]._id;
-        console.log(`Test First event id: ${testEventId}`);
+        //console.log('Events are created: ' + JSON.stringify(newEvs.ops));
+
+        testEventId = newEvs['ops'][0]._id;
+        //console.log(`Test First event id: ${testEventId}`);
         done();
-      })
+      });
     });
   });
 
   it('should get all events', cb => {
     request.get('/events/all')
-      .set('Accept', 'application/json')
       .expect(200)
       .end((err, results) => {
         if (err) throw `Error supertest.request: ${err}`;
         expect(results.body).to.exist;
-        expect(results.body).length.to.be.greaterThan(0);
+        expect(results.body.length).to.be.greaterThan(0);
         cb();
       });
   });
@@ -65,7 +63,7 @@ describe('Events route', () => {
         expect(results.body.event).to.exist.and.to.haveOwnProperty('users');
         expect(results.body.event).to.haveOwnProperty('_id', `${testEventId}`);
         //expect(results.body.event['_id']).equals(`${testEventId}`);
-        console.log('GETID res : ', results.body);
+        //console.log('GETID res : ', results.body);
         cb();
       });
   });
@@ -76,7 +74,6 @@ describe('Events route', () => {
       .end((err, results) => {
         if (err) throw `Error supertest.request: ${err}`;
         expect(results.body).to.exist;
-        console.log(results.body);
         cb();
       });
   });
