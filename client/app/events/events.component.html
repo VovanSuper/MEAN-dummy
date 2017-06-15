@@ -1,3 +1,9 @@
-<p>
-  events works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-5 col-xs-12">
+      <div *ngFor="let event of events | async">
+        <em-event [event]="event"></em-event>
+      </div>
+    </div>
+  </div>
+</div>

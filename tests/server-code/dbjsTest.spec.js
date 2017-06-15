@@ -13,7 +13,6 @@ let root = process.cwd(),
 
 
 describe('db.js: ', () => {
-
   it('should return {} and have properties `mongoose, connection, models` ', () => {
     db.should.exist;
     db.should.be.type('object');
@@ -21,7 +20,6 @@ describe('db.js: ', () => {
     db.should.have.property('models');
     db.should.have.property('connection');
   });
-
 });
 
 

@@ -1,14 +1,14 @@
 import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './main';
-import { ConferencesComponent, conferences_routes } from './conferences';
-import { WorkshopsComponent } from './workshops';
 import { NotfoundComponent } from './notfound';
+import { EventsComponent, EventComponent, EventDetailsComponent } from './events';
 
 export const ROUTES_DEFINITION: Routes = [
-  { path: 'conferences', component: ConferencesComponent, children: [...conferences_routes] },
-  { path: '', redirectTo: 'conferences', pathMatch: 'full' },
-  { path: '**', component: NotfoundComponent, pathMatch: 'full' }
-]
+  { path: 'events/:id/details', component: EventDetailsComponent },
+  { path: 'events', component: EventsComponent, pathMatch: 'full' },
+  { path: '', redirectTo: 'events', pathMatch: 'full' },
+  { path: '**', component: NotfoundComponent }
+];
 
-export const APP_ROUTING: ModuleWithProviders = RouterModule.forRoot(ROUTES_DEFINITION)
+export const APP_ROUTING: ModuleWithProviders = RouterModule.forRoot(ROUTES_DEFINITION);

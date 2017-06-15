@@ -2,16 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { TabsModule } from 'ng2-bootstrap';
+ //import { TabsModule } from 'ng2-bootstrap';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header';
-import { TabularComponent } from './tabs';
-import { ConferenceComponent, ConferencesComponent } from './conferences';
-import { EventsComponent } from './events';
-import { MainComponent } from './main';
+
+import { EventsComponent, EventComponent, EventDetailsComponent } from './events';
 import { NotfoundComponent } from './notfound';
-import { WorkshopsComponent } from './workshops';
 import { APP_ROUTING } from './routes';
 import { ApiService } from './shared';
 
@@ -19,19 +16,17 @@ import { ApiService } from './shared';
   declarations: [
     AppComponent,
     HeaderComponent,
-    TabularComponent,
-    ConferenceComponent,
-    ConferencesComponent,
+    
     EventsComponent,
-    MainComponent,
+    EventComponent,
+    EventDetailsComponent,
     NotfoundComponent,
-    WorkshopsComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    TabsModule.forRoot(),
+    
     APP_ROUTING
   ],
   providers: [ ApiService ],

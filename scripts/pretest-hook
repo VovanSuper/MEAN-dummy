@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+
+var path = require('path'),
+  npm = require('npm'),
+  fs = require('fs');
+
+npm.load(function (err) {
+  if (err) {
+    console.error(err);
+    process.exit(254);
+  }
+  var wwwroot = fs.existsSync(path.resolve(process.cwd(), 'wwwroot'));
+  if (wwwroot) {
+    return console.log('wwwroot already there...');
+  }
+
+  npm.commands['run-script'](['pretesthooks'], function (err, results) {
+    if (err) {
+      console.error(err);
+      process.exit(255);
+    }
+  })
+});

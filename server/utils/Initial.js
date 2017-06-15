@@ -12,8 +12,8 @@ module.exports = app => {
   app.rootPath = process.cwd();
 
   app.set('port', process.env.PORT || config.get('base.port'))
-    .use(favicon(path.join(app.rootPath, 'wwwroot/dist/favicon.ico')))
-    .use(express.static(path.join(app.rootPath, 'wwwroot/dist')))
+    .use(favicon(path.join(app.rootPath, config.get('paths.clientDist'), 'favicon.ico')))
+    .use(express.static(path.join(app.rootPath, config.get('paths.clientDist'))))
     .use(cors())
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({ extended: false }))

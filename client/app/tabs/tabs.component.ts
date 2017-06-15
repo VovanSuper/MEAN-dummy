@@ -1,34 +1,32 @@
 import { Component, OnInit, ChangeDetectionStrategy, AfterContentInit, OnDestroy } from '@angular/core';
-import { ApiService } from '../shared';
+import { ApiService, IEvent } from '../shared';
 
 @Component({
   selector: 'em-tabs',
-  templateUrl: './tabs.component.html',
-  styles: [`
-  `]
+  templateUrl: './tabs.component.html'
 })
 export class TabularComponent implements AfterContentInit, OnInit {
 
-  public tabs: any[] = []
+  public tabs: any[] = [];
 
-  constructor(private apiService: ApiService) { }
+  constructor(private api: ApiService) { }
 
   ngAfterContentInit() {
-    //this.tabs[0].active = true;
+     //this.tabs[0].active = true;
   }
   ngOnInit() {
-    this.apiService.getEvents().then(resp => {
-      let events = resp as any[];
+    this.api.getEvents().then(resp => {
+      const events = resp;
       events.forEach(ev => {
         this.tabs.push({
-          id: ev._id,
+          id: ev['_id'],
           heading: ev.name,
           active: false
-        })
-      })
+        });
+      });
     }).catch(err => {
       console.log('ERROR WHILE CALLING API /EVENTS/ALL');
       console.log(JSON.stringify(err));
-    })
+    });
   }
 }

@@ -14,5 +14,5 @@ module.exports = {
   cleanAssets: cleanAssets,
   wpReporter: wpReporter,
   log: log,
-  env: env.type || process.env.ENV || process.env.NODE_ENV || 'development'
+  env: env.type ||  process.env.NODE_ENV || process.env.ENV || 'development'
 }

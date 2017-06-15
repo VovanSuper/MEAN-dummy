@@ -1,13 +1,13 @@
-import * as chalk from 'chalk';
-import { log }    from './helpers/functions';
-let nodemon = require('gulp-nodemon');
+import * as chalk  from 'chalk';
+import { log }     from './helpers/functions';
+let nodemon        = require('gulp-nodemon');
 let bunyan, stream = null;
 
 module.exports = () => {
   return (callback) => {
     stream = nodemon({
       exec: 'babel-node',
-      watch: ['app.js', 'boot.js', 'db.js', 'routes', 'models', 'libs', 'utils'].map(i => './server/'+i),
+      watch: ['app.js', 'boot.js', 'db.js', 'routes', 'models', 'libs', 'utils'].map(i => './server/' + i),
       script: './server/app.js',
       ext: 'js html css',
       ignore: ['./node_modules', './mongod', './data', './dist', './wwwroot']
@@ -44,4 +44,5 @@ module.exports = () => {
     return stream;
   }
 }
-process.on('SIGINT', () => { if (stream) stream.emit('exit'); stream.quit(); });
+
+process.on('SIGINT', () => { if (stream) { stream.emit('exit'); stream.quit(); process.exit(1) } });

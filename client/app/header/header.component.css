@@ -1,6 +1,12 @@
 /*.fixed-top-header {
     padding-top: 2em !important;
 }*/
+
+.logo {
+    width: 35rem;
+    height: 10rem;
+}
+
 .fixed-top-header {
     /*position: fixed;*/
     border-bottom: 1px solid #d0d0d0;

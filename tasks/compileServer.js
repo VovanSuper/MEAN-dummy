@@ -2,15 +2,17 @@ import * as combiner from 'stream-combiner2';
 import path          from 'path';
 const $              = require('gulp-load-plugins')();
 
+let isEntry = (file) => {
+  return file.basename === 'app.js'
+}
+
 module.exports = (params) => {
-  let isEntry = (file) => {
-    return (params.env === 'production' && file.basename === 'app.js');
-  }
+  
   return () => {
     return combiner.obj(
       params.gulp.src(params.paths.appFilesPaths)
         .on('data', (file) => { file.cwd = './server' })
-      , $.if(isEntry, $.rename(path => { path.basename = 'index' }))
+      , $.if((params.env === 'production' && isEntry), $.rename(path => { path.basename = 'index' }))
       , $.babel()
       , $.debug({ title: '[Gulp-Debug]::', minimal: true })
       , params.gulp.dest(file => {

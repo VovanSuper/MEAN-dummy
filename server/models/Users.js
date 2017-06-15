@@ -1,5 +1,6 @@
-//import bcrypt from 'bcryptjs';
-import * as bcrypt from 'bcryptjs';
+//import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
+
 module.exports = (mongoose) => {
 
   let nonEmpty = (name) => {

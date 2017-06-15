@@ -95,8 +95,9 @@ exports = module.exports = app => {
     Events.findById(id, '-__v')
       .populate('users')
       .then((ev) => {
-        if (!ev) throw `No Event with id: ${id}`;
-        req.event = ev;
+        if (!ev) throw new Error(`No Event with id: ${id}`);
+        
+        resp.locals.event = ev;
         next();
       })
       .catch((err) => {
@@ -109,7 +110,7 @@ exports = module.exports = app => {
 
     .route('/:id')
     .get((req, resp) => {
-      let item = req.event;
+      let item = resp.locals.event;
       let eventPopUsers = {
         _id: item._id,
         name: item.name,
@@ -124,7 +125,7 @@ exports = module.exports = app => {
     })
 
     .put((req, resp) => {
-      let ev = req.event;
+      let ev = resp.locals.event;
       let postedUsers = req.body.users.trim().split(',');
       ev.name = req.body.name;
       ev.startTime = Date.parse(req.body.startTime);
@@ -151,7 +152,7 @@ exports = module.exports = app => {
     })
 
     .delete((req, resp) => {
-      Events.findByIdAndRemove(req.event['_id'], (err, event) => {
+      Events.findByIdAndRemove(resp.locals.event['_id'], (err, event) => {
         if (err)
           return resp.status(500).json({
             operationStatus: 'Error deleting Event',
@@ -159,13 +160,13 @@ exports = module.exports = app => {
           });
 
         resp.status(200).json({
-          operationStatus: `Event ${req.event['_id']} removed`
+          operationStatus: `Event ${resp.locals.event['_id']} removed`
         });
       });
     })
 
     .patch((req, resp) => {
-      let ev = req.event;
+      let ev = resp.locals.event;
       let postedUsers = req.body.users.trim().split(',');
       if (req.body._id)
         delete req.body._id;

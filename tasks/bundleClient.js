@@ -6,6 +6,8 @@ const $ = require('gulp-load-plugins')({
   pattern: ['gulp-*', 'vinyl-named', 'webpack-stream', 'stream-combiner2']
 });
 
+let isProd = process.env.NODE_ENV == 'production';
+
 module.exports = (params) => {
   return (callback) => {
     log(chalk.bgWhite.black.italic('Bundling for ' + params.env));
@@ -16,23 +18,23 @@ module.exports = (params) => {
         path.join(params.paths.clientSrc, 'main.ts')
       ], { since: $.memoryCache.lastMtime('client') })
       , $.vinylNamed()
-      , $.if( process.env.NODE_ENV !== 'production', $.memoryCache('client'))
-      , $.webpackStream(require(params.paths.webpackfile), null, wpReporter)
+      , $.if( !isProd, $.memoryCache('client'))
+      , $.webpackStream(require(params.paths.webpackfile), require('webpack'), wpReporter)
       , params.gulp.dest(params.paths.clientDist)
         .on('data', () => {
           setTimeout(() => {   //TODO: improve!! now is quite a durty hack to continue gulp.series pipeline ex
             callback();
-          }, 1000);
+          }, 1500);
         })
     )
       .on('error', () => {
-        $.memoryCache.flush('client');
+        if(!isProd) $.memoryCache.flush('client');
         $.notify.onError(err => ({
           MainTitle: 'Error during CLIENT BUNDLING pipeline',
           ErrorMsg: err.message,
           FullError: JSON.stringify(err)
         }))
       })
-      .on('change', $.memoryCache.update('client')) ;
+      .on('change', () => { if (!isProd) $.memoryCache.update('client') });
   }
 }

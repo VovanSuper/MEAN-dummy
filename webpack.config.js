@@ -35,7 +35,7 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.ts', '.html', '.css']
   },
-  devtool: 'source-map',
+  devtool: 'inline-source-map',
   plugins: [
     new V8LazyParseWebpackPlugin(),
     new webpack.optimize.DedupePlugin(),
@@ -68,9 +68,6 @@ module.exports = {
       mangle: {
         screw_ie8: true,
         except: ['$', 'webpackJsonp']
-      },
-      output: {
-        comments: false
       }
     }),
     new htmlWebpackPlugin({
@@ -78,15 +75,16 @@ module.exports = {
       hash: true,
       favicon: 'client/favicon.ico',
       xhtml: true,
+      inject: 'body',
       template: 'client/index.html',
       minify: {
         collapseWhitespace: true,
         collapseInlineTagWhitespace: true,
         keepClosingSlash: true,
-        minifyCss: true,
+        minifyCSS: true,
         removeComments: true,
         removeRedundantAttributes: true,
-        removeEmptyAttributes: true,
+        removeEmptyAttributes: false,
         removeOptionalTags: true,
         removeScriptTypeAttributes: true,
         removeStyleLinkTypeAttributes: true,

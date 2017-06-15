@@ -33,10 +33,7 @@ describe('Events route', () => {
 
       Events.collection.insert(events, (err, newEvs) => {
         if (err) return console.dir(err);
-        //console.log('Events are created: ' + JSON.stringify(newEvs.ops));
-
         testEventId = newEvs['ops'][0]._id;
-        //console.log(`Test First event id: ${testEventId}`);
         done();
       });
     });
@@ -62,8 +59,7 @@ describe('Events route', () => {
         expect(results.body.operationStatus).to.exist.and.to.contain('Found');
         expect(results.body.event).to.exist.and.to.haveOwnProperty('users');
         expect(results.body.event).to.haveOwnProperty('_id', `${testEventId}`);
-        //expect(results.body.event['_id']).equals(`${testEventId}`);
-        //console.log('GETID res : ', results.body);
+        expect(results.body.event['_id']).equals(`${testEventId}`);
         cb();
       });
   });
@@ -74,6 +70,7 @@ describe('Events route', () => {
       .end((err, results) => {
         if (err) throw `Error supertest.request: ${err}`;
         expect(results.body).to.exist;
+        expect(results.body.operationStatus).to.exist.and.to.contain(`${testEventId}` + ' removed');
         cb();
       });
   });

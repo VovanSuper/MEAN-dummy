@@ -1,20 +1,20 @@
 base:
-  port: 8080
+  port: 80
 
 paths:
   clientSrc: 'client'
   appFilesPaths: 
-    - 'app.js'
+    - 'app.js' 
     - 'db.js'
     - 'boot.js'
     - './utils/**/*.js'
     - './routes/**/*.js'
     - './models/**/*.js'
-  clientDist: '/client'
-  appDist: 'server'
+  clientDist: 'wwwroot/dist'
+  appDist: 'wwwroot'
   testsSrc: 'tests/**/*.spec.js'
-  webpackFile: 'webpack.config.test.js'
-  indexPath: 'client/index.html'
+  webpackFile: 'webpack.config.js'
+  indexPath: 'wwwroot/dist/index.html'
 
 database:
   host: 'mongodb://test:test@ds048279.mlab.com:48279/event_man'

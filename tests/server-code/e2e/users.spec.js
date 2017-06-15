@@ -37,10 +37,7 @@ describe('Users route', () => {
 
       Users.collection.insert(users, (err, newUsr) => {
         if (err) return console.dir(err);
-        console.log('Users are created: ' + JSON.stringify(newUsr));
-
         testUserId = newUsr['ops'][0]._id;
-        console.log(`Test First event id: ${testUserId}`);
         done();
     });
   });

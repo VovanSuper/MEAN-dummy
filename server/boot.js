@@ -1,6 +1,6 @@
 module.exports = app => {
   app.db.mongoose.connection
-    .on('error', (err) =>  { 
+    .on('error', err =>  { 
       app.utils.Logger.error(err) 
     })
     .on('open', () => {

@@ -1,8 +1,0 @@
-base:
-  port: 8080
-    
-database: 
-  host: 'mongodb://test:test@ds048279.mlab.com:48279/event_man'
-  creds:
-    user: 'test'
-    password: 'test'

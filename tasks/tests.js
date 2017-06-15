@@ -1,19 +1,13 @@
 const $ = require('gulp-load-plugins')();
 
 module.exports = (params) => {
-  return () => {
-    return params.gulp.src(params.testsSrc, { read: false, since: $.memoryCache.lastMtime('tests') })
-      .pipe($.memoryCache('tests'))
+  return (cb) => {
+    return params.gulp.src(params.testsSrc, { read: false, since: $.memoryCache.lastMtime('testsCache') })
+      .pipe($.memoryCache('testsCache'))
       .pipe($.mocha({
-        watch: false,
         reporter: 'nyan',
-        compilers: {
-          js: $.babel
-        }
+        compilers: { js: $.babel }
       }))
-      .on('change', () => {
-        $.memoryCache.update('tests');
-      })
-      .on('end', () => { process.exit(0) });
+      .on('end', () => { cb(); process.exit(0) });
   }
 }

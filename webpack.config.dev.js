@@ -3,17 +3,33 @@ const webpack = require('webpack'),
   htmlWebpackPlugin = require('html-webpack-plugin'),
   scriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin'),
   WebpackMd5Hash = require('webpack-md5-hash'),
+  InlineChunkManifestHtmlWebpackPlugin = require('inline-chunk-manifest-html-webpack-plugin'),
   path = require('path');
 
 module.exports = {
-
   output: {
-    filename: '[name].[chunkhash].bundle.js',
-    sourceMapFilename: '[name].[chunkhash].bundle.map'
+    filename: '[name].[chunkhash].js'
+    , sourceMapFilename: '[name].[chunkhash].map'
   },
+  progress: true,
   watch: true,
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   module: {
+    preLoaders: [
+      {
+        test: /\.ts$/,
+        include: [
+          path.resolve(__dirname, 'client')
+        ],
+        loader: 'tslint-loader'
+      }
+    ],
+
+    tslint: {
+      emitErrors: true,
+      failOnHint: false
+    },
+
     loaders: [{
       test: /\.component\.ts$/,
       loader: 'awesome-typescript!angular2-template',
@@ -32,26 +48,39 @@ module.exports = {
     },
     {
       test: /\.(html|css)$/,
-      loader: 'raw-loader'
+      loader: 'raw',
+      include: [
+        path.resolve(__dirname, 'client')
+      ]
     }]
   },
+
   resolve: {
     extensions: ['', '.js', '.ts', '.html', '.css']
   },
+
   plugins: [
+    new webpack.NoErrorsPlugin(),
     new WebpackMd5Hash(),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'polyfills'
-    }),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'common'
+    // }),
     new htmlWebpackPlugin({
-      cache: false,
+      cache: true,
       hash: false,
+      inject: 'body',
+      template: './client/index.html',
       favicon: './client/favicon.ico',
-      xhtml: true,
-      template: './client/index.html'
+      xhtml: true
     }),
+    new InlineChunkManifestHtmlWebpackPlugin(),
     new scriptExtHtmlWebpackPlugin({
       defaultAttribute: 'async'
+    }),
+    new webpack.DefinePlugin({
+      app: {
+        environment: JSON.stringify('development')
+      }
     })
   ]
 };
