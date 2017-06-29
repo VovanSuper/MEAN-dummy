@@ -45,8 +45,8 @@ describe('Events route', () => {
       .expect(200)
       .end((err, results) => {
         if (err) throw `Error supertest.request: ${err}`;
-        expect(results.body).to.exist;
-        expect(results.body.length).to.be.greaterThan(0);
+        expect(results.body).to.exist.and.to.contain('data');
+        expect(results.body).to.be.greaterThan(0);
         cb();
       });
   });
@@ -58,11 +58,11 @@ describe('Events route', () => {
       .expect(200)
       .end((err, results) => {
         if (err) throw `Error supertest.request: ${err}`;
-        expect(results.type).to.exist.and.to.be.an('string');
+        expect(results.type).to.be.an('string');
         expect(results.body.operationStatus).to.exist.and.to.contain('Found');
-        expect(results.body.event).to.exist.and.to.haveOwnProperty('users');
-        expect(results.body.event).to.haveOwnProperty('_id', `${testEventId}`);
-        expect(results.body.event['_id']).equals(`${testEventId}`);
+        expect(results.body.data).to.exist.and.to.haveOwnProperty('users');
+        expect(results.body.data).to.haveOwnProperty('_id', `${testEventId}`);
+        expect(results.body.data['_id']).equals(`${testEventId}`);
         cb();
       });
   });
@@ -74,7 +74,7 @@ describe('Events route', () => {
       .end((err, results) => {
         if (err) throw `Error supertest.request: ${err}`;
         expect(results.body).to.exist;
-        expect(results.body.operationStatus).to.exist.and.to.contain(`${testEventId}` + ' removed');
+        expect(results.body.operationStatus).to.exist.and.to.contain(`Removed event ${testEventId}`);
         cb();
       });
   });

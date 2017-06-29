@@ -7,7 +7,7 @@
 
 ### A dummy (a very basic) MEAN (MongoDB, Express4, @Angular(2), Node.js) project 
 
-by Vladimir Ovsyukov <<vovansuper@mail.ru>>
+by Vladimir Ovsyukov <<ovsyukov@yandex.com>>
 
 Software Stack used: 
 
@@ -49,4 +49,4 @@ web api server serving on port 8080;
 ##### Redistribution
 
 **MIT**
-*Copyright (c) 2017 Vladimir Ovsyukov <<vovansuper@mail.ru>> -- with link required to original sources point*
+*Copyright (c) 2017 Vladimir Ovsyukov <<ovsyukov@yandex.com>> -- with link required to original sources point*
