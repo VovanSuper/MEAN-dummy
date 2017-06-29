@@ -7,6 +7,7 @@ const webpack = require('webpack'),
   path = require('path');
 
 module.exports = {
+
   output: {
     filename: '[name].[chunkhash].js'
     , sourceMapFilename: '[name].[chunkhash].map'
@@ -50,7 +51,7 @@ module.exports = {
       test: /\.(html|css)$/,
       loader: 'raw',
       include: [
-        path.resolve(__dirname, 'client')
+        path.resolve(__dirname, 'client', 'app')
       ]
     }]
   },
@@ -62,16 +63,21 @@ module.exports = {
   plugins: [
     new webpack.NoErrorsPlugin(),
     new WebpackMd5Hash(),
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: 'common'
-    // }),
+    new webpack.optimize.CommonsChunkPlugin({
+      //names: ['polyfills', 'vendor'],
+      children: true, 
+      async: true,
+      minChunks: 2,
+      minSize: 256
+    }),
     new htmlWebpackPlugin({
       cache: true,
       hash: false,
       inject: 'body',
       template: './client/index.html',
       favicon: './client/favicon.ico',
-      xhtml: true
+      xhtml: true,
+      minify: false
     }),
     new InlineChunkManifestHtmlWebpackPlugin(),
     new scriptExtHtmlWebpackPlugin({
@@ -81,6 +87,12 @@ module.exports = {
       app: {
         environment: JSON.stringify('development')
       }
+    }),
+    new webpack.ProvidePlugin({
+      "$": "jQuery",
+      "jQuery": "JQuery",
+      "jquery": "JQuery",
+      "toastr": "toastr"
     })
   ]
 };

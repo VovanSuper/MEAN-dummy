@@ -2,21 +2,28 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
- //import { TabsModule } from 'ng2-bootstrap';
+import { MomentModule } from 'angular2-moment';
+//import { TabsModule } from 'ng2-bootstrap';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header';
 
 import { EventsComponent, EventComponent, EventDetailsComponent } from './events';
 import { NotfoundComponent } from './notfound';
-import { APP_ROUTING } from './routes';
-import { ApiService } from './shared';
+import { AppRoutingModule } from './';
+import { ApiService,
+  RouteValidService,
+  ErrorService,
+  ToastrService,
+  toastrToken,
+  canDeactivate,
+  EventsResolverService } from './shared';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    
+
     EventsComponent,
     EventComponent,
     EventDetailsComponent,
@@ -26,10 +33,18 @@ import { ApiService } from './shared';
     BrowserModule,
     FormsModule,
     HttpModule,
-    
-    APP_ROUTING
+    MomentModule,
+    AppRoutingModule
   ],
-  providers: [ ApiService ],
-  bootstrap: [ AppComponent ]
+  providers: [
+    ApiService,
+    RouteValidService,
+    EventsResolverService,
+    { provide: toastrToken, useValue: toastrToken },
+    { provide: 'canLeave', useValue: canDeactivate },
+    ToastrService,
+    ErrorService
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

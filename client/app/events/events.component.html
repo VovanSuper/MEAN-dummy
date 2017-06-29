@@ -1,8 +1,11 @@
-<div class="container">
+<div class="container-fluid">
   <div class="row">
-    <div class="col-5 col-xs-12">
-      <div *ngFor="let event of events | async">
-        <em-event [event]="event"></em-event>
+    <div class="col-10 col-xs-12">
+      <p class="text-primary bg-info"> <strong>All events:</strong> </p>
+      <div class="card-group">
+        <div *ngFor="let event of events" style="padding: .2em; background-color: bisque;">
+          <em-event [event]="event"></em-event>
+        </div>
       </div>
     </div>
   </div>

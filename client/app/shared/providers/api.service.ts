@@ -1,22 +1,24 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { IEvent } from '../';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class ApiService {
+  eventsUrl = 'http://localhost:8080/events';
+
   constructor(private http: Http) { }
 
-  public getEvents(): Promise<IEvent[]> {
-    return this.http.get('/events/all').map(result => result.json().events as IEvent[]).toPromise();
+  public getEvents(): Promise<{ operationStatus: string, data?: IEvent[], err?: string }> {
+    return this.http.get(`${this.eventsUrl}/all`).map((resp: Response) => resp.json()).toPromise();
   }
 
-  public getEventById(id: string): Promise<IEvent> {
-    return this.http.get(`/events/${id}`).map(result => result.json().event as IEvent).toPromise();
+  public getEventById(id: string): Promise<{ operationStatus: string, data?: IEvent, err?: string }> {
+    return this.http.get(`${this.eventsUrl}/${id}`).map((resp: Response) => resp.json()).toPromise();
   }
 
-  public deleteEventById(id: string) : Promise<string> {
-    return this.http.delete(`/events/${id}`).map(result => result.json().operationStatus).toPromise();
+  public deleteEventById(id: string): Promise<{operationStatus: string, err?: string }> {
+    return this.http.delete(`${this.eventsUrl}/${id}`).map((resp: Response) => resp.json()).toPromise();
   }
 }

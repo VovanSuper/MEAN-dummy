@@ -37,6 +37,12 @@ module.exports = {
   },
   devtool: 'inline-source-map',
   plugins: [
+    //new webpack.ContextReplacementPlugin(
+    //  // The (\\|\/) piece accounts for path separators in *nix and Windows
+    //  /angular(\\|\/)core(\\|\/)@angular/,
+    //  helpers.root('./src'), // location of your src
+    //  {} // a map of your routes
+    //),
     new V8LazyParseWebpackPlugin(),
     new webpack.optimize.DedupePlugin(),
 
@@ -67,7 +73,8 @@ module.exports = {
       },
       mangle: {
         screw_ie8: true,
-        except: ['$', 'webpackJsonp']
+        except: ['$', 'webpackJsonp'],
+        keep_fnames: true
       }
     }),
     new htmlWebpackPlugin({
@@ -92,7 +99,9 @@ module.exports = {
       }
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'polyfills'
+      names: ['polyfills', 'vendor', 'main'],
+      minChunks: 2,
+      minSize: 256
     }),
     new scriptExtHtmlWebpackPlugin({
       defaultAttribute: 'async'

@@ -1,11 +1,11 @@
-exports = module.exports = app => {
+module.exports = app => {
   const Events = app.db.models.Events;
   const Users = app.db.models.Users;
 
   let attachUsers = (event) => {
     if (!event) throw Error('Event object is not provided!!!');
     if ((event['users']).length === 0) return [];
-    return event['users'].map(u => {
+    return event['users'].map(u => {       // TODO: use virtual here ?
       return {
         _id: u._id,
         name: u.name,
@@ -32,7 +32,7 @@ exports = module.exports = app => {
       });
   }
 
-  let eventsRouter = require('express').Router();
+  const eventsRouter = require('express').Router();
 
   eventsRouter.route('/all')
     .get((req, resp) => {
@@ -41,16 +41,19 @@ exports = module.exports = app => {
         .then((items) => {
           let eventPopUsers = [];
           items.forEach(ev => {
-            let users = attachUsers(ev);
+            let usersOfEv = attachUsers(ev);
             eventPopUsers.push({
               _id: ev._id,
               name: ev.name,
               startTime: ev.startTime,
               endTime: ev.endTime,
-              users: users
+              users: usersOfEv
             });
           });
-          resp.status(200).json(eventPopUsers);
+          resp.status(200).json({
+            operationStatus: 'Found',
+            data: eventPopUsers
+          });
         })
         .catch((err) => {
           return resp.status(404).json({
@@ -61,6 +64,13 @@ exports = module.exports = app => {
     });
 
   eventsRouter.route('/')
+    .all((req, resp, next) => {
+      if (!req.xhr) return next();
+    })
+
+    .get((req, resp) => {
+      resp.status(301).redirect('/events/all');
+    })
     .post((req, resp) => {
       let postedUsers = req.body.users.trim().split(',');
       let newEvent = new Events({
@@ -81,14 +91,10 @@ exports = module.exports = app => {
           updateUsers(postUId, ev, resp);
         });
         resp.status(201).json({
-          operationStatus: 'Saved',
-          itemId: ev['_id']
+          operationStatus: `Saved event id ${ev['_id']}`,
+          data: ev
         });
       });
-    })
-
-    .get((req, resp) => {
-      resp.status(301).redirect('/events/all');
     });
 
   eventsRouter.param('id', (req, resp, next, id) => {
@@ -96,7 +102,7 @@ exports = module.exports = app => {
       .populate('users')
       .then((ev) => {
         if (!ev) throw new Error(`No Event with id: ${id}`);
-        
+
         resp.locals.event = ev;
         next();
       })
@@ -109,9 +115,12 @@ exports = module.exports = app => {
   })
 
     .route('/:id')
+    .all((req, resp, next) => {
+      if (!req.xhr) return next();
+    })
     .get((req, resp) => {
       let item = resp.locals.event;
-      let eventPopUsers = {
+      let event = {
         _id: item._id,
         name: item.name,
         startTime: item.startTime,
@@ -120,10 +129,10 @@ exports = module.exports = app => {
       }
       resp.status(200).json({
         operationStatus: 'Found',
-        event: eventPopUsers
+        data: event
       });
     })
-
+    // .use( passport.authenticate('jwtAuth
     .put((req, resp) => {
       let ev = resp.locals.event;
       let postedUsers = req.body.users.trim().split(',');
@@ -145,8 +154,8 @@ exports = module.exports = app => {
         });
 
         resp.status(201).json({
-          operationStatus: 'Created',
-          itemID: ev['_id']
+          operationStatus: `Created event id ${ev['_id']}`,
+          data: ev
         });
       });
     })
@@ -160,7 +169,7 @@ exports = module.exports = app => {
           });
 
         resp.status(200).json({
-          operationStatus: `Event ${resp.locals.event['_id']} removed`
+          operationStatus: `Removed event id ${resp.locals.event['_id']}`
         });
       });
     })
@@ -191,8 +200,8 @@ exports = module.exports = app => {
         });
 
         resp.status(201).json({
-          operationStatus: 'Item pathed',
-          itemID: item['_id']
+          operationStatus: `Patched event id ${item['_id']}`,
+          data: item 
         });
       });
     });

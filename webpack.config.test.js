@@ -1,30 +1,46 @@
 'use strict';
 const webpack = require('webpack'),
-  htmlWebpackPlugin = require('html-webpack-plugin'),
-  scriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+  path = require('path'),
+  htmlWebpackPlugin = require('html-webpack-plugin');
+  //,scriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 
 module.exports = {
   entry: './client/main.ts',
 
   output: {
     filename: '[name].bundle.js',
-    path: './dist',
+    //path: './dist',
     //publicPath: './dist',
     sourceMapFilename: '[name].bundle.map'
   },
-  devtool: '#sourcemap',
+  devtool: 'cheap-module-source-map',
   module: {
     loaders: [{
       test: /\.component\.ts$/,
-      loader: 'ts!angular2-template'
+      loader: 'ts!angular2-template',
+      include: [
+        path.resolve(__dirname, 'client', 'app')
+      ]
     },
     {
       test: /\.ts$/,
       loader: 'ts',
-      exclude: /\.component\.ts/
+      exclude: /\.component\.ts/,
+      include: [
+        path.resolve(__dirname, 'client'),
+        path.resolve(__dirname, 'node_modules')
+      ],
     },
     {
-      test: /\.(html|css)$/,
+      test: /\.css$/,
+      loader: 'null'
+    },
+    {
+      test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
+      loader: 'null'
+    },
+    {
+      test: /\.html$/,
       loader: 'raw-loader'
     }]
   },
@@ -38,9 +54,6 @@ module.exports = {
       favicon: './client/favicon.ico',
       xhtml: true,
       template: './client/index.html'
-    }),
-    new scriptExtHtmlWebpackPlugin({
-      defaultAttribute: 'async'
     })
   ]
 };

@@ -15,7 +15,7 @@ module.exports = app => {
     });
   }
 
-  let usersRouter = require('express').Router();
+  const usersRouter = require('express').Router();
 
   usersRouter.route('/all')
     .get((req, resp) => {

@@ -1,5 +1,5 @@
 
-let path = require('path'),
+const path = require('path'),
   expect = require('chai').expect,
   root = process.cwd(),
   app = require(path.resolve(root, 'server', 'app.js')),
@@ -13,10 +13,10 @@ let path = require('path'),
 
 describe('Events route', () => {
 
-  var testEventId = null;
+  let testEventId = null;
 
   beforeEach(done => {
-    let events = [{
+    const events = [{
       name: 'Event 1',
       startTime: Date.now(),
       endTime: Date.now(),
@@ -41,6 +41,7 @@ describe('Events route', () => {
 
   it('should get all events', cb => {
     request.get('/events/all')
+      .set('Accept', 'application/json')
       .expect(200)
       .end((err, results) => {
         if (err) throw `Error supertest.request: ${err}`;
@@ -52,6 +53,8 @@ describe('Events route', () => {
 
   it('should return single Event with provided id: GET /events/:id', cb => {
     request.get(`/events/${testEventId}`)
+      .set('Accept', 'application/json')
+      //.set('X-Requested-With', 'XMLHttpRequest')
       .expect(200)
       .end((err, results) => {
         if (err) throw `Error supertest.request: ${err}`;
@@ -66,6 +69,7 @@ describe('Events route', () => {
 
   it('should delete Event from db with quety : DELETE /events/:id', cb => {
     request.delete(`/events/${testEventId}`)
+      .set('Accept', 'application/json')
       .expect(200)
       .end((err, results) => {
         if (err) throw `Error supertest.request: ${err}`;

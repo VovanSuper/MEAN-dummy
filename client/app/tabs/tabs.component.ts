@@ -16,7 +16,7 @@ export class TabularComponent implements AfterContentInit, OnInit {
   }
   ngOnInit() {
     this.api.getEvents().then(resp => {
-      const events = resp;
+      const events = resp['events'];
       events.forEach(ev => {
         this.tabs.push({
           id: ev['_id'],
@@ -24,9 +24,6 @@ export class TabularComponent implements AfterContentInit, OnInit {
           active: false
         });
       });
-    }).catch(err => {
-      console.log('ERROR WHILE CALLING API /EVENTS/ALL');
-      console.log(JSON.stringify(err));
     });
   }
 }

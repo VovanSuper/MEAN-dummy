@@ -38,7 +38,7 @@ module.exports = () => {
       })
       .on('end', callback)
       .on('exit', () => {
-        log(chalk.bgYellow.black.italic('Exiting nodemon'));
+        log('Exiting nodemon');
       });
 
     return stream;

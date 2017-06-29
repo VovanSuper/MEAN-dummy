@@ -12,7 +12,7 @@ paths:
     - './models/**/*.js'
   clientDist: '/client'
   appDist: 'server'
-  testsSrc: 'tests/**/*.spec.js'
+  testsSrc: 'tests/specs/**/*.spec.js'
   webpackFile: 'webpack.config.test.js'
   indexPath: 'client/index.html'
 

@@ -6,7 +6,7 @@ const $ = require('gulp-load-plugins')({
   pattern: ['gulp-*', 'vinyl-named', 'webpack-stream', 'stream-combiner2']
 });
 
-let isProd = process.env.NODE_ENV == 'production';
+let isProd = process.env.NODE_ENV === 'production';
 
 module.exports = (params) => {
   return (callback) => {
@@ -15,26 +15,27 @@ module.exports = (params) => {
     return $.streamCombiner2.obj(
       params.gulp.src([
         path.join(params.paths.clientSrc, 'polyfills.ts'),
+        path.join(params.paths.clientSrc, 'vendor.ts'),
         path.join(params.paths.clientSrc, 'main.ts')
-      ], { since: $.memoryCache.lastMtime('client') })
+      ], { since: isProd ? params.gulp.lastRun('bindleClient') : $.memoryCache.lastMtime('bindleClient') })
       , $.vinylNamed()
-      , $.if( !isProd, $.memoryCache('client'))
+      , $.if(!isProd, $.memoryCache('bindleClient'))
       , $.webpackStream(require(params.paths.webpackfile), require('webpack'), wpReporter)
       , params.gulp.dest(params.paths.clientDist)
         .on('data', () => {
           setTimeout(() => {   //TODO: improve!! now is quite a durty hack to continue gulp.series pipeline ex
             callback();
-          }, 1500);
+          }, 2500);
         })
     )
       .on('error', () => {
-        if(!isProd) $.memoryCache.flush('client');
+        if (!isProd) $.memoryCache.flush('bindleClient');
         $.notify.onError(err => ({
           MainTitle: 'Error during CLIENT BUNDLING pipeline',
           ErrorMsg: err.message,
           FullError: JSON.stringify(err)
         }))
       })
-      .on('change', () => { if (!isProd) $.memoryCache.update('client') });
+      .on('change', () => { if (!isProd) $.memoryCache.update('bindleClient') });
   }
 }
