@@ -46,7 +46,7 @@ describe('Events route', () => {
       .end((err, results) => {
         if (err) throw `Error supertest.request: ${err}`;
         expect(results.body).to.exist.and.to.contain('data');
-        expect(results.body).to.be.greaterThan(0);
+        expect(results.body.data).to.be.greaterThan(0);
         cb();
       });
   });
@@ -74,7 +74,7 @@ describe('Events route', () => {
       .end((err, results) => {
         if (err) throw `Error supertest.request: ${err}`;
         expect(results.body).to.exist;
-        expect(results.body.operationStatus).to.exist.and.to.contain(`Removed event ${testEventId}`);
+        expect(results.body.operationStatus).to.exist.and.to.contain(`Removed event id ${testEventId}`);
         cb();
       });
   });
