@@ -23,8 +23,7 @@ module.exports = {
         test: /\.ts$/,
         loader: 'awesome-typescript',
         include: [
-          path.resolve(__dirname, 'client'),
-          path.resolve(__dirname, 'node_modules')
+          path.resolve(__dirname, 'client')
         ],
         exclude: /\.component\.ts$/
       }, {
@@ -33,7 +32,7 @@ module.exports = {
       }]
   },
   resolve: {
-    extensions: ['', '.js', '.ts', '.html', '.css']
+    extensions: [ '', '.js', '.ts', '.html', '.css' ]
   },
   devtool: 'inline-source-map',
   plugins: [
@@ -73,7 +72,7 @@ module.exports = {
       },
       mangle: {
         screw_ie8: true,
-        except: ['$', 'webpackJsonp'],
+        except: [ '$', 'webpackJsonp' ],
         keep_fnames: true
       }
     }),
@@ -99,7 +98,9 @@ module.exports = {
       }
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['polyfills', 'vendor', 'main'],
+      // names: [ 'polyfills', 'vendor', 'main' ],
+      children: true,
+      async: true,
       minChunks: 2,
       minSize: 256
     }),
@@ -108,8 +109,15 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       app: {
-        environment: JSON.stringify('production')
+        environment: JSON.stringify('production'),
+        host: JSON.stringify(`http://localhost:${process.env.PORT || 80}`)
       }
+    }),
+    new webpack.ProvidePlugin({
+      "$": "jQuery",
+      "jQuery": "JQuery",
+      "jquery": "JQuery",
+      "toastr": "toastr"
     })
   ]
 };

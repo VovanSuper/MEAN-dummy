@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IEvent } from '../shared';
+import { IEvent } from '../shared/';
 
 @Component({
   templateUrl: './events.component.html',

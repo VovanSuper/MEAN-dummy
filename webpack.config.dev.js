@@ -1,4 +1,3 @@
-'use strict';
 const webpack = require('webpack'),
   htmlWebpackPlugin = require('html-webpack-plugin'),
   scriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin'),
@@ -91,7 +90,8 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       app: {
-        environment: JSON.stringify('development')
+        environment: JSON.stringify('development'),
+         host: JSON.stringify(`http://localhost:${process.env.PORT || 8080}`)
       }
     }),
     new webpack.ProvidePlugin({

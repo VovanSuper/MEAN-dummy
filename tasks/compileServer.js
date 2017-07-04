@@ -7,8 +7,7 @@ let isEntry = (file) => {
 }
 
 module.exports = (params) => {
-  
-  return () => {
+  return (callback) => {
     return obj(
       params.gulp.src(params.paths.appFilesPaths)
         .on('data', (file) => { file.cwd = './server' })
@@ -19,6 +18,7 @@ module.exports = (params) => {
         return (path.relative(file.dirname, file.cwd) == '') ?
           params.paths.appDist : path.resolve(params.paths.appDist, path.relative(file.cwd, file.base))
       })
+        .on('end', callback)
     )
       .on('error', () => {
         $.notify.onError(err => ({

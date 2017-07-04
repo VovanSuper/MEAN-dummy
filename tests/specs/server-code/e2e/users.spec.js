@@ -13,10 +13,10 @@ let path = require('path'),
 
 describe('Users route', () => {
 
-  var testUserId = null;
+  let testUserId = null;
 
   beforeEach(done => {
-    let users = [{
+    const users = [{
         name: 'Vladimir Ovsyukov',
         username: 'Vovan_Super',
         email: 'vovansuper@mail.ru',
@@ -35,9 +35,9 @@ describe('Users route', () => {
     Users.remove({}, (err) => {
       if (err) throw `Error after hook: ${err}`;
 
-      Users.collection.insert(users, (err, newUsr) => {
+      Users.collection.insert(users, (err, newUsrs) => {
         if (err) return console.dir(err);
-        testUserId = newUsr['ops'][0]._id;
+        testUserId = newUsrs['ops'][0]._id;
         done();
     });
   });
@@ -50,7 +50,7 @@ describe('Users route', () => {
       .end((err, results) => {
         if (err) throw `Error supertest.request: ${err}`;
         expect(results.body).to.exist.and.to.haveOwnProperty('data');
-        expect(results.body).to.exist.and.to.haveOwnProperty('operationStatus');
+        expect(results.body).to.haveOwnProperty('operationStatus');
         expect(JSON.stringify(results.body)).to.contain(testUserId.toString());
         cb();
       });
@@ -67,7 +67,6 @@ describe('Users route', () => {
         expect(results.body.operationStatus).to.contain('Found');
         expect(results.body.data).to.include.keys(['name', 'email']);        
         expect(results.body.data).to.haveOwnProperty('username');
-        
         cb();
       });
   });
