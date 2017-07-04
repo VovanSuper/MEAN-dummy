@@ -33,7 +33,8 @@
     "forever:stop": "forever stopall",
     "forever:start": "cross-env PORT=80 forever start ./wwwroot --color | bunyan --color",
     "test": "cross-env NODE_ENV=test gulp tests --color",
-    "test:watch": "gulp tests:watch"
+    "test:watch": "gulp tests:watch",
+    "prune": "npm prune"
   },
   "dependencies": {
     "@angular/common": "^2.2.4",
