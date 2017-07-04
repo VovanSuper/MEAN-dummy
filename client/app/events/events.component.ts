@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ApiService, IEvent, ErrorService } from '../shared';
+import { IEvent } from '../shared';
 
 @Component({
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.css']
 })
 export class EventsComponent implements OnInit {
-  selected: number;
+  
   events: IEvent[];
-  constructor(private actRoute: ActivatedRoute, private errorService: ErrorService) { }
+
+  constructor(private actRoute: ActivatedRoute) { }
 
   ngOnInit() {
     //this.api.getEvents().then(resp => {

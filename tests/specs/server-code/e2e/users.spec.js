@@ -49,8 +49,9 @@ describe('Users route', () => {
       .expect(200)
       .end((err, results) => {
         if (err) throw `Error supertest.request: ${err}`;
-        expect(results.body).to.exist.and.to.haveOwnProperty('users');
+        expect(results.body).to.exist.and.to.haveOwnProperty('data');
         expect(results.body).to.exist.and.to.haveOwnProperty('operationStatus');
+        expect(JSON.stringify(results.body)).to.contain(testUserId.toString());
         cb();
       });
   });
@@ -62,10 +63,10 @@ describe('Users route', () => {
       .end((err, results) => {
         if (err) throw `Error supertest.request: ${err}`;
         expect(results.type).to.exist.and.to.be.an('string');
-        expect(results.body).to.exist.and.to.haveOwnProperty('users');
+        expect(results.body).to.exist.and.to.haveOwnProperty('data');
         expect(results.body.operationStatus).to.contain('Found');
-        expect(results.body.users).to.include.keys(['name', 'email']);        
-        expect(results.body.users).to.haveOwnProperty('username');
+        expect(results.body.data).to.include.keys(['name', 'email']);        
+        expect(results.body.data).to.haveOwnProperty('username');
         
         cb();
       });

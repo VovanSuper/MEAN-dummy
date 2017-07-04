@@ -42,11 +42,17 @@ module.exports = {
       test: /\.ts$/,
       loader: 'awesome-typescript',
       include: [
-        path.resolve(__dirname, 'client'),
-        path.resolve(__dirname, 'node_modules')
+        path.resolve(__dirname, 'client')
       ],
       exclude: /\.component\.ts$/
     },
+    // {
+    //   test: /\routes\.ts/,
+    //   loader: 'awesome-typescript!angular2-router',
+    //   include: [
+    //     path.resolve(__dirname, 'client', 'app')
+    //   ]
+    // },
     {
       test: /\.(html|css)$/,
       loader: 'raw',
@@ -71,13 +77,13 @@ module.exports = {
       minSize: 256
     }),
     new htmlWebpackPlugin({
-      cache: true,
-      hash: false,
-      inject: 'body',
+      cache:    true,
+      hash:     false,
+      inject:   'body',
       template: './client/index.html',
-      favicon: './client/favicon.ico',
-      xhtml: true,
-      minify: false
+      favicon:  './client/favicon.ico',
+      xhtml:    true,
+      minify:   false
     }),
     new InlineChunkManifestHtmlWebpackPlugin(),
     new scriptExtHtmlWebpackPlugin({
@@ -89,7 +95,7 @@ module.exports = {
       }
     }),
     new webpack.ProvidePlugin({
-      "$": "jQuery",
+      "$"     : "jQuery",
       "jQuery": "JQuery",
       "jquery": "JQuery",
       "toastr": "toastr"

@@ -2,8 +2,8 @@ import path                from 'path';
 import chalk               from 'chalk';
 import { log, wpReporter } from './helpers/functions';
 
-const $ = require('gulp-load-plugins')({
-  pattern: ['gulp-*', 'vinyl-named', 'webpack-stream', 'stream-combiner2']
+const $                    = require('gulp-load-plugins')({
+  pattern: [ 'gulp-*', 'vinyl-named', 'webpack-stream', 'stream-combiner2' ]
 });
 
 let isProd = process.env.NODE_ENV === 'production';
@@ -25,7 +25,7 @@ module.exports = (params) => {
         .on('data', () => {
           setTimeout(() => {   //TODO: improve!! now is quite a durty hack to continue gulp.series pipeline ex
             callback();
-          }, 2500);
+          }, 1500);
         })
     )
       .on('error', () => {

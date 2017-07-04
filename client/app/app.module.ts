@@ -5,46 +5,34 @@ import { HttpModule } from '@angular/http';
 import { MomentModule } from 'angular2-moment';
 //import { TabsModule } from 'ng2-bootstrap';
 
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './header';
-
-import { EventsComponent, EventComponent, EventDetailsComponent } from './events';
-import { NotfoundComponent } from './notfound';
-import { AppRoutingModule } from './';
-import { ApiService,
-  RouteValidService,
-  ErrorService,
-  ToastrService,
-  toastrToken,
-  canDeactivate,
-  EventsResolverService } from './shared';
+import {
+  AppComponent,
+  AppRoutingModule
+} from './';
+import { HeaderComponent } from "./header/";
+import { NotfoundComponent } from "./notfound/";
+import { EventsModule } from "./events/";
+import { toastrToken, ToastrService, ErrorService } from "./shared/";
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-
-    EventsComponent,
-    EventComponent,
-    EventDetailsComponent,
-    NotfoundComponent,
+    NotfoundComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     MomentModule,
+    EventsModule,
     AppRoutingModule
   ],
   providers: [
-    ApiService,
-    RouteValidService,
-    EventsResolverService,
     { provide: toastrToken, useValue: toastrToken },
-    { provide: 'canLeave', useValue: canDeactivate },
     ToastrService,
     ErrorService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

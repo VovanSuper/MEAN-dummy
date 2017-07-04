@@ -24,6 +24,7 @@ module.exports = app => {
         .then(items => {
           if (!items) throw 'No users found'
           let users = items.map(user => Object.assign({}, {
+            _id: user._id,
             name: user.name,
             username: user.username,
             email: user.email,
@@ -32,8 +33,8 @@ module.exports = app => {
           }, { events: attachEvents(user) }));
 
           return resp.status(200).json({
-            operationStatus: 'Ok',
-            users: users
+            operationStatus: 'Found',
+            data: users
           });
         })
         .catch(err => {
@@ -63,7 +64,7 @@ module.exports = app => {
         .then((item) => {
           resp.status(201).json({
             operationStatus: 'Saved',
-            item: item
+            data: item
           });
         })
         .catch((err) => {
@@ -103,7 +104,7 @@ module.exports = app => {
       }
       resp.status(200).json({
         operationStatus: 'Found',
-        users: usersPopEvents
+        data: usersPopEvents
       });
     })
     .put((req, resp) => {
@@ -144,7 +145,7 @@ module.exports = app => {
         .then((item) => {
           resp.status(201).json({
             operationStatus: 'Patched successfully',
-            item: item
+            data: item
           });
         })
         .catch((err) => {

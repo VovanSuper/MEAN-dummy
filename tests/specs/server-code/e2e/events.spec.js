@@ -25,7 +25,7 @@ describe('Events route', () => {
       name: 'Event 2 ',
       startTime: Date.now(),
       endTime: Date.now(),
-      users: ['58fa534e41973a0cf40711a3']
+      users: []
     }];
 
     Events.remove({}, (err) => {
@@ -45,8 +45,9 @@ describe('Events route', () => {
       .expect(200)
       .end((err, results) => {
         if (err) throw `Error supertest.request: ${err}`;
-        expect(results.body).to.exist.and.to.contain('data');
-        expect(results.body.data).to.be.greaterThan(0);
+        expect(results.body.operationStatus).to.exist.and.to.contain('Found');
+        expect(results.body.data).to.be.lengthOf(2);
+        expect(JSON.stringify(results.body)).to.contain(testEventId.toString());
         cb();
       });
   });
@@ -54,7 +55,7 @@ describe('Events route', () => {
   it('should return single Event with provided id: GET /events/:id', cb => {
     request.get(`/events/${testEventId}`)
       .set('Accept', 'application/json')
-      //.set('X-Requested-With', 'XMLHttpRequest')
+      // .set('X-Requested-With', 'XMLHttpRequest')
       .expect(200)
       .end((err, results) => {
         if (err) throw `Error supertest.request: ${err}`;
