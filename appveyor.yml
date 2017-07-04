@@ -12,8 +12,8 @@ init:
 
 environment:
   matrix:
+    - nodejs_version: "8"
     - nodejs_version: "4"
-    - nodejs_version: "0.12"
 
 platform:
   - x86
@@ -29,7 +29,7 @@ services:
 test_script:
   - node --version
   - npm --version
-  - cmd: npm test
+  - cmd: npm start && npm forever:stop
 
 # artifacts:
 #   - path: wwwroot
