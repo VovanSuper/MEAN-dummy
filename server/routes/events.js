@@ -5,14 +5,14 @@ module.exports = app => {
   let attachUsers = (event) => {
     if (!event) throw Error('Event object is not provided!!!');
     if ((event['users']).length === 0) return [];
-    return event['users'].map(u => {       // TODO: use virtual here ?
-      return {
-        _id: u._id,
-        name: u.name,
-        email: u.email,
-        registered: u.registered
-      }
-    });
+    return event['users'].map(u => {
+        return {
+          _id: u._id,
+          name: u.name,
+          email: u.email,
+          registered: u.registered
+        }
+      });
   }
 
   let updateUsers = (postUId, event, resp) => {
@@ -201,7 +201,7 @@ module.exports = app => {
 
         resp.status(201).json({
           operationStatus: `Patched event id ${item['_id']}`,
-          data: item 
+          data: item
         });
       });
     });
