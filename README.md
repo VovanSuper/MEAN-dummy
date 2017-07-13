@@ -9,7 +9,6 @@
 
 ### A dummy (a very basic) MEAN (MongoDB, Express4, @Angular(2), Node.js) project 
 
-by Vladimir Ovsyukov <<ovsyukov@yandex.com>>
 
 Software Stack used: 
 

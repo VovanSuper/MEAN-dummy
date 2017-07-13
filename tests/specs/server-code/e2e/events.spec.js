@@ -62,8 +62,8 @@ describe('Events route', () => {
         expect(results.type).to.be.an('string');
         expect(results.body.operationStatus).to.exist.and.to.contain('Found');
         expect(results.body.data).to.exist.and.to.haveOwnProperty('users');
-        expect(results.body.data).to.haveOwnProperty('_id', `${testEventId}`);
-        expect(results.body.data['_id']).equals(`${testEventId}`);
+        expect(results.body.data).to.haveOwnProperty('id', `${testEventId}`);
+        expect(results.body.data['id']).equals(`${testEventId}`);
         cb();
       });
   });

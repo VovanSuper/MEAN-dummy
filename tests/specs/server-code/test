@@ -1,0 +1,103 @@
+#!/usr/bin/env node
+require('babel-register')({ presets: ['es2015'] });
+
+var path = require('path'),
+  mongoId = require('mongoose').SchemaTypes.ObjectId,
+  dbjs = require(path.resolve(__dirname, '../../..', 'server', 'db.js')),
+  log = console.log;
+
+var app = {
+  basePath: path.resolve(__dirname, '../../..', 'server')
+};
+
+var db = dbjs(app);
+var EventsModel = db.models['Events'];
+var UsersModel = db.models['Users'];
+
+function clean() {
+  EventsModel.remove({}).exec();
+  UsersModel.remove({}).exec();
+}
+function seed(cb) {
+
+  var users = [{
+    name: 'Vladimir A. Ovsyukov',
+    username: 'suppa_man',
+    email: 'ovysukov@yandex.com',
+    password: 'Triton11111',
+    work_place: 'HomeApp  '
+  },
+  {
+    name: 'Aleksandr Ovsyukov',
+    username: 'AleXo',
+    email: 'alex.ovsyukov@gmail.com',
+    password: 'Alexo77798988',
+    work_place: 'Retired'
+  }];
+
+  var events = [{
+    name: 'Test Event 1',
+    startTime: Date.now(),
+    endTime: Date.now()
+  }, {
+    name: 'Test Event 2 ',
+    startTime: Date.now(),
+    endTime: Date.now()
+  }];
+
+  UsersModel.collection.insert(users, function (err, newUsrs) {
+    if (err) return log(err.toString());
+    var uId1 = newUsrs['ops'][0]['_id'];
+    var uId2 = newUsrs['ops'][1]['_id'];
+    var id1 = new mongoId(uId1, {});
+    var id2 = new mongoId(uId2, {});
+
+    var eventToIns1 = Object.assign({}, events[0], { users: [uId1, uId2] });
+    var eventToIns2 = Object.assign({}, events[1], { users: [uId1] });
+    // console.dir(eventToIns1);
+    // console.dir(eventToIns2);
+
+    EventsModel.collection.insert([eventToIns1, eventToIns2], function (err, newEvs) {
+      if (err) return log(err.toString());
+      log(`Events are created : ${newEvs['ops'][0]['_id']}, ${newEvs['ops'][1]['_id']}`);
+      cb();
+    });
+  });
+}
+
+var conn = db.connection
+  .on('error', function (err) {
+    return log(err.toString())
+  })
+  .on('disconnecting', function () {
+    log('Cleaning the db...');
+    clean();
+  })
+  .on('open', function () {
+    log('Connected to mlab...'); clean();
+    log('Trying to seed the db..');
+
+    seed(function AfterSeed() {
+      for (var m in db.models) {
+        log('>>  MODEL : ' + m);
+        log(' model name : ' + db.models[m].modelName);
+        log('----------------------------------------------------');
+        Object.getOwnPropertyNames(db.models[m]).forEach(prop => { log('\t prop : ' + prop); });
+      };
+
+      process.nextTick(function () {
+        EventsModel.findOne({
+          name: 'Test Event 1'
+        })
+          .populate('users')
+          .exec((err, ev) => {
+            if (err) return log(err.toString());
+            log(`Event with name 'Test Event1' : ${ev || 'not found'}`);
+
+
+            conn.close();  // to emit `disconnecting` event
+          });
+      });
+    });
+  });
+
