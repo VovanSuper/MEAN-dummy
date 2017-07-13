@@ -8,15 +8,15 @@ let db = null;
 module.exports = app => {
   if (!db) {
     const conf = {
-      host:  config.get('database.host'),        
+      host : config.get('database.host'),        
       creds: config.get('database.creds')
     };
     mongoose.Promise = require('bluebird');
     mongoose.connect(conf.host);
     db = {
-      mongoose: mongoose,
+      mongoose  : mongoose,
       connection: mongoose.connection,
-      models: {}
+      models    : {}
     };
 
     let modelsDir = path.join(app.basePath, './models');

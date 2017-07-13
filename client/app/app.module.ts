@@ -5,11 +5,12 @@ import { HttpModule } from '@angular/http';
 import { MomentModule } from 'angular2-moment';
 //import { TabsModule } from 'ng2-bootstrap';
 
-import { AppComponent, AppRoutingModule } from './';
-import { HeaderComponent } from "./header/";
-import { NotfoundComponent } from "./notfound/";
-import { EventsModule } from "./events/";
-import { SharedServicesModule } from "./shared/module";
+import { AppRoutingModule } from './app.routes';
+import { SharedServicesModule } from './shared/module/';
+import { AppComponent } from './app/app.component';
+import { HeaderComponent } from './header/';
+import { NotfoundComponent } from './notfound/';
+import { EventsModule } from './events/';
 
 @NgModule({
   declarations: [

@@ -1,16 +1,15 @@
-//import bcrypt from 'bcrypt';
+// import bcrypt from 'bcrypt';
 import bcrypt from 'bcryptjs';
 
+let nonEmpty = (name) => {
+  return name.trim().length > 0;
+};
+let emailValid = (email) => {
+  let pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$/;
+  return pattern.test(email);
+};
+
 module.exports = (mongoose) => {
-
-  let nonEmpty = (name) => {
-    return name.trim().length > 0;
-  };
-  let emailValid = (email) => {
-    let pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$/;
-    return pattern.test(email);
-  };
-
   let userSchema = new mongoose.Schema({
     name: { type: String, required: true, validate: nonEmpty },
     username: { type: String, index: { unique: true }, validate: { validator: nonEmpty } },
@@ -30,7 +29,7 @@ module.exports = (mongoose) => {
 
   userSchema.virtual('userInfo').get(() => {
     return {
-      _id: this._id,
+      id: this._id,
       name: this.name,
       username: this.username,
       email: this.email,

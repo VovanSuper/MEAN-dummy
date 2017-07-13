@@ -17,7 +17,7 @@
     left: 0px;
     top: 0px;
     z-index: 999;*/
-    background: #ffffff;
+    background-color: #aaa;
     transition: all 300ms ease;
     -moz-transition: all 300ms ease;
     -webkit-transition: all 300ms ease;
@@ -33,10 +33,9 @@
     position: relative;
     float: right;
     display: block;*/
-}
+
 .main-menu .navbar-collapse > ul > li.current-menu-parent > a {
-    background: #fc5a1b none repeat scroll 0 0;
-    color: #ffffff;
+    background-color: #aaa
 }
 
 /*@media (min-width: 768px) {
@@ -82,7 +81,7 @@
     -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.1);
     box-shadow: inset 0 1px 0 rgba(255,255,255,.1);
 }*/
-}
+
 /*.collapse {
     display: none;
 }*/

@@ -33,7 +33,7 @@ module.exports = app => {
   }
 
   const eventsRouter = require('express').Router();
-
+  
   eventsRouter.route('/all')
     .get((req, resp) => {
       Events.find({}, '-__v')
@@ -43,7 +43,7 @@ module.exports = app => {
           items.forEach(ev => {
             let usersOfEv = attachUsers(ev);
             eventPopUsers.push({
-              _id: ev._id,
+              id: ev._id,
               name: ev.name,
               startTime: ev.startTime,
               endTime: ev.endTime,
@@ -91,7 +91,7 @@ module.exports = app => {
           updateUsers(postUId, ev, resp);
         });
         resp.status(201).json({
-          operationStatus: `Saved event id ${ev['_id']}`,
+          operationStatus: `Created event id ${ev['_id']}`,
           data: ev
         });
       });
@@ -121,7 +121,7 @@ module.exports = app => {
     .get((req, resp) => {
       let item = resp.locals.event;
       let event = {
-        _id: item._id,
+        id: item._id,
         name: item.name,
         startTime: item.startTime,
         endTime: item.endTime,
@@ -177,8 +177,8 @@ module.exports = app => {
     .patch((req, resp) => {
       let ev = resp.locals.event;
       let postedUsers = req.body.users.trim().split(',');
-      if (req.body._id)
-        delete req.body._id;
+      if (req.body.id)
+        delete req.body.id;
       if (req.body.startTime)
         req.body.startTime = Date.parse(req.body.startTime);
       if (req.body.endTime)
