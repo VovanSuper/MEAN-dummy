@@ -1,209 +1,106 @@
 module.exports = app => {
-  const Events = app.db.models.Events;
-  const Users = app.db.models.Users;
-
-  let attachUsers = (event) => {
-    if (!event) throw Error('Event object is not provided!!!');
-    if ((event['users']).length === 0) return [];
-    return event['users'].map(u => {
-        return {
-          _id: u._id,
-          name: u.name,
-          email: u.email,
-          registered: u.registered
-        }
-      });
-  }
-
-  let updateUsers = (postUId, event, resp) => {
-    Users.findByIdAndUpdate(postUId, {
-      $addToSet: {
-        events: event['_id']
-      }
-    }, {
-        new: true
-      },
-      (err, user) => {
-        if (err)
-          return resp.status(500).json({
-            operationStatus: `Error trying to update User ${postUId} for event field of ${event}`,
-            err: err
-          });
-      });
-  }
+  let Events = app.db.models.Events;
+  let retEvent = app.utils.Helpers.retEventJson;
+  let splitSubParams = app.utils.Helpers.splitSubParams;
+  let Handler = app.utils.Handlers;
+  let idParamHandler = app.middlewares.idParamHandler;
 
   const eventsRouter = require('express').Router();
-  
+
   eventsRouter.route('/all')
     .get((req, resp) => {
       Events.find({}, '-__v')
         .populate('users')
-        .then((items) => {
-          let eventPopUsers = [];
-          items.forEach(ev => {
-            let usersOfEv = attachUsers(ev);
-            eventPopUsers.push({
-              id: ev._id,
-              name: ev.name,
-              startTime: ev.startTime,
-              endTime: ev.endTime,
-              users: usersOfEv
-            });
-          });
-          resp.status(200).json({
-            operationStatus: 'Found',
-            data: eventPopUsers
-          });
+        .then((events) => {
+          return Handler.Ok(resp, 200, events.map(retEvent), 'Found');
         })
         .catch((err) => {
-          return resp.status(404).json({
-            operationStatus: 'Server Error',
-            err: err
-          });
+          return Handler.Error(resp, 404, err, 'Not found');
         });
     });
 
   eventsRouter.route('/')
-    .all((req, resp, next) => {
-      if (!req.xhr) return next();
-    })
-
     .get((req, resp) => {
       resp.status(301).redirect('/events/all');
     })
+
     .post((req, resp) => {
-      let postedUsers = req.body.users.trim().split(',');
+      console.log(`\nPOST DONE ${req.body} type is: ${typeof req.body} `)
+      
+      let postedUsers = splitSubParams(req.body.participants);
+      console.log(`\nPOST DONE users : ${postedUsers} type is: ${typeof postedUsers} `)
       let newEvent = new Events({
         name: req.body.name,
         startTime: req.body.startTime,
         endTime: req.body.endTime,
-        users: (postedUsers && postedUsers.length > 0) ? postedUsers : []
+        createdAt: req.body.createdAt,
+        createdBy: req.body.createdBy,
+        participants: postedUsers
       });
+      console.log(`\nPOST DONE newEvent : ${newEvent} type is: ${typeof newEvent} `)
 
-      newEvent.save((err, ev) => {
-        if (err)
-          return resp.status(412).json({
-            operationStatus: `Error trying to save event ${ev}`,
-            err: err
-          });
-
-        postedUsers.forEach(postUId => {
-          updateUsers(postUId, ev, resp);
+      newEvent.save().then((evnt) => {
+        if (!evnt) throw 'Error while saving event';
+        return Handler.Ok(resp, 201, retEvent(evnt), `Created event id ${evnt['_id']}`);
+      })
+        .catch((err) => {
+          return Handler.Error(resp, 412, err, `Error trying to save event: ${err.toString()}`);
         });
-        resp.status(201).json({
-          operationStatus: `Created event id ${ev['_id']}`,
-          data: ev
-        });
-      });
     });
 
-  eventsRouter.param('id', (req, resp, next, id) => {
-    Events.findById(id, '-__v')
-      .populate('users')
-      .then((ev) => {
-        if (!ev) throw new Error(`No Event with id: ${id}`);
-
-        resp.locals.event = ev;
-        next();
-      })
-      .catch((err) => {
-        return resp.status(412).json({
-          operationStatus: `No event with id: ${id}`,
-          err: err
-        });
-      });
-  })
-
+  eventsRouter
+    .param('id', idParamHandler(Events, 'users'))
     .route('/:id')
-    .all((req, resp, next) => {
-      if (!req.xhr) return next();
-    })
     .get((req, resp) => {
-      let item = resp.locals.event;
-      let event = {
-        id: item._id,
-        name: item.name,
-        startTime: item.startTime,
-        endTime: item.endTime,
-        users: attachUsers(item)
-      }
-      resp.status(200).json({
-        operationStatus: 'Found',
-        data: event
-      });
+      return Handler.Ok(resp, 200, retEvent(resp.locals.event), 'Found');
     })
+
     // .use( passport.authenticate('jwtAuth
     .put((req, resp) => {
-      let ev = resp.locals.event;
-      let postedUsers = req.body.users.trim().split(',');
-      ev.name = req.body.name;
-      ev.startTime = Date.parse(req.body.startTime);
-      ev.endTime = Date.parse(req.body.endTime);
-      ev.users = (postedUsers && postedUsers.length > 0) ? postedUsers : [];
-      ev.markModified('users');
-      ev.markModified('startTime');
-      ev.markModified('endTime');
-      ev.save((err, ev) => {
-        if (err)
-          return resp.status(404).json({
-            operationStatus: 'Error updating Event',
-            err: err
-          });
-        postedUsers.forEach(postUId => { //TODO: extract a pluging for that -> aka trigger/stored_proc
-          updateUsers(postUId, ev, resp);
-        });
+      let event = resp.locals.event;
+      let postedUsers = splitSubParams(req.body.participants);
+      event.name = req.body.name || '';
+      event.startTime = req.body.startTime || resp.locals.event.startTime;
+      event.endTime = req.body.endTime || resp.locals.event.endTime;
+      event.createdAt = req.body.createdAt || resp.locals.event.createdAt;
+      event.createdBy = req.body.createdBy || resp.locals.event.createdBy
+      event.participants = postedUsers
+      event.markModified('participants');
 
-        resp.status(201).json({
-          operationStatus: `Created event id ${ev['_id']}`,
-          data: ev
+      event.save().then((evnt) => {
+        if (!evnt) throw 'Erro while modifying event';
+        return Handler.Ok(resp, 200, retEvent(evnt), `Modified event id ${evnt['_id']}`);
+      })
+        .catch((err) => {
+          return Handler.Error(resp, 412, err, `Error updatong event id ${event['_id']}`);
         });
-      });
-    })
-
-    .delete((req, resp) => {
-      Events.findByIdAndRemove(resp.locals.event['_id'], (err, event) => {
-        if (err)
-          return resp.status(500).json({
-            operationStatus: 'Error deleting Event',
-            err: err
-          });
-
-        resp.status(200).json({
-          operationStatus: `Removed event id ${resp.locals.event['_id']}`
-        });
-      });
     })
 
     .patch((req, resp) => {
-      let ev = resp.locals.event;
-      let postedUsers = req.body.users.trim().split(',');
-      if (req.body.id)
-        delete req.body.id;
-      if (req.body.startTime)
-        req.body.startTime = Date.parse(req.body.startTime);
-      if (req.body.endTime)
-        req.body.startTime = Date.parse(req.body.endTime);
-      if (req.body.users) {
-        req.body.users = (postedUsers && postedUsers.length > 0) ? postedUsers : [];
-      }
-      for (let key in req.body)
-        ev[key] = req.body[key];
-      ev.markModified('users');
-      ev.save((err, item) => {
-        if (err)
-          return resp.status(404).json({
-            operationStatus: 'Error patching item',
-            err: err
-          });
-        postedUsers.forEach(postedUId => {
-          updateUsers(postedUId, ev, resp);
-        });
+      let event = resp.locals.event;
+      req.body.participants = splitSubParams(req.body.participants);
 
-        resp.status(201).json({
-          operationStatus: `Patched event id ${item['_id']}`,
-          data: item
+      for (let key in req.body)
+        event[key] = req.body[key];
+      event.markModified('participants');
+
+      event.save().then((evnt) => {
+        if (!evnt) throw 'Error while pathcing event';
+        return Handler.Ok(resp, 200, retEvent(evnt), `Patched event id ${evnt['_id']}`);
+      })
+        .catch((err) => {
+          return Handler.Error(resp, 412, err, `Error pathching event id ${event['_id']}`);
         });
-      });
+    })
+
+    .delete((req, resp) => {
+      let evId = resp.locals.event['_id'];
+      Events.findByIdAndRemove(evId).exec().then((res) => {
+        
+        
+        return Handler.Ok(resp, 202, null, `Removed event id ${evId}`);
+      })
+        .catch(err => { return Handler.Error(resp, 500, err, `Error deleting event ${evId}`) })
     });
 
   app.use('/events', eventsRouter);

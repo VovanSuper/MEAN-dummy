@@ -1,6 +1,6 @@
-import * as chalk  from 'chalk';
-import { log }     from './helpers/functions';
-let nodemon        = require('gulp-nodemon');
+import chalk from 'chalk';
+import { log } from './helpers/functions';
+let nodemon = require('gulp-nodemon');
 let bunyan, stream = null;
 
 module.exports = () => {
@@ -45,4 +45,4 @@ module.exports = () => {
   }
 }
 
-process.on('SIGINT', () => { if (stream) { stream.emit('exit'); stream.quit(); process.exit(1) } });
+process.on('SIGUSR2', () => { if (stream) { stream.emit('quit'); process.exit(0); } });

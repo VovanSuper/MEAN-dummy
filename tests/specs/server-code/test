@@ -2,15 +2,16 @@
 require('babel-register')({ presets: ['es2015'] });
 
 var path = require('path'),
-  mongoId = require('mongoose').SchemaTypes.ObjectId,
-  dbjs = require(path.resolve(__dirname, '../../..', 'server', 'db.js')),
-  log = console.log;
+  log = console.log,
+  dbjs = require(path.resolve(__dirname, '../../..', 'server', 'db.js'));
 
-var app = {
-  basePath: path.resolve(__dirname, '../../..', 'server')
+var appStub = {
+  locals: {
+    basePath: path.resolve(__dirname, '../../..', 'server')
+  }
 };
 
-var db = dbjs(app);
+var db = dbjs(appStub);
 var EventsModel = db.models['Events'];
 var UsersModel = db.models['Users'];
 
@@ -49,8 +50,6 @@ function seed(cb) {
     if (err) return log(err.toString());
     var uId1 = newUsrs['ops'][0]['_id'];
     var uId2 = newUsrs['ops'][1]['_id'];
-    var id1 = new mongoId(uId1, {});
-    var id2 = new mongoId(uId2, {});
 
     var eventToIns1 = Object.assign({}, events[0], { users: [uId1, uId2] });
     var eventToIns2 = Object.assign({}, events[1], { users: [uId1] });
@@ -82,7 +81,7 @@ var conn = db.connection
         log('>>  MODEL : ' + m);
         log(' model name : ' + db.models[m].modelName);
         log('----------------------------------------------------');
-        Object.getOwnPropertyNames(db.models[m]).forEach(prop => { log('\t prop : ' + prop); });
+        Object.getOwnPropertyNames(db.models[m]).forEach(function (prop) { log('\t prop : ' + prop); });
       };
 
       process.nextTick(function () {
@@ -90,7 +89,7 @@ var conn = db.connection
           name: 'Test Event 1'
         })
           .populate('users')
-          .exec((err, ev) => {
+          .exec(function (err, ev) {
             if (err) return log(err.toString());
             log(`Event with name 'Test Event1' : ${ev || 'not found'}`);
 

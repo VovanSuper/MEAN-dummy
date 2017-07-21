@@ -1,38 +1,44 @@
 {
   "name": "events-manager",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": {
-    "email": "vovansuper@mail.ru",
+    "email": "ovsyukov@yandex.com",
     "name": "Vladimir Ovsyukov"
   },
-  "description": "A primitive sample app using express and Angular for displaying Events.",
+  "description": "A primitive sample app using express and Angular2 for displaying events.",
   "main": "app.js",
   "homepage": "https://github.com/VovanSuper/MEAN-dummy",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/VovanSuper/MEAN-dummy.git"
   },
+  "bugs": {
+    "email": "vovansuper@mail.ru",
+    "url": "https://github.com/VovanSuper/MEAN-dummy/issues"
+  },
   "engines": {
-    "node": ">4.1.0",
+    "node": ">4.1.1",
     "npm": ">3.7.1"
   },
   "keywords": [
-    "Angular",
+    "Angular2",
     "webpack",
-    "npm",
-    "node.js"
+    "mongoose",
+    "gulp.js",
+    "express.js",
+    "MEAN"
   ],
   "license": "MIT",
   "scripts": {
     "gulp:client:bundle": "gulp --type=production client:bundle",
     "gulp:server:compile": "gulp --type=production server:compile",
     "prestart": "npm run test",
-    "start": "cross-env NODE_ENV=production run-s prepare:prod forever:start",
+    "start": "cross-env NODE_ENV=production PORT=80 run-s prepare:prod prune forever:start",
     "start:dev": "gulp --type=development --color | bunyan --color",
     "prepare:prod": "gulp --type=production compileBundle:prod --color",
     "forever:stop": "forever stopall",
-    "forever:start": "cross-env PORT=80 node ./wwwroot --color | bunyan --color",
-    "test": "cross-env NODE_ENV=test gulp tests --color",
+    "forever:start": "forever start ./wwwroot --color | bunyan --color",
+    "test": "gulp --type=test tests --color | bunyan --color",
     "test:watch": "gulp tests:watch",
     "prune": "npm prune --production"
   },
@@ -60,6 +66,7 @@
     "jquery": "^3.2.1",
     "js-yaml": "^3.7.0",
     "mongoose": "^4.6.6",
+    "mongoose-autopopulate": "^0.4.1",
     "multer": "^1.2.0",
     "ng2-bootstrap": "^1.4.0",
     "reflect-metadata": "^0.1.9",
@@ -129,6 +136,5 @@
     "webpack": "^1.4.1",
     "webpack-md5-hash": "~0.0.5",
     "webpack-stream": "^3.2.0"
-  },
-  "false": {}
+  }
 }

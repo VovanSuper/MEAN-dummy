@@ -8,23 +8,25 @@ let db = null;
 module.exports = app => {
   if (!db) {
     const conf = {
-      host : config.get('database.host'),        
+      host: config.get('database.host'),
       creds: config.get('database.creds')
     };
     mongoose.Promise = require('bluebird');
-    mongoose.connect(conf.host);
+    mongoose.connect(conf.host, { useMongoClient: true });
     db = {
-      mongoose  : mongoose,
+      mongoose: mongoose,
       connection: mongoose.connection,
-      models    : {}
+      models: {}
     };
 
-    let modelsDir = path.join(app.basePath, './models');
-    fs.readdirSync(modelsDir).forEach(fileName => {
-      let filePath = path.join(modelsDir, fileName)
-      let modelName = fileName.slice(0, fileName.indexOf('.'));
-      db.models[modelName] = (require(filePath))(mongoose);
-    });
+    let modelsDir = path.resolve(app.locals.basePath, 'models');
+    fs.readdirSync(modelsDir)
+      .filter(fName => fs.statSync(path.join(modelsDir, fName)).isFile() && fName.indexOf('.js') !== -1)
+      .forEach(fName => {
+        let filePath = path.join(modelsDir, fName)
+        let modelName = fName.slice(0, fName.indexOf('.'));
+        db.models[modelName] = (require(filePath))(mongoose);
+      });
   }
   return db;
 }

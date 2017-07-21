@@ -1,19 +1,10 @@
 module.exports = app => {
 
-  const Users = app.db.models.Users;
-
-  let attachEvents = (user) => {
-    if (!user) throw new Error('Event object is not provided!!!');
-    if (!(user['events']).length) return [];
-    return (user['events']).map(ev => {
-      return {
-        _id: ev._id,
-        name: ev.name,
-        startTime: ev.startTime,
-        endTime: ev.endTime
-      }
-    });
-  }
+  let Users = app.db.models.Users;
+  let retUser = app.utils.Helpers.retUserJson;
+  let splitSubParams = app.utils.Helpers.splitSubParams;
+  let Handler = app.utils.Handlers;
+  let idParamHandler = app.middlewares.idParamHandler;
 
   const usersRouter = require('express').Router();
 
@@ -21,151 +12,79 @@ module.exports = app => {
     .get((req, resp) => {
       Users.find({}, '-__v')
         .populate('events')
-        .then(items => {
-          if (!items) throw 'No users found'
-          let users = items.map(user => Object.assign({}, {
-            _id: user._id,
-            name: user.name,
-            username: user.username,
-            email: user.email,
-            work_place: user.work_place,
-            registered: user.registered
-          }, { events: attachEvents(user) }));
-
-          return resp.status(200).json({
-            operationStatus: 'Found',
-            data: users
-          });
+        .then((users) => {
+          return Handler.Ok(resp, 200, users.map(retUser), 'Found');
         })
-        .catch(err => {
-          return resp.status(412).json({
-            operationStatus: 'Server error',
-            err: err
-          });
-        });
+        .catch((err) => { return Handler.Error(resp, 404, err, 'Not found') });
     });
 
   usersRouter.route('/')
     .get((req, resp) => {
       resp.status(301).redirect('/users/all');
     })
+
     .post((req, resp) => {
       let newUser = new Users({
-        username: req.body.username,
         name: req.body.name,
+        username: req.body.username,
         email: req.body.email,
         password: req.body.password,
         registered: req.body.registered,
-        work_place: req.body.work_place,
-        events: [...req.body.events]
+        work_place: req.body.work_place
       });
-
-      newUser.save()
-        .then((item) => {
-          resp.status(201).json({
-            operationStatus: 'Saved',
-            data: item
-          });
-        })
-        .catch((err) => {
-          return req.status(412).json({
-            operationStatus: 'Error trying to save entity',
-            err: err
-          });
-        });
+      newUser.save().then((user) => {
+        if (!user) throw `Error saving user ${user}`;
+        return Handler.Ok(resp, 201, user, `Created user id ${user['_id']}`);
+      })
+        .catch((err) => { return Handler.Error(resp, 412, err, `Error trying to save user: ${err.toString()}`) });
     });
 
-  usersRouter.param('id', (req, resp, next, id) => {
-    Users.findById(id, '-__v')
-      .populate('events')
-      .then(user => {
-        if (!user)
-          throw `No user present in database with id of ${id}`;
-
-        req.user = user;
-        next();
-      })
-      .catch(err => {
-        return resp.status(412).json({
-          operationStatus: `No User with id: ${id}`,
-          err: err
-        });
-      });
-  })
+  usersRouter
+    .param('id', idParamHandler(Users, 'events'))
     .route('/:id')
     .get((req, resp) => {
-      let usersPopEvents = {
-        username: req.user.username,
-        name: req.user.name,
-        email: req.user.email,
-        registered: req.user.registered,
-        work_place: req.user.work_place,
-        event: attachEvents(req.user)
-      }
-      resp.status(200).json({
-        operationStatus: 'Found',
-        data: usersPopEvents
-      });
+      return Handler.Ok(resp, 200, retUser(resp.locals.user), 'Found');
     })
+
     .put((req, resp) => {
-      let user = req.user;
+      let user = resp.locals.user;
       user.username = req.body.username;
       user.name = req.body.name;
       user.email = req.body.email;
-      user.password = req.body.password;
-      user.work_place = req.body.work_place;
+      user.password = req.body.password || null;
+      user.work_place = req.body.work_place || '';
+      user.markModified('events');
 
-      Users.findByIdAndUpdate(req.user['_id'], {
-        $set: {
-          username: user.username,
-          name: user.name,
-          email: user.email,
-          password: user.password,
-          work_place: user.work_place
-        }
-      }, {
-          new: true
-        }, (err, user) => {
-          if (err)
-            return resp.status(500).json({
-              operationStatus: `Error updating user ${user['_id']}`,
-              err: err
-            });
-          resp.status(204).json({
-            operationStatus: `Updated user ${user['_id']}`
-          });
-        });
-    })
-    .patch((req, resp) => {
-      let user = req.user;
-      for (let field in req.body) {
-        user[field] = req.body[field];
-      }
-      user.save()
-        .then((item) => {
-          resp.status(201).json({
-            operationStatus: 'Patched successfully',
-            data: item
-          });
-        })
+      user.save().then((usr) => {
+        return Handler.Ok(resp, 200, retUser(usr), `Modified user ${usr['_id']}`);
+      })
         .catch((err) => {
-          return req.status(412).json({
-            operationStatus: 'Error trying to save entity',
-            err: err
-          });
+          return Handler.Error(resp, 412, err, `Error updating user ${user['_id']}`)
         });
     })
-    .delete((req, resp) => {
-      Users.findByIdAndRemove(req.user['_id'], (err) => {
-        if (err)
-          return resp.status(500).json({
-            operationStatus: 'Error deleting Event',
-            err: err
-          });
-        resp.status(200).json({
-          operationStatus: `User ${req.user['_id']} removed`
+
+    .patch((req, resp) => {
+      let user = resp.locals.user;
+      for (let key in req.body)
+        user[key] = req.body[key];
+      user.markModified('events');
+
+      user.save().then((usr) => {
+        if (!usr) throw 'Error while pathing user';
+        return Handler.Ok(resp, 200, retUser(usr), `Patched user id ${usr['_id']}`);
+      })
+        .catch((err) => {
+          return Handler.Error(resp, 412, err || 'no user after PATCH', `Error patching user id ${user['_id']}`);
         });
-      });
+    })
+
+    .delete((req, resp) => {
+      let usrId = resp.locals.user['_id'];
+
+      Users.findByIdAndRemove(usrId).exec().then((res) => {
+        return Handler.Ok(resp, 202, null, `Removed user id ${usrId}`);
+      })
+        .catch(err => { return Handler.Error(resp, 500, err, `Error deleting user id ${usrId}`) })
     });
 
   app.use('/users', usersRouter);
