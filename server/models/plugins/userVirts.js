@@ -1,14 +1,14 @@
 
-const fullName = (schema, opts) => {
-  schema.virtual('fullName').get(() => {
+const fullName = function (schema, opts) {
+  schema.virtual('fullName').get(function () {
     return {
       username: this.username,
       email: this.email
     }
   });
 }
-const userInfo = (schema, opts) => {
-  schema.virtual('userInfo').get(() => {
+const userInfo = function (schema, opts) {
+  schema.virtual('userInfo').get(function () {
     return {
       id: this._id,
       name: this.name,

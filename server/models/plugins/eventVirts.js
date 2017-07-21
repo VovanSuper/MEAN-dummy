@@ -1,6 +1,6 @@
 
-const eventInfo = (schema, opts) => {
-  schema.virtual('eventInfo').get(() => {
+const eventInfo = function (schema, opts) {
+  schema.virtual('eventInfo').get(function () {
     return {
       id: this._id,
       name: this.name,

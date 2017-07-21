@@ -10,7 +10,7 @@ module.exports = app => {
   eventsRouter.route('/all')
     .get((req, resp) => {
       Events.find({}, '-__v')
-        .populate('users')
+        .populate('Users')
         .then((events) => {
           return Handler.Ok(resp, 200, events.map(retEvent), 'Found');
         })
@@ -25,7 +25,7 @@ module.exports = app => {
     })
 
     .post((req, resp) => {
-      console.log(`\nPOST DONE ${req.body} type is: ${typeof req.body} `)
+      // console.log(`\nPOST DONE ${req.body} type is: ${typeof req.body} `)
       
       let postedUsers = splitSubParams(req.body.participants);
       console.log(`\nPOST DONE users : ${postedUsers} type is: ${typeof postedUsers} `)

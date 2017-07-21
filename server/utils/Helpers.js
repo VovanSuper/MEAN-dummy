@@ -3,10 +3,8 @@ module.exports = app => {
 
   let Users = app.db.models.Users;
 
-  const attachUsersToEvent = event => {
-    if (!event) throw new Error('Event object is not provided');
-    if (event['participants'].length === 0) return [];
-    return event['participants'].map(u => {
+  const attachParticipantsToEvent = event => {
+    return (event['participants']).map(u => {
       return {
         id: u['_id'],
         name: u.name,
@@ -19,8 +17,6 @@ module.exports = app => {
   }
 
   const attachEventsToUser = user => {
-    if (!user) throw new Error('Event object is not provide');
-    if (user['events'].length === 0) return [];
     return (user['events']).map(ev => {
       return {
         id: ev['_id'],
@@ -35,11 +31,12 @@ module.exports = app => {
     return {
       id: event['_id'],
       name: event.name,
+      description: event.description,
       startTime: event.startTime,
       endTime: event.endTime,
       createdAt: event.createdAt,
       createdBy: event.createdBy,
-      participants: attachUsersToEvent(event)
+      participants: attachParticipantsToEvent(event)
     }
   }
 
@@ -74,9 +71,9 @@ module.exports = app => {
 
   const splitSubParams = params => {
     console.log('PARAMS ::::\n');
-    console.dir(params)
-    if(typeof params === 'string') params = JSON.parse(params);
-    return (params && params.lenght > 0) ? params : [];
+    console.dir(params);
+
+    return (params && params.lenght > 0) ? (Array.isArray(params) ? [...params] : params) : [];
   }
 
   return {

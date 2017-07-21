@@ -1,7 +1,7 @@
 // import bcrypt from 'bcrypt';
 import bcrypt from 'bcryptjs';
 
-const passHasher = (schema, opts) => {
+const passHasher = function (schema, opts) {
   schema.pre('save', function (next) {
     let self = this;
     if (!this.isModified('password')) return next();
@@ -16,7 +16,7 @@ const passHasher = (schema, opts) => {
   });
 };
 
-const passValidator = (schema, opts) => {
+const passValidator = function (schema, opts) {
   schema.methods.comparePassword = function (pass, cb) {
     bcrypt.compare(pass, this.password, function (err, isMatch) {
       if (err) return cb(err);
@@ -27,10 +27,10 @@ const passValidator = (schema, opts) => {
 
 const preUserRemoveHook = function (schema, opts) {
   schema.pre('findByIdAndRemove', preRemoveHook);
-  // schema.pre('remove', preRemoveHook);
+  schema.pre('remove', preRemoveHook);
 }
 
-const preRemoveHook = (next) => {
+const preRemoveHook = function (next) {
   let self = this;
   self.events.update({ participants: self._id }, {
     $pull: { participants: self._id }
