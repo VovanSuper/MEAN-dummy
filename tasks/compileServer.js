@@ -6,26 +6,24 @@ let isEntry = (file) => {
   return file.basename === 'app.js'
 }
 
-module.exports = (params) => {
-  return (callback) => {
-    return obj(
-      params.gulp.src(params.paths.appFilesPaths)
-        .on('data', (file) => { file.cwd = './server' })
-      , $.if((params.env === 'production' && isEntry), $.rename(path => { path.basename = 'index' }))
-      , $.babel()
-      , $.debug({ title: '[Gulp-Debug]::', minimal: true })
-      , params.gulp.dest(file => {
-        return (path.relative(file.dirname, file.cwd) == '') ?
-          params.paths.appDist : path.resolve(params.paths.appDist, path.relative(file.cwd, file.base))
-      })
-        .on('end', callback)
-    )
-      .on('error', () => {
-        $.notify.onError(err => ({
-          MainTitle: 'Error during SERVER COMPILING pipeline',
-          ErrorMsg: err.message,
-          FullError: JSON.stringify(err)
-        }))
-      });
-  }
+module.exports = (params) => (callback) => {
+  return obj(
+    params.gulp.src(params.paths.appFilesPaths)
+      .on('data', (file) => { file.cwd = './server' })
+    , $.if((params.env === 'production' && isEntry), $.rename(path => { path.basename = 'index' }))
+    , $.babel()
+    , $.debug({ title: '[Gulp-Debug]::', minimal: true })
+    , params.gulp.dest(file => {
+      return (path.relative(file.dirname, file.cwd) == '') ?
+        params.paths.appDist : path.resolve(params.paths.appDist, path.relative(file.cwd, file.base))
+    })
+      .on('end', callback)
+  )
+    .on('error', () => {
+      $.notify.onError(err => ({
+        MainTitle: 'Error during SERVER COMPILING pipeline',
+        ErrorMsg: err.message,
+        FullError: JSON.stringify(err)
+      }))
+    });
 }

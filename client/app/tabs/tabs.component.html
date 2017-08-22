@@ -1,6 +1,26 @@
-<tabset type="pills">
-  <tab *ngFor="let tab of tabs" [heading]="tab.heading" [active]="tab.active" (select)="tab.active = true" (deselect)="tab.active = false"
-    >
-    {{tab?.content}}
-  </tab>
-</tabset>
+<!-- <div (click)="$event.preventDefault()">
+  <tabset type="tabs">
+    <tab id="" active="true">
+      <template tabHeading>
+        <a [routerLink]="['/events']">
+          All
+        </a>
+      </template>
+    </tab>
+
+
+    <tab *ngFor="let tab of tabs" [active]="tab.active">
+      <template tabHeading>
+        <a [routerLink]="['/events', tab.id, 'details']">
+          {{tab.heading}}
+        </a>
+      </template>
+    </tab>
+    <div>
+      <ng-content select="[em-content-body]"></ng-content>
+    </div>
+
+
+  </tabset>
+
+</div> -->

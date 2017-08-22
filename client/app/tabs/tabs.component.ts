@@ -1,30 +1,49 @@
-// import { Component, OnInit, ChangeDetectionStrategy, AfterContentInit, OnDestroy } from '@angular/core';
-// import { IEvent } from '../shared';
-// import { ApiService } from "../events/index";
+// import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, AfterContentInit } from '@angular/core';
+// import { IEvent } from '../shared/interfaces/';
+// import { ApiService } from '../shared/module/providers/';
+// import { TabDirective } from "ng2-bootstrap";
+// import { Router } from "@angular/router";
 
 // @Component({
 //   selector: 'em-tabs',
 //   templateUrl: './tabs.component.html'
 // })
-// export class TabularComponent implements AfterContentInit, OnInit {
+// export class TabsComponent implements OnInit {
 
-//   public tabs: any[] = [];
+//   currentEvent: TabDirective;
+//   tabs: any[] = [];
+//   events: IEvent[] = [];
 
-//   constructor(private api: ApiService) { }
+//   constructor(private api: ApiService, private router: Router) { }
 
-//   ngAfterContentInit() {
-//      //this.tabs[0].active = true;
-//   }
 //   ngOnInit() {
-//     this.api.getEvents().then(resp => {
-//       const events = resp['events'];
-//       events.forEach(ev => {
+//     this.api.getEvents().then(evs => {
+//       this.events = evs;
+
+//       this.events.forEach(e => {
 //         this.tabs.push({
-//           id: ev['_id'],
-//           heading: ev.name,
-//           active: false
+//           id: e.id,
+//           heading: e.name,
+//           active: false,
+//           disabled: false,
+//           removable: false
 //         });
 //       });
 //     });
 //   }
+//   // ngAfterContentInit() {
+//   //   this.router.navigateByUrl('/events');
+//   //   this.tabs[0].active = true;
+//   //   this.currentEvent = this.tabs[0];
+//   // }
+
+//   selectTab(tab: any) {
+//     this.currentEvent = tab;
+//     this.currentEvent.active = true;
+//   }
+//   deselectTab(tab: any) {
+//     tab.active = false;
+//   }
+
+
 // }

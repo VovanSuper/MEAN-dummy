@@ -1,5 +1,5 @@
-import del                       from 'del';
-import { env, log, PluginError } from 'gulp-util';
+import del                             from 'del';
+import { env, log, PluginError, noop } from 'gulp-util';
 
 const cleanAssets = (path, cb) => {
   del.sync(path, { force: true });
@@ -14,5 +14,6 @@ module.exports = {
   cleanAssets: cleanAssets,
   wpReporter: wpReporter,
   log: log,
-  env: env.type ||  process.env.NODE_ENV || process.env.ENV || 'development'
+  noop: noop,
+  env: env.type || process.env.NODE_ENV || process.env.ENV || 'development'
 }

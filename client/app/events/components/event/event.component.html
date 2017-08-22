@@ -1,0 +1,20 @@
+<div class="card card-info" style="max-width: 18rem; width: 15rem;">
+  <div class="card-block">
+    <strong class="card-title">Event : </strong><em>{{event.name}}</em>
+    <hr />
+    <div class="card-text">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-4"><small>Start: </small></div>
+          <div class="pull-right"><i>{{event.startTime | amUtc | amDateFormat: 'DD.MM.YYY'}}</i></div>
+        </div>
+        <div class="row">
+          <div class="col-4"><small>End: </small></div>
+          <div class="pull-right"><i>{{event.endTime | amUtc | amDateFormat: 'DD.MM.YYY'}}</i></div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <a class="btn btn-primary btn-sm btn-block" [routerLink]="['/events', event.id, 'details']" role="button" aria-pressed="true">Details</a>
+  </div>
+</div>

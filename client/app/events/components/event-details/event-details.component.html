@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-xs-12">
+      <div class="card">
+        <div class="card-block">
+          <h2 class="card-title">{{event?.name}}</h2>
+          <strong class="card-text">{{event?.name}}</strong>
+          <div class="row">
+            <div class="col-2"><i>ID: </i></div>
+            <div class="col-10">{{event?.id}}</div>
+          </div>
+          <div class="row">
+            <div class="col-2"><small>Starting: </small></div>
+            <div class="col-10">{{event?.startTime | amUtc | amDateFormat: 'YYYY-MM-DD'}}</div>
+          </div>
+          <div class="row">
+            <div class="col-2"><small>Ending:</small> </div>
+            <div class="col-10">{{event?.endTime | amUtc | amDateFormat: 'YYYY-MM-DD'}}</div>
+          </div>
+          <div class="row">
+            <div class="col-2"><small>Created at:</small> </div>
+            <div class="col-10">{{event?.createdAt | amUtc | amDateFormat: 'YYYY-MM-DD'}}</div>
+          </div>
+          <div class="row">
+            <div class="col-2"><small>Creator:</small> </div>
+            <div class="col-10">{{event?.createdBy}}</div>
+          </div>
+          <div class="row">
+            <div class="col-2"><small>Description:</small> </div>
+            <div class="col-10">{{event?.description}}</div>
+          </div>
+          <hr />
+          <div class="row" *ngIf='event?.participants?.length > 0'>
+            <div class="col-12"><small>Participating : </small></div>
+            <div *ngFor="let participant of event?.participants">
+              <ul class='list-group'>
+                <li class='list-group-item'><em>{{participant?.name}}</em></li>
+              </ul>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button type="button" (click)="goBack()" class="btn btn-lg btn-block btn-warning" role="button">
+             <i class="fa fa-backward" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

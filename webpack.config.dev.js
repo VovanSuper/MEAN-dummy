@@ -34,14 +34,14 @@ module.exports = {
       test: /\.component\.ts$/,
       loader: 'awesome-typescript!angular2-template',
       include: [
-        path.resolve(__dirname, 'client', 'app')
+        path.join(__dirname, 'client', 'app')
       ]
     },
     {
       test: /\.ts$/,
       loader: 'awesome-typescript',
       include: [
-        path.resolve(__dirname, 'client')
+        path.join(__dirname, 'client')
       ],
       exclude: /\.component\.ts$/
     },
@@ -56,7 +56,7 @@ module.exports = {
       test: /\.(html|css)$/,
       loader: 'raw',
       include: [
-        path.resolve(__dirname, 'client', 'app')
+        path.join(__dirname, 'client', 'app')
       ]
     }]
   },
@@ -101,4 +101,4 @@ module.exports = {
       "toastr": "toastr"
     })
   ]
-};
+}

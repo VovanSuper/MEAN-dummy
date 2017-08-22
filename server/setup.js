@@ -6,7 +6,7 @@ import path            from 'path';
 import config          from 'config';
 
 module.exports = app => {
-  app.set('port', process.env.PORT || config.get('base.port'))
+  app.set('port', process.env.PORT || config.get('base.port') || 8080)
     .use(favicon(path.join(app.locals.rootPath, config.get('paths.clientDist'), 'favicon.ico')))
     .use(express.static(path.join(app.locals.rootPath, config.get('paths.clientDist'))))
     .use(cors())

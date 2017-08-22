@@ -34,7 +34,6 @@ jspm_packages
 .node_repl_history
 
 # Dist and configs and data
-app
 wwwroot
 dist
 data
@@ -42,4 +41,3 @@ public
 .vscode
 .vs
 .c9
-

@@ -1,15 +1,9 @@
-// import { Component, OnInit } from '@angular/core';
-// import { TabularComponent } from '../tabs';
+// import { Component } from '@angular/core';
 
 // @Component({
+//   selector: 'em-main',
 //   templateUrl: './main.component.html',
 //   styleUrls: ['./main.component.css']
 // })
-// export class MainComponent implements OnInit {
-
-//   constructor() { }
-
-//   ngOnInit() {
-//   }
-
+// export class MainComponent {
 // }

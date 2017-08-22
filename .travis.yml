@@ -4,9 +4,9 @@ language: node_js
 # before_install:
 #   - add-apt-repository ppa:ubuntu-toolchain-r/test -y
 #   - apt-get update -y
-#   - apt-get install gcc-6 -y
-#   - apt-get install g++-6 -y
-#   - apt-get install build-essentials -y
+#   - apt-get install gcc-6 -y -q -f --no-install-recommends
+#   - apt-get install g++-6 -y -q -f --no-install-recommends
+#   - apt-get install build-essentials -y -q -f --no-install-recommends
 #   - update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-6
 
 # addons:

@@ -1,0 +1,17 @@
+<div class="container-fluid">
+  <div class="row d-sm-flex">
+    <div class="col-8 col-xs-6">
+      <p class="d-inline text-primary"> <strong>All events:</strong> </p>
+      <div class="card-group">
+        <div class="bg-info" *ngFor="let event of events">
+          <em-event [event]="event"></em-event>
+        </div>
+      </div>
+    </div>
+    <div class="col-4 col-xs-6">
+      <p class="d-inline text-faded"><em>Details</em></p>
+      <div class="">
+        <router-outlet></router-outlet>
+      </div>
+  </div>
+</div>

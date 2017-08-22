@@ -110,7 +110,7 @@ module.exports = {
     new webpack.DefinePlugin({
       app: {
         environment: JSON.stringify('production'),
-        host: JSON.stringify(`http://localhost:${process.env.PORT || 80}`)
+        host: JSON.stringify(`http://${process.env.HOST} || localhost:${process.env.PORT || 80}`)
       }
     }),
     new webpack.ProvidePlugin({

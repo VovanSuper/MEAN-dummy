@@ -6,9 +6,6 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,
-    "lib": [ "dom", "es2015" ]
-  },
-  "exclude": [
-    "node_modules", "wwwroot"
-  ]
+    "lib": [ "dom", "es2016" ]
+  }
 }
