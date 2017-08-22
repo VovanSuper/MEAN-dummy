@@ -16,7 +16,7 @@ module.exports = (params) => (callback) => {
       path.join(params.paths.clientSrc, 'polyfills.ts'),
       path.join(params.paths.clientSrc, 'vendor.ts'),
       path.join(params.paths.clientSrc, 'main.ts')
-    ], { since: !isProd ? $.memoryCache.lastMtime('bundleClient') : noop() })
+    ], !isProd ? { since: $.memoryCache.lastMtime('bundleClient') } : { } )
     , $.vinylNamed()
     , $.if(!isProd, $.memoryCache('bundleClient'))
     , $.webpackStream(require(params.paths.webpackfile), require('webpack'), wpReporter)

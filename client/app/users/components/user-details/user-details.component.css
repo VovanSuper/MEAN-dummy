@@ -1,0 +1,6 @@
+.cursor-hand {
+  cursor: pointer;
+}
+.cursor-hand:hover {
+  background-color: red;
+}
