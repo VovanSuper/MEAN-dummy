@@ -31,7 +31,7 @@ import { EventsModule } from './events/';
     SharedServicesModule.forRoot(),
     // TabsModule.forRoot(),
     EventsModule,
-    // UsersModule,    
+    // UsersModule,
     AppRoutes
   ],
   bootstrap: [ AppComponent ]

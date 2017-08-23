@@ -7,7 +7,6 @@ import { IEvent } from '../../../shared/';
   styleUrls: ['./events.component.css']
 })
 export class EventsComponent implements OnInit {
-  
   events: IEvent[];
 
   constructor(private actRoute: ActivatedRoute) { }

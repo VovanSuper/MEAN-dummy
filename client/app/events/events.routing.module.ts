@@ -4,12 +4,16 @@ import { EventDetailsComponent, EventsComponent, NotSelectedComponent } from './
 import { RouteValidService, EventsResolverService } from '../shared/module/providers/';
 
 export const EVENTS_ROUTES: Routes = [
-  { path: '', component: EventsComponent, pathMatch: 'full' },
   {
-    path: ':id/details',
-    component: EventDetailsComponent,
-    canActivate: [RouteValidService],
-    canDeactivate: ['canLeave']
+    path: 'events', children: [
+      { path: '', component: EventsComponent, resolve: { events: EventsResolverService }, pathMatch: 'full' },
+      {
+        path: ':id/details',
+        component: EventDetailsComponent,
+        canActivate: [RouteValidService],
+        canDeactivate: ['canLeave']
+      }
+    ]
   }
 ];
 
