@@ -4,7 +4,7 @@ module.exports = app => {
   let retUser = app.utils.Helpers.retUserJson;
   let splitSubParams = app.utils.Helpers.splitSubParams;
   let Handler = app.utils.Handlers;
-  let idParamHandler = app.middlewares.idParamHandler;
+  let idParamHandler = app.middlewares.IdParamHandler;
 
   const usersRouter = require('express').Router();
 

@@ -8,7 +8,7 @@ let isEntry = (file) => {
 
 module.exports = (params) => (callback) => {
   return obj(
-    params.gulp.src(params.paths.appFilesPaths)
+    params.gulp.src([...params.paths.appFilesPaths])
       .on('data', (file) => { file.cwd = './server' })
     , $.if((params.env === 'production' && isEntry), $.rename(path => { path.basename = 'index' }))
     , $.babel()

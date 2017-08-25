@@ -1,6 +1,6 @@
 import path                from 'path';
 import chalk               from 'chalk';
-import { log, wpReporter, noop } from './helpers/functions';
+import { log, wpReporter } from './helpers/functions';
 
 const $ = require('gulp-load-plugins')({
   pattern: ['gulp-*', 'vinyl-named', 'webpack-stream', 'stream-combiner2']

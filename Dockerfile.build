@@ -1,0 +1,10 @@
+FROM node:6
+ENV NODE_ENV production
+RUN ["mkdir", "-p", "/usr/local/bin/build"]
+WORKDIR /usr/local/bin/build
+COPY ["package.json", "package-lock.json", "./"]
+RUN npm install --global bunyan 
+RUN ["echo", "Building for porduction..."]
+COPY ./wwwroot .
+EXPOSE 80 443
+CMD ["npm", "run", "prepare:prod"]

@@ -3,7 +3,7 @@ module.exports = app => {
   let retEvent = app.utils.Helpers.retEventJson;
   let splitSubParams = app.utils.Helpers.splitSubParams;
   let Handler = app.utils.Handlers;
-  let idParamHandler = app.middlewares.idParamHandler;
+  let idParamHandler = app.middlewares.IdParamHandler;
 
   const eventsRouter = require('express').Router();
 

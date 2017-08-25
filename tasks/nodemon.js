@@ -6,9 +6,9 @@ let bunyan, stream = null;
 module.exports = () => (callback) => {
   stream = nodemon({
     exec: 'babel-node',
-    watch: ['app.js', 'boot.js', 'db.js', 'routes', 'models', 'libs', 'utils'].map(i => './server/' + i),
+    watch: ['app.js', 'boot.js', 'db.js', 'setup.js', 'routes', 'models', 'libs', 'utils'].map(i => './server/' + i),
     script: './server/app.js',
-    ext: 'js html css',
+    ext: 'js',
     ignore: ['./node_modules', './mongod', './data', './dist', './wwwroot']
   })
     .on('readable', () => {
@@ -43,4 +43,4 @@ module.exports = () => (callback) => {
   return stream;
 }
 
-process.on('SIGUSR2', () => { if (stream) stream.emit('quit'); process.exit(0); });
+process.on('SIGUSR2', () => { if (stream) stream.emit('quit'); process.emit('exit', 0); });

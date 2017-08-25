@@ -38,6 +38,8 @@
     "prepare:prod": "gulp --type=production compileBundle:prod --color",
     "forever:stop": "forever stopall",
     "forever:start": "node ./wwwroot --color | bunyan --color",
+    "docker:build": "./scripts/build.sh",
+    "docker:compose": "docker-compose --build up -d",
     "test": "cross-env NODE_ENV=test gulp tests --color | bunyan --color",
     "test:watch": "gulp tests:watch",
     "prune": "npm prune --production"

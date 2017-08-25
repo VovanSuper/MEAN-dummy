@@ -1,0 +1,14 @@
+version: '2.2'
+
+services:
+  mean-dummy:
+    image: vovansuper/mean-dummy
+    ports:
+      - 80:80
+      - 443:443
+      - 48279:48279
+    depends_on:
+      - db
+          condition: service_healthy
+  db:
+    image: mvertes/alpine-mongo    
