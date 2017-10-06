@@ -3,7 +3,8 @@ const webpack = require('webpack'),
   V8LazyParseWebpackPlugin = require('v8-lazy-parse-webpack-plugin'),
   //ClosureCompilerPlugin = require('webpack-closure-compiler'),
   htmlWebpackPlugin = require('html-webpack-plugin'),
-  scriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+  scriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin'),
+  config = require('config');
 
 module.exports = {
   output: {
@@ -26,7 +27,8 @@ module.exports = {
           path.resolve(__dirname, 'client')
         ],
         exclude: /\.component\.ts$/
-      }, {
+      }, 
+	  {
         test: /\.(html|css)$/,
         loader: 'raw-loader'
       }]
@@ -95,7 +97,9 @@ module.exports = {
         removeScriptTypeAttributes: true,
         removeStyleLinkTypeAttributes: true,
         useShortDoctype: true
-      }
+      },
+      headOptions: config.get('base.headOptions')
+      
     }),
     new webpack.optimize.CommonsChunkPlugin({
       // names: [ 'polyfills', 'vendor', 'main' ],
@@ -110,11 +114,12 @@ module.exports = {
     new webpack.DefinePlugin({
       app: {
         environment: JSON.stringify('production'),
-        host: JSON.stringify(`http://${process.env.HOST} || localhost:${process.env.PORT || 80}`)
+        host: JSON.stringify(`//${process.env.HOST || 'localhost'}`),
+        port: `${process.env.PORT || 80}`
       }
     }),
     new webpack.ProvidePlugin({
-      "$": "jQuery",
+      "$"	    : "jQuery",
       "jQuery": "JQuery",
       "jquery": "JQuery",
       "toastr": "toastr"

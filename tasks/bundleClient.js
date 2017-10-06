@@ -11,6 +11,7 @@ let isProd = process.env.NODE_ENV === 'production';
 module.exports = (params) => (callback) => {
   log(chalk.bgWhite.black.italic('Bundling for ' + params.env));
   log(chalk.bgWhite.magenta.bold('Using ' + path.basename(params.paths.webpackfile)));
+  
   return $.streamCombiner2.obj(
     params.gulp.src([
       path.join(params.paths.clientSrc, 'polyfills.ts'),

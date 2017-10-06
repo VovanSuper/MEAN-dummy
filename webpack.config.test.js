@@ -1,7 +1,8 @@
 'use strict';
 const webpack = require('webpack'),
   path = require('path'),
-  htmlWebpackPlugin = require('html-webpack-plugin');
+  htmlWebpackPlugin = require('html-webpack-plugin'),
+  config = require('config');
 // ,scriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 
 module.exports = {
@@ -57,7 +58,8 @@ module.exports = {
     new webpack.DefinePlugin({
       app: {
         environment: JSON.stringify('test'),
-        host: JSON.stringify(`http://localhost:${process.env.PORT || 8080}`)
+        host: JSON.stringify(`//${process.env.HOST || 'localhost'}}`),
+        port: JSON.stringify(8080)
       }
     }),
   ]

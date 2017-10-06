@@ -3,7 +3,8 @@ const webpack = require('webpack'),
   scriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin'),
   WebpackMd5Hash = require('webpack-md5-hash'),
   InlineChunkManifestHtmlWebpackPlugin = require('inline-chunk-manifest-html-webpack-plugin'),
-  path = require('path');
+  path = require('path'),
+  config = require('config');
 
 module.exports = {
 
@@ -70,19 +71,21 @@ module.exports = {
     new WebpackMd5Hash(),
     new webpack.optimize.CommonsChunkPlugin({
       //names: ['polyfills', 'vendor'],
-      children: true, 
+      children: true,
       async: true,
       minChunks: 2,
       minSize: 256
     }),
     new htmlWebpackPlugin({
-      cache:    true,
-      hash:     false,
-      inject:   'body',
+      cache: true,
+      hash: false,
+      inject: 'body',
       template: './client/index.html',
-      favicon:  './client/favicon.ico',
-      xhtml:    true,
-      minify:   false
+      favicon: './client/favicon.ico',
+      xhtml: true,
+      minify: false,
+      headOptions: config.get('base.headOptions')
+
     }),
     new InlineChunkManifestHtmlWebpackPlugin(),
     new scriptExtHtmlWebpackPlugin({
@@ -91,11 +94,12 @@ module.exports = {
     new webpack.DefinePlugin({
       app: {
         environment: JSON.stringify('development'),
-         host: JSON.stringify(`http://localhost:${process.env.PORT || 8080}`)
+        host: JSON.stringify(`//${process.env.HOST || 'localhost'}`),
+        port: `${process.env.PORT || 8080}`
       }
     }),
     new webpack.ProvidePlugin({
-      "$"     : "jQuery",
+      "$": "jQuery",
       "jQuery": "JQuery",
       "jquery": "JQuery",
       "toastr": "toastr"

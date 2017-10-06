@@ -6,7 +6,7 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class ApiService {
-  hostUrl = app.host || 'http://localhost:8080';
+  hostUrl = `${app.host}:${app.port}` || '//localhost:8080';
   eventsUrl = `${this.hostUrl}/events`;
   usersUrl = `${this.hostUrl}/users`;
   
