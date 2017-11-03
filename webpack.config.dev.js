@@ -47,7 +47,7 @@ module.exports = {
     //   exclude: /\.component\.ts$/
     // },
     // {
-    //   test: /\routes\.ts/,
+    //   test: /routes\.ts/,
     //   loader: 'awesome-typescript!angular2-router',
     //   include: [
     //     path.resolve(__dirname, 'client', 'app')
@@ -59,7 +59,15 @@ module.exports = {
       include: [
         path.join(__dirname, 'client', 'app')
       ]
-    }]
+    },
+    {
+      test: /\.ejs$/,
+      include: [
+        path.join(__dirname, 'client')
+      ],
+      loader: 'ejs'
+    }
+    ]
   },
 
   resolve: {
@@ -80,11 +88,11 @@ module.exports = {
       cache: true,
       hash: false,
       inject: 'body',
-      template: './client/index.html',
+      template: './client/index.ejs',
       favicon: './client/favicon.ico',
       xhtml: true,
       minify: false,
-      title: config.get('base.headOptions.title')
+      opts: config.get('base.headOptions')
 
     }),
     new InlineChunkManifestHtmlWebpackPlugin(),

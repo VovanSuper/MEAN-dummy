@@ -3,7 +3,7 @@ base:
   headOptions:
     title: 'MEAN2 Dummy (prod)'
     desc:  'A sample mean (Angular2, node.js, express.js, mongodb) project'
-    author: 'Vladimir Ovsyukov <ovsyukov@yandex.com>'
+    author: 'Vladimir Ovsyukov \<me@ovsyukov.info\>'
     keywords: 'Mean 2, Angular, node.js, express.js, mongodb, mongoose, gulp.js, gulp4, webpack, babel.js, typescript'
     baseUrl: '/'
 

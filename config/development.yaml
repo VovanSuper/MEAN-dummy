@@ -4,7 +4,7 @@ base:
     title: 'MEAN2 Dummy (dev)'
     desc:  'A sample mean (Angular2, node.js, express.js, mongodb) project'
     keywords: 'Mean 2, Angular, node.js, express.js, mongodb, mongoose, gulp.js, gulp4, webpack, babel.js, typescript'
-    author: 'Vladimir Ovsyukov <ovsyukov@yandex.com>'
+    author: 'Vladimir Ovsyukov \<me@ovsyukov.info\>'
     baseUrl: '/'
 
 paths:

@@ -6,11 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
 
-  <title><%=htmlWebpackPlugin.options.title%></title>
-  <base href="/" />
-  <meta name="description" content="A sample Angular2 express app"  />
-  <meta name="keywords" content="Angular, node.js, express.js, webpack, gulp.js" />
-  <meta name="author" content="Vladimir Ovsyukov <me@ovsyukov.info>" />
+  <title><%= htmlWebpackPlugin.options.opts.title %></title>
+  <base href="<%= htmlWebpackPlugin.options.opts.base %>" />
+  <meta name="description" content="<%= htmlWebpackPlugin.options.opts.desc %>"  />
+  <meta name="keywords" content="<%= htmlWebpackPlugin.options.opts.keywords %>" />
+  <meta name="author" content="<%= htmlWebpackPlugin.options.opts.author %>" />
 
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
     crossorigin="anonymous" />

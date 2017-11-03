@@ -23,6 +23,13 @@ module.exports = {
       {
         test: /\.(html|css)$/,
         loader: 'raw-loader'
+      },
+      {
+        test: /\.ejs$/,
+        include: [
+          path.join(__dirname, 'client')
+        ],
+        loader: 'ejs'
       }
     ]
   },
@@ -77,7 +84,7 @@ module.exports = {
       favicon: 'client/favicon.ico',
       xhtml: true,
       inject: 'body',
-      template: 'client/index.html',
+      template: 'client/index.ejs',
       minify: {
         collapseWhitespace: true,
         collapseInlineTagWhitespace: true,
@@ -91,7 +98,7 @@ module.exports = {
         removeStyleLinkTypeAttributes: true,
         useShortDoctype: true
       },
-      title: config.get('base.headOptions.title')
+      opts: config.get('base.headOptions')
 
     }),
     new webpack.optimize.CommonsChunkPlugin({
@@ -110,17 +117,6 @@ module.exports = {
         host: JSON.stringify(`//${process.env.HOST || 'localhost'}`),
         port: `${process.env.PORT || 80}`
       }
-    }),
-    new htmlWebpackPlugin({
-      cache: true,
-      hash: false,
-      inject: 'body',
-      template: './client/index.html',
-      favicon: './client/favicon.ico',
-      xhtml: true,
-      minify: false,
-      title: config.get('base.headOptions.title')
-
     }),
     new webpack.ProvidePlugin({
       "$": "jQuery",
