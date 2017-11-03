@@ -33,7 +33,7 @@
     "gulp:client:bundle": "gulp --type=production client:bundle --color",
     "gulp:server:compile": "gulp --type=production server:compile --color",
     "start": "cross-env NODE_ENV=production PORT=80 run-s prepare:prod forever:start",
-    "start:dev": "gulp --type=development --color",
+    "start:dev": "gulp --type=development | bunyan --color",
     "prepare:prod": "gulp --type=production compileBundle:prod --color",
     "forever:stop": "forever stopall",
     "forever:start": "node ./wwwroot | bunyan --color",

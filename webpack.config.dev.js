@@ -32,20 +32,20 @@ module.exports = {
     },
 
     loaders: [{
-      test: /\.component\.ts$/,
+      test: /\.ts$/,
       loader: 'awesome-typescript!angular2-template',
       include: [
         path.join(__dirname, 'client', 'app')
       ]
     },
-    {
-      test: /\.ts$/,
-      loader: 'awesome-typescript',
-      include: [
-        path.join(__dirname, 'client')
-      ],
-      exclude: /\.component\.ts$/
-    },
+    // {
+    //   test: /\.ts$/,
+    //   loader: 'awesome-typescript',
+    //   include: [
+    //     path.join(__dirname, 'client')
+    //   ],
+    //   exclude: /\.component\.ts$/
+    // },
     // {
     //   test: /\routes\.ts/,
     //   loader: 'awesome-typescript!angular2-router',
@@ -84,7 +84,7 @@ module.exports = {
       favicon: './client/favicon.ico',
       xhtml: true,
       minify: false,
-      headOptions: config.get('base.headOptions')
+      title: config.get('base.headOptions.title')
 
     }),
     new InlineChunkManifestHtmlWebpackPlugin(),

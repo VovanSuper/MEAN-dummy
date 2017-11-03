@@ -14,27 +14,20 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.component\.ts$/,
+        test: /\.ts$/,
         include: [
           path.resolve(__dirname, 'client')
         ],
         loader: 'awesome-typescript!angular2-template'
       },
       {
-        test: /\.ts$/,
-        loader: 'awesome-typescript',
-        include: [
-          path.resolve(__dirname, 'client')
-        ],
-        exclude: /\.component\.ts$/
-      }, 
-	  {
         test: /\.(html|css)$/,
         loader: 'raw-loader'
-      }]
+      }
+    ]
   },
   resolve: {
-    extensions: [ '', '.js', '.ts', '.html', '.css' ]
+    extensions: ['', '.js', '.ts', '.html', '.css']
   },
   devtool: 'inline-source-map',
   plugins: [
@@ -74,7 +67,7 @@ module.exports = {
       },
       mangle: {
         screw_ie8: true,
-        except: [ '$', 'webpackJsonp' ],
+        except: ['$', 'webpackJsonp'],
         keep_fnames: true
       }
     }),
@@ -99,7 +92,7 @@ module.exports = {
         useShortDoctype: true
       },
       title: config.get('base.headOptions.title')
-      
+
     }),
     new webpack.optimize.CommonsChunkPlugin({
       // names: [ 'polyfills', 'vendor', 'main' ],
@@ -126,11 +119,11 @@ module.exports = {
       favicon: './client/favicon.ico',
       xhtml: true,
       minify: false,
-      headOptions: config.get('base.headOptions')
+      title: config.get('base.headOptions.title')
 
     }),
     new webpack.ProvidePlugin({
-      "$"	    : "jQuery",
+      "$": "jQuery",
       "jQuery": "JQuery",
       "jquery": "JQuery",
       "toastr": "toastr"
