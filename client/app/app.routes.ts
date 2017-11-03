@@ -6,6 +6,7 @@ import { EventsResolverService } from './shared/module/providers/';
 
 export const ROUTES_DEFINITION: Routes = [
   { path: '', redirectTo: '/events', pathMatch: 'full' },
+  // { path: 'users', loadChildren: 'users/users.module#UsersModule' },
   { path: 'notfound', component: NotfoundComponent },
   { path: '**', redirectTo: '/notfound' }
 ];

@@ -12,5 +12,6 @@ module.exports = app => {
     .use(cors())
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({ extended: false }))
-    .use(app.middlewares.reqLogger) ;
+    .use(app.middlewares.reqLogger)
+    .use(app.middlewares.errorHandler)
 }

@@ -120,7 +120,6 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       "$": "jQuery",
-      "jQuery": "JQuery",
       "jquery": "JQuery",
       "toastr": "toastr"
     })

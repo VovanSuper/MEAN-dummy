@@ -17,19 +17,11 @@ module.exports = {
   devtool: 'cheap-module-inline-source-map',
   module: {
     loaders: [{
-      test: /\.component\.ts$/,
+      test: /\.ts$/,
       loader: 'awesome-typescript!angular2-template',
       include: [
-        path.resolve(__dirname, 'client', 'app')
-      ]
-    },
-    {
-      test: /\.ts$/,
-      loader: 'awesome-typescript',
-      exclude: /\.component\.ts/,
-      include: [
         path.resolve(__dirname, 'client')
-      ],
+      ]
     },
     {
       test: /\.css$/,
@@ -48,13 +40,6 @@ module.exports = {
     extensions: ['', '.js', '.ts', '.html', '.css']
   },
   plugins: [
-    // new htmlWebpackPlugin({
-    //   cache: false,
-    //   hash: false,
-    //   favicon: './client/favicon.ico',
-    //   xhtml: true,
-    //   template: './client/index.html'
-    // }),
     new webpack.DefinePlugin({
       app: {
         environment: JSON.stringify('test'),

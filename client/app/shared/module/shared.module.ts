@@ -5,9 +5,11 @@ import {
   canDeactivate,
   ErrorService,
   EventsResolverService,
-  RouteValidService,
+  EventRouteValidService,
+  UserRouteValidService,
   Toastr,
-  TOASTR_TOKEN
+  TOASTR_TOKEN,
+  UsersResolverService
 } from './providers/';
 
 declare const toastr: Toastr;
@@ -21,8 +23,10 @@ export class SharedServicesModule {
         { provide: 'canLeave', useValue: canDeactivate },
         { provide: TOASTR_TOKEN, useValue: toastr },
         { provide: ApiService, useClass: ApiService },
-        { provide: RouteValidService, useClass: RouteValidService },
+        { provide: EventRouteValidService, useClass: EventRouteValidService },
+        { provide: UserRouteValidService, useClass: UserRouteValidService },
         { provide: EventsResolverService, useClass: EventsResolverService },
+        { provide: UsersResolverService, useClass: UsersResolverService },
         ErrorService
       ]
     };

@@ -7,6 +7,6 @@ export interface IEvent {
   startTime?: Date,
   endTime?: Date,
   createdAt?: Date,
-  createdBy?: IUser,
+  createdBy?: string,
   participants?: IUser[];
 }

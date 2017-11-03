@@ -12,7 +12,6 @@ export class ApiService {
   
   constructor(private http: Http) { }
   
-
   public getEvents(): Promise<IEvent[]> {
     return this.getEventsJson().then(res => {
       if (res.err) throw new Error(res.err);
@@ -41,7 +40,7 @@ export class ApiService {
     }).catch(this.handleError);
   }
 
-  public cangeEventById(id: string, newEvent: IEvent): Promise<IEvent> {
+  public changeEventById(id: string, newEvent: IEvent): Promise<IEvent> {
     return this.changeEventByIdJson(id, newEvent).then(res => {
       if (res.err) throw new Error(res.err);
       return Promise.resolve(res.data as IEvent);

@@ -1,36 +1,36 @@
-<nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
-  <div class="container">
-    <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar" aria-controls="navbarSupportedContent"
-      aria-expanded="false" aria-label="Toggle navigation">
-      &#9776;
-    </button>
+<nav class="navbar navbar-inverse bg-primary fixed-top-header">
+  <button class="navbar-toggler navbar-toggler-right" type="button" 
+    data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    <div id="navbarSupportedContent" class="collapse navbar-toggleable-xs">
-      <div class="navbar-brand logo">
-        <a> <img class="img-responsive img-fluid logo" src="logo.png" alt="logo" /> </a>
-      </div>
-      <ul class="nav navbar-nav mr-auto">
-        <li class="nav-item active" >
-          <a title="Home" routerLink="/" class="nav-link hvr-underline-from-left1" aria-expanded="false" data-scroll="" data-options="easing: easeOutQuart">
-            LMIT 2016
-          </a>
-        </li>
-        <li class="nav-item " >
-          <a title="Events" routerLink="/events" class="nav-link">Subjects</a>
-        </li>
-        <!-- <li class="nav-item " routerLink="/agenda">
+  <div id="navbarContent" class="collapse navbar-collapse navbar-toggleable-xs">
+    <a class="navbar-brand logo">
+      <!-- <img class="img-responsive img-fluid logo" src="logo.png" alt="logo" />  -->
+      BRAND TEXT
+    </a>
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a title="Home" [routerLink]="['/']" class="nav-link hvr-underline-from-left1" aria-expanded="false" data-scroll="" data-options="easing: easeOutQuart">
+          Home
+        </a>
+      </li>
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a title="Events" [routerLink]="['/events']" class="nav-link">Events</a>
+      </li>
+      <!-- <li class="nav-item " routerLink="/agenda">
           <a title="Agenda" class="nav-link">Agenda</a>
         </li> -->
-        <li class="nav-item" routerLink="/users">
-          <a title="Speakers" class="nav-link">Speakers</a>
-        </li>
-        <!-- <li class="nav-item pull-right" routerLink="/login">
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a title="Speakers" [routerLink]="['/users']" class="nav-link">Users</a>
+      </li>
+      <!-- <li class="nav-item pull-right" routerLink="/login">
           <a title="Log in" class="nav-link">Speakers</a>
         </li>
         <li class="nav-item pull-right" routerLink="/logout">
           <a title="Log out" class="nav-link">Speakers</a>
         </li> -->
-      </ul>
-    </div>
+    </ul>
   </div>
 </nav>

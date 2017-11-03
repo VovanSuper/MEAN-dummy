@@ -11,9 +11,9 @@ import { AppComponent } from './app/app.component';
 import { HeaderComponent } from './header/';
 import { NotfoundComponent } from './notfound/';
 import { EventsModule } from './events/';
-// import { UsersModule } from "./users/";
-// import { TabsComponent } from "./tabs/";
-// import { MainComponent } from "./main/";
+import { UsersModule } from './users/';
+// import { TabsComponent } from './tabs/';
+// import { MainComponent } from './main/';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,7 @@ import { EventsModule } from './events/';
     SharedServicesModule.forRoot(),
     // TabsModule.forRoot(),
     EventsModule,
-    // UsersModule,
+    UsersModule,
     AppRoutes
   ],
   bootstrap: [ AppComponent ]

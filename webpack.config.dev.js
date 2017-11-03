@@ -35,7 +35,7 @@ module.exports = {
       test: /\.ts$/,
       loader: 'awesome-typescript!angular2-template',
       include: [
-        path.join(__dirname, 'client', 'app')
+        path.join(__dirname, 'client')
       ]
     },
     // {
@@ -108,7 +108,6 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       "$": "jQuery",
-      "jQuery": "JQuery",
       "jquery": "JQuery",
       "toastr": "toastr"
     })

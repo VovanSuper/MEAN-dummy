@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { EventDetailsComponent, EventsComponent, NotSelectedComponent } from './components/';
-import { RouteValidService, EventsResolverService } from '../shared/module/providers/';
+import { EventRouteValidService, EventsResolverService } from '../shared/module/providers/';
 
 export const EVENTS_ROUTES: Routes = [
   {
@@ -10,7 +10,7 @@ export const EVENTS_ROUTES: Routes = [
       {
         path: ':id/details',
         component: EventDetailsComponent,
-        canActivate: [RouteValidService],
+        canActivate: [EventRouteValidService],
         canDeactivate: ['canLeave']
       }
     ]

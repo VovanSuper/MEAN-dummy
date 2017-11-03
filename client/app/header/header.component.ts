@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-require('file?name=[name].[ext]!./assets/logo.png');
+import 'file?name=[name].[ext]!./assets/logo.png';
 
 @Component({
   selector: 'em-header',

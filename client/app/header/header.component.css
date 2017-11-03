@@ -1,40 +1,32 @@
 .fixed-top-header {
-    padding-top: 2em !important;
-}*/
-
-.logo {
-    width: 35rem;
-    height: 10rem;
-}
-
-.fixed-top-header {
-    /*position: fixed;*/
-    border-bottom: 1px solid #d0d0d0;
-}
-.main-header {
-    /*position: relative;
-    width: 100%;
-    left: 0px;
-    top: 0px;
-    z-index: 999;*/
-    background-color: #aaa;
+    min-height: 4rem;
+    border-bottom: 1px solid #8d3232;
+    
+    /* border-bottom: 1px solid #8d3232;
+    color: #ccc;
     transition: all 300ms ease;
     -moz-transition: all 300ms ease;
     -webkit-transition: all 300ms ease;
     -ms-transition: all 300ms ease;
-    -o-transition: all 300ms ease;
+    -o-transition: all 300ms ease; */
 }
-
-.navbar-collapse > ul > li.current-menu-parent > a {
-    background-color: #e2562f;
-    cursor: pointer;
+/* .fixed-top-header::after {
+    display: table;
+    content: '';
+    border-bottom: 1px solid #771b1b;
+} */
+.fixed-top-header > button {
+    background-color: #8d3232;
+}
+.navbar-collapse > ul > li.active > a{
+    color: #e2562f;
 }
 /*.main-menu {
     position: relative;
     float: right;
     display: block;*/
 
-.main-menu .navbar-collapse > ul > li.current-menu-parent > a {
+.main-menu .navbar-collapse > ul >li.active {
     background-color: #aaa
 }
 
