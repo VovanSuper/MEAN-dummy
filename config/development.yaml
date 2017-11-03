@@ -26,6 +26,7 @@ paths:
 
 database:
   host: 'mongodb://test:test@ds048279.mlab.com:48279/event_man'
+  db: 'event_man'
   creds:
     user: 'test'
     password: 'test'

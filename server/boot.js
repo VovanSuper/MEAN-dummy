@@ -9,7 +9,7 @@ module.exports = app => {
   process.on('SIGINT', arg => {
     app.db.mongoose.connection.close(() => {
       app.locals.Logger.error('Exiting!.. Closing connection to db...');
-      process.emit('disconnect');
+      // process.emit('disconnect');
       process.emit('exit', 0);
     })
   });

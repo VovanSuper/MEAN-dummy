@@ -6,7 +6,7 @@ module.exports = (gulp, root) => (taskName, taskfileName, params) => {
   params.gulp = gulp;
   let fullTaskPath = path.join(root, 'tasks', taskfileName);
 
-  gulp.task(taskName, (callback) => {
+  return gulp.task(taskName, (callback) => {
     let task = require(fullTaskPath).call(this, params);
     return task(callback);
   });

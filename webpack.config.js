@@ -98,7 +98,7 @@ module.exports = {
         removeStyleLinkTypeAttributes: true,
         useShortDoctype: true
       },
-      headOptions: config.get('base.headOptions')
+      title: config.get('base.headOptions.title')
       
     }),
     new webpack.optimize.CommonsChunkPlugin({
@@ -117,6 +117,17 @@ module.exports = {
         host: JSON.stringify(`//${process.env.HOST || 'localhost'}`),
         port: `${process.env.PORT || 80}`
       }
+    }),
+    new htmlWebpackPlugin({
+      cache: true,
+      hash: false,
+      inject: 'body',
+      template: './client/index.html',
+      favicon: './client/favicon.ico',
+      xhtml: true,
+      minify: false,
+      headOptions: config.get('base.headOptions')
+
     }),
     new webpack.ProvidePlugin({
       "$"	    : "jQuery",

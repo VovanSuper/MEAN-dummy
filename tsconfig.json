@@ -6,6 +6,6 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,
-    "lib": [ "dom", "es2016" ]
+    "lib": [ "dom", "es2015" ]
   }
 }

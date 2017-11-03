@@ -20,6 +20,6 @@ module.exports = app => {
         }
         next();
       })
-      .catch(err => { return Handler.Error(resp, 422, err, `Failed to find item with id ${id}`) });
+      .catch(err => Handler.Error(resp, 422, err, `Failed to find item with id ${id}`));
   }
 }
