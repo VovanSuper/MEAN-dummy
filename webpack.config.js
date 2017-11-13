@@ -101,6 +101,7 @@ module.exports = {
         removeStyleLinkTypeAttributes: true,
         useShortDoctype: true
       },
+      title: config.get('base.headOptions.title'),
       opts: config.get('base.headOptions')
     }),
     new webpack.optimize.CommonsChunkPlugin({

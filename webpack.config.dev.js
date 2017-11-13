@@ -82,7 +82,7 @@ module.exports = {
       cache: true,
       hash: true,
       inject: 'body',
-      template: './client/index.ejs',
+      template: '!!ejs?name=[name].[ext]!./client/index.ejs',
       favicon: './client/favicon.ico',
       xhtml: true,
       showErrors: true,
@@ -91,9 +91,9 @@ module.exports = {
       opts: config.get('base.headOptions')
     }),
     new InlineChunkManifestHtmlWebpackPlugin(),
-    // new scriptExtHtmlWebpackPlugin({
-    //   defaultAttribute: 'async'
-    // }),
+    new scriptExtHtmlWebpackPlugin({
+      defaultAttribute: 'async'
+    }),
     new webpack.DefinePlugin({
       app: {
         environment: JSON.stringify('development'),
