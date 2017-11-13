@@ -16,20 +16,20 @@ module.exports = {
   watch: true,
   devtool: 'source-map',
   module: {
-    preLoaders: [
-      {
-        test: /\.ts$/,
-        include: [
-          path.resolve(__dirname, 'client')
-        ],
-        loader: 'tslint-loader'
-      }
-    ],
+    // preLoaders: [
+    //   {
+    //     test: /\.ts$/,
+    //     include: [
+    //       path.resolve(__dirname, 'client')
+    //     ],
+    //     loader: 'tslint-loader'
+    //   }
+    // ],
 
-    tslint: {
-      emitErrors: true,
-      failOnHint: false
-    },
+    // tslint: {
+    //   emitErrors: true,
+    //   failOnHint: false
+    // },
 
     loaders: [{
       test: /\.ts$/,
@@ -86,7 +86,7 @@ module.exports = {
     }),
     new htmlWebpackPlugin({
       cache: true,
-      hash: false,
+      hash: true,
       inject: 'body',
       template: './client/index.ejs',
       favicon: './client/favicon.ico',

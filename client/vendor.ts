@@ -13,5 +13,6 @@ import 'rxjs/add/operator/toPromise';
 import 'file?name=[name].[ext]!toastr/build/toastr.css';
 
 import 'jquery';
+
 import 'bootstrap/dist/js/bootstrap';
 import 'toastr';
