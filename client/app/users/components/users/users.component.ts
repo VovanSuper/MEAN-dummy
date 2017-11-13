@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { IUser } from '../../../shared/';
 
 @Component({
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  templateUrl: 'users.component.html',
+  styleUrls: ['users.component.css']
 })
 export class UsersComponent implements OnInit {
   

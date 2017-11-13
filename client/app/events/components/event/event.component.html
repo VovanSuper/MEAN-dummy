@@ -1,4 +1,4 @@
-<div class="card card-info" style="max-width: 18rem; min-width: 15rem;">
+<div class="card card-info" >
   <div class="card-block">
     <strong class="card-title">Event : </strong><em>{{event.name}}</em>
     <hr />
@@ -15,6 +15,9 @@
       </div>
     </div>
     <hr />
-    <a class="btn btn-primary btn-sm btn-block" [routerLink]="['/events', event.id, 'details']" role="button" aria-pressed="true">Details</a>
+    <a class="btn btn-primary btn-sm btn-block" role="button" aria-pressed="true"
+      [routerLink]="['/events', event.id, 'details']">
+      Details
+    </a>
   </div>
 </div>

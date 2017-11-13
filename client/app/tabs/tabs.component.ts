@@ -6,7 +6,7 @@
 
 // @Component({
 //   selector: 'em-tabs',
-//   templateUrl: './tabs.component.html'
+//   templateUrl: 'tabs.component.html'
 // })
 // export class TabsComponent implements OnInit {
 

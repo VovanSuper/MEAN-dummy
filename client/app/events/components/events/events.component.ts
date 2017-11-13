@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { IEvent } from '../../../shared/';
 
 @Component({
-  templateUrl: './events.component.html',
-  styleUrls: ['./events.component.css']
+  templateUrl: 'events.component.html',
+  styleUrls: ['events.component.css']
 })
 export class EventsComponent implements OnInit {
   events: IEvent[];

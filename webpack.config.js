@@ -25,11 +25,14 @@ module.exports = {
         loader: 'raw-loader'
       },
       {
-        test: /\.ejs$/,
+        test: /styles\.css$/,
+        loader: 'file?name=[name].[ext]',
         include: [
           path.join(__dirname, 'client')
         ],
-        loader: 'ejs'
+        exclude: [
+          path.join(__dirname, 'client', 'app')
+        ]
       }
     ]
   },
@@ -38,12 +41,11 @@ module.exports = {
   },
   devtool: 'inline-source-map',
   plugins: [
-    //new webpack.ContextReplacementPlugin(
-    //  // The (\\|\/) piece accounts for path separators in *nix and Windows
-    //  /angular(\\|\/)core(\\|\/)@angular/,
-    //  helpers.root('./src'), // location of your src
-    //  {} // a map of your routes
-    //),
+    new webpack.ContextReplacementPlugin(
+      // The (\\|\/) piece accounts for path separators in *nix and Windows
+      /angular(\\|\/)core(\\|\/)@angular/,
+      path.join('client')
+    ),
     new V8LazyParseWebpackPlugin(),
     new webpack.optimize.DedupePlugin(),
 
@@ -84,12 +86,13 @@ module.exports = {
       favicon: 'client/favicon.ico',
       xhtml: true,
       inject: 'body',
-      template: 'client/index.ejs',
+      template: '!!ejs!./client/index.ejs',
       minify: {
         collapseWhitespace: true,
         collapseInlineTagWhitespace: true,
         keepClosingSlash: true,
         minifyCSS: true,
+        minifyJS: true,
         removeComments: true,
         removeRedundantAttributes: true,
         removeEmptyAttributes: false,
@@ -99,7 +102,6 @@ module.exports = {
         useShortDoctype: true
       },
       opts: config.get('base.headOptions')
-
     }),
     new webpack.optimize.CommonsChunkPlugin({
       // names: [ 'polyfills', 'vendor', 'main' ],

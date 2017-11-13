@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'em-event',
-  templateUrl: 'event.component.html'
+  templateUrl: 'event.component.html',
+  styleUrls: ['event.component.css']
 })
 
 export class EventComponent {

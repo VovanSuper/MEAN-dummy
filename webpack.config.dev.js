@@ -16,20 +16,20 @@ module.exports = {
   watch: true,
   devtool: 'source-map',
   module: {
-    preLoaders: [
-      {
-        test: /\.ts$/,
-        include: [
-          path.resolve(__dirname, 'client')
-        ],
-        loader: 'tslint-loader'
-      }
-    ],
+    // preLoaders: [
+    //   {
+    //     test: /\.ts$/,
+    //     include: [
+    //       path.resolve(__dirname, 'client')
+    //     ],
+    //     loader: 'tslint-loader'
+    //   }
+    // ],
 
-    tslint: {
-      emitErrors: true,
-      failOnHint: false
-    },
+    // tslint: {
+    //   emitErrors: true,
+    //   failOnHint: false
+    // },
 
     loaders: [{
       test: /\.ts$/,
@@ -38,21 +38,6 @@ module.exports = {
         path.join(__dirname, 'client')
       ]
     },
-    // {
-    //   test: /\.ts$/,
-    //   loader: 'awesome-typescript',
-    //   include: [
-    //     path.join(__dirname, 'client')
-    //   ],
-    //   exclude: /\.component\.ts$/
-    // },
-    // {
-    //   test: /routes\.ts/,
-    //   loader: 'awesome-typescript!angular2-router',
-    //   include: [
-    //     path.resolve(__dirname, 'client', 'app')
-    //   ]
-    // },
     {
       test: /\.(html|css)$/,
       loader: 'raw',
@@ -61,12 +46,21 @@ module.exports = {
       ]
     },
     {
-      test: /\.ejs$/,
+      test: /styles\.css$/,
+      loader: 'file?name=[name].[ext]',
       include: [
         path.join(__dirname, 'client')
-      ],
-      loader: 'ejs'
+      ]
     }
+
+    // , {
+    //   test: /routes\.ts/,
+    //   loader: 'awesome-typescript!angular2-router',
+    //   include: [
+    //     path.resolve(__dirname, 'client', 'app')
+    //   ]
+    // },
+ 
     ]
   },
 
@@ -86,19 +80,20 @@ module.exports = {
     }),
     new htmlWebpackPlugin({
       cache: true,
-      hash: false,
+      hash: true,
       inject: 'body',
       template: './client/index.ejs',
       favicon: './client/favicon.ico',
       xhtml: true,
+      showErrors: true,
       minify: false,
+      title: config.get('base.headOptions.title'),
       opts: config.get('base.headOptions')
-
     }),
     new InlineChunkManifestHtmlWebpackPlugin(),
-    new scriptExtHtmlWebpackPlugin({
-      defaultAttribute: 'async'
-    }),
+    // new scriptExtHtmlWebpackPlugin({
+    //   defaultAttribute: 'async'
+    // }),
     new webpack.DefinePlugin({
       app: {
         environment: JSON.stringify('development'),
@@ -107,7 +102,7 @@ module.exports = {
       }
     }),
     new webpack.ProvidePlugin({
-      "$": "jQuery",
+      "$"     : "jQuery",
       "jquery": "JQuery",
       "toastr": "toastr"
     })

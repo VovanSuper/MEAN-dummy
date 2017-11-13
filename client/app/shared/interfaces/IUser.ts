@@ -1,11 +1,9 @@
-import { IEvent } from './'
+import { IEntity } from './'
 
-export interface IUser {
-  id: string;
-  name: string;
+export interface IUser extends IEntity {
   username: string;
   email?: string;
   registered?: Date,
   work_place?: string;
-  events?: IEvent[]
+  events?: IEntity[]
 }

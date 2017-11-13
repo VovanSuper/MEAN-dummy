@@ -1,5 +1,5 @@
-import path from 'path';
-import chalk from 'chalk';
+import path                from 'path';
+import chalk               from 'chalk';
 import { log, wpReporter } from './helpers/functions';
 
 const $ = require('gulp-load-plugins')({
@@ -16,7 +16,8 @@ module.exports = (params) => (callback) => {
     params.gulp.src([
       path.join(params.paths.clientSrc, 'polyfills.ts'),
       path.join(params.paths.clientSrc, 'vendor.ts'),
-      path.join(params.paths.clientSrc, 'main.ts')
+      path.join(params.paths.clientSrc, 'main.ts'),
+      path.join(params.paths.clientSrc, 'styles.css')
     ]
       , !isProd ? { since: $.memoryCache.lastMtime('bundleClient') } : {}
     )
@@ -27,16 +28,14 @@ module.exports = (params) => (callback) => {
       .on('data', () => {
         setTimeout(callback, 1500)   //TODO: improve!! now is quite a durty hack to continue gulp.series pipeline exec
       })
-      .on('finish', callback)
   )
-  .on('error', () => {
-    if (!isProd) $.memoryCache.flush('bundleClient');
-    $.notify.onError(err => ({
-      MainTitle: 'Error during CLIENT BUNDLING pipeline',
-      ErrorMsg: err.message,
-      FullError: JSON.stringify(err)
-    }));
-  })
-
-  .on('change', () => { if (!isProd) $.memoryCache.update('bundleClient') });
+    .on('error', () => {
+      if (!isProd) $.memoryCache.flush('bundleClient');
+      $.notify.onError(err => ({
+        MainTitle: 'Error during CLIENT BUNDLING pipeline',
+        ErrorMsg: err.message,
+        FullError: JSON.stringify(err)
+      }));
+    })
+    .on('change', () => { if (!isProd) $.memoryCache.update('bundleClient') });
 }
