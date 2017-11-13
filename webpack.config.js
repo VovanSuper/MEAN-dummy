@@ -81,10 +81,10 @@ module.exports = {
       }
     }),
     new htmlWebpackPlugin({
-      cache: true,
-      hash: true,
+      cache: false,
+      hash: false,
       favicon: 'client/favicon.ico',
-      xhtml: true,
+      xhtml: false,
       inject: 'body',
       template: '!!ejs!./client/index.ejs',
       minify: {

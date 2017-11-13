@@ -9,9 +9,9 @@ export class ApiService {
   hostUrl = `${app.host}:${app.port}` || '//localhost:8080';
   eventsUrl = `${this.hostUrl}/events`;
   usersUrl = `${this.hostUrl}/users`;
-  
+
   constructor(private http: Http) { }
-  
+
   public getEvents(): Promise<IEvent[]> {
     return this.getEventsJson().then(res => {
       if (res.err) throw new Error(res.err);
@@ -54,7 +54,7 @@ export class ApiService {
     }).catch(this.handleError);
   }
 
-    public getUsers(): Promise<IUser[]> {
+  public getUsers(): Promise<IUser[]> {
     return this.getUsersJson().then(res => {
       if (res.err) throw new Error(res.err);
       return Promise.resolve(res.data as IUser[]);
@@ -100,10 +100,14 @@ export class ApiService {
   * Private methods for http crud calls to server wrapping actual server responce object 
   */
   private getEventsJson(): Promise<{ operationStatus: string, data?: IEvent[], err?: string }> {
-    return this.http.get(`${this.eventsUrl}/all`).map((resp: Response) => resp.json()).toPromise();
+    const headers = new Headers({ 'Accept': 'application/json' })
+    return this.http.get(`${this.eventsUrl}/all`, { headers })
+      .map((resp: Response) => resp.json()).toPromise();
   }
   private getEventByIdJson(id: string): Promise<{ operationStatus: string, data?: IEvent, err?: string }> {
-    return this.http.get(`${this.eventsUrl}/${id}`).map((resp: Response) => resp.json()).toPromise();
+    const headers = new Headers({ 'Accept': 'application/json' })
+    return this.http.get(`${this.eventsUrl}/${id}`, { headers })
+      .map((resp: Response) => resp.json()).toPromise();
   }
   private deleteEventByIdJson(id: string): Promise<{ operationStatus: string, err?: string }> {
     return this.http.delete(`${this.eventsUrl}/${id}`).map((resp: Response) => resp.json()).toPromise();
@@ -125,7 +129,7 @@ export class ApiService {
     return this.http.patch(`${this.eventsUrl}/${id}`, newEvent, opts).map((resp: Response) => resp.json()).toPromise();
   }
 
-    private getUsersJson(): Promise<{ operationStatus: string, data?: IUser[], err?: string }> {
+  private getUsersJson(): Promise<{ operationStatus: string, data?: IUser[], err?: string }> {
     return this.http.get(`${this.usersUrl}/all`).map((resp: Response) => resp.json()).toPromise();
   }
   private getUserByIdJson(id: string): Promise<{ operationStatus: string, data?: IUser, err?: string }> {
