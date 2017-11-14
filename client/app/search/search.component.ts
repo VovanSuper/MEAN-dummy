@@ -17,10 +17,10 @@ export class SearchComponent implements OnInit {
     this.searchTerm =  new FormControl('', [Validators.required, Validators.minLength(1)]);
     this.searchForm = new FormGroup({
       "searchTerm" : this.searchTerm
-    })
+    });
   }
 
   search() {
-    console.log(<string>this.searchForm.value['searchTerm'])
+    console.log(<string>this.searchForm.value['searchTerm']);
   }
 }
