@@ -50,6 +50,9 @@ module.exports = {
       loader: 'file?name=[name].[ext]',
       include: [
         path.join(__dirname, 'client')
+      ],
+      exlude: [
+        path.join(__dirname, 'client', 'app')
       ]
     }
 
@@ -72,7 +75,7 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new WebpackMd5Hash(),
     new webpack.optimize.CommonsChunkPlugin({
-      //names: ['polyfills', 'vendor'],
+      names: ['polyfills', 'vendor'],
       children: true,
       async: true,
       minChunks: 2,
@@ -80,12 +83,12 @@ module.exports = {
     }),
     new htmlWebpackPlugin({
       cache: true,
-      hash: true,
-      inject: 'body',
-      template: '!!ejs?name=[name].[ext]!./client/index.ejs',
+      hash: false,
+      inject: 'head',
+      template: './client/index.ejs',
       favicon: './client/favicon.ico',
       xhtml: true,
-      showErrors: true,
+      // showErrors: true,
       minify: false,
       title: config.get('base.headOptions.title'),
       opts: config.get('base.headOptions')

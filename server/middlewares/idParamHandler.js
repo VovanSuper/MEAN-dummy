@@ -18,7 +18,7 @@ module.exports = app => {
             resp.locals.unknown = item || undefined;
             break;
         }
-        return next();
+        next();
       })
       .catch(err => Handler.Error(resp, 422, err, `Failed to find item with id ${id}`));
   }

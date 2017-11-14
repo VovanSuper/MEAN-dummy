@@ -5,6 +5,7 @@ import '@angular/core';
 import '@angular/common';
 import '@angular/http';
 import '@angular/router';
+
 // RxJS
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -12,8 +13,8 @@ import 'rxjs/add/operator/toPromise';
 // other
 import 'file?name=[name].[ext]!toastr/build/toastr.css';
 
+import 'jquery/dist/jquery.min';
 
-// import 'jquery/dist/jquery';
 import 'toastr';
 
-import 'bootstrap/dist/js/bootstrap';
+import 'bootstrap/dist/js/bootstrap.min';

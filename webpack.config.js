@@ -37,7 +37,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.ts', '.html', '.css']
+    extensions: ['', '.js', '.ts', '.html', '.css', 'ejs']
   },
   devtool: 'inline-source-map',
   plugins: [
@@ -84,21 +84,21 @@ module.exports = {
       cache: false,
       hash: false,
       favicon: 'client/favicon.ico',
-      xhtml: false,
+      xhtml: true,
       inject: 'body',
       template: '!!ejs!./client/index.ejs',
       minify: {
         collapseWhitespace: true,
         collapseInlineTagWhitespace: true,
-        keepClosingSlash: true,
+        keepClosingSlash: false,
         minifyCSS: true,
-        minifyJS: true,
+        minifyJS: false,
         removeComments: true,
         removeRedundantAttributes: true,
         removeEmptyAttributes: false,
-        removeOptionalTags: true,
-        removeScriptTypeAttributes: true,
-        removeStyleLinkTypeAttributes: true,
+        removeOptionalTags: false,
+        removeScriptTypeAttributes: false,
+        removeStyleLinkTypeAttributes: false,
         useShortDoctype: true
       },
       title: config.get('base.headOptions.title'),

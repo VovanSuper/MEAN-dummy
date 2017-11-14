@@ -16,13 +16,13 @@ module.exports = (params) => (callback) => {
     params.gulp.src([
       path.join(params.paths.clientSrc, 'polyfills.ts'),
       path.join(params.paths.clientSrc, 'vendor.ts'),
-      path.join(params.paths.clientSrc, 'main.ts'),
-      path.join(params.paths.clientSrc, 'styles.css')
+      path.join(params.paths.clientSrc, 'styles.css'),
+      path.join(params.paths.clientSrc, 'main.ts')
     ]
-      , !isProd ? { since: $.memoryCache.lastMtime('bundleClient') } : {}
+      // , !isProd ? { since: $.memoryCache.lastMtime('bundleClient') } : {}
     )
     , $.vinylNamed()
-    , $.if(!isProd, $.memoryCache('bundleClient'))
+    // , $.if(!isProd, $.memoryCache('bundleClient'))
     , $.webpackStream(require(params.paths.webpackfile), require('webpack'), wpReporter)
     , params.gulp.dest(params.paths.clientDist)
       .on('data', () => {
@@ -30,12 +30,12 @@ module.exports = (params) => (callback) => {
       })
   )
     .on('error', () => {
-      if (!isProd) $.memoryCache.flush('bundleClient');
+      // if (!isProd) $.memoryCache.flush('bundleClient');
       $.notify.onError(err => ({
         MainTitle: 'Error during CLIENT BUNDLING pipeline',
         ErrorMsg: err.message,
         FullError: JSON.stringify(err)
       }));
     })
-    .on('change', () => { if (!isProd) $.memoryCache.update('bundleClient') });
+    // .on('change', () => { if (!isProd) $.memoryCache.update('bundleClient') });
 }
