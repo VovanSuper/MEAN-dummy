@@ -1,4 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { HttpModule } from '@angular/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MomentModule } from 'angular2-moment';
 
 import {
   ApiService,
@@ -9,12 +12,28 @@ import {
   UserRouteValidService,
   Toastr,
   TOASTR_TOKEN,
-  UsersResolverService
-} from './providers/';
+  UsersResolverService,
+  AuthGuard,
+  AuthService,
+  DataStorageService,
+  HttpHelpersService,
+  UserStoreService
+} from './services/';
 
 declare const toastr: Toastr;
 
-@NgModule({})
+@NgModule({
+  imports: [
+    ReactiveFormsModule,
+    HttpModule,
+    MomentModule
+  ],
+  exports: [
+    ReactiveFormsModule,
+    HttpModule,
+    MomentModule
+  ]
+})
 export class SharedServicesModule {
   static forRoot(): ModuleWithProviders {
     return {
@@ -22,12 +41,17 @@ export class SharedServicesModule {
       providers: [
         { provide: 'canLeave', useValue: canDeactivate },
         { provide: TOASTR_TOKEN, useValue: toastr },
-        { provide: ApiService, useClass: ApiService },
+        { provide: ErrorService, useClass: ErrorService },
         { provide: EventRouteValidService, useClass: EventRouteValidService },
         { provide: UserRouteValidService, useClass: UserRouteValidService },
         { provide: EventsResolverService, useClass: EventsResolverService },
         { provide: UsersResolverService, useClass: UsersResolverService },
-        ErrorService
+        { provide: DataStorageService, useClass: DataStorageService },
+        { provide: UserStoreService, useClass: UserStoreService },
+        { provide: HttpHelpersService, useClass: HttpHelpersService },
+        { provide: ApiService, useClass: ApiService },
+        { provide: AuthService, useClass: AuthService },
+        { provide: AuthGuard, useClass: AuthGuard }
       ]
     };
   }

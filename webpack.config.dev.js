@@ -16,20 +16,20 @@ module.exports = {
   watch: true,
   devtool: 'source-map',
   module: {
-    preLoaders: [
-      {
-        test: /\.ts$/,
-        include: [
-          path.resolve(__dirname, 'client')
-        ],
-        loader: 'tslint-loader'
-      }
-    ],
+    // preLoaders: [
+    //   {
+    //     test: /\.ts$/,
+    //     include: [
+    //       path.resolve(__dirname, 'client')
+    //     ],
+    //     loader: 'tslint-loader'
+    //   }
+    // ],
 
-    tslint: {
-      emitErrors: true,
-      failOnHint: false
-    },
+    // tslint: {
+    //   emitErrors: true,
+    //   failOnHint: false
+    // },
 
     loaders: [{
       test: /\.ts$/,
@@ -53,6 +53,16 @@ module.exports = {
     //     path.resolve(__dirname, 'client', 'app')
     //   ]
     // },
+    // {
+    //   test: /styles\.css$/,
+    //   loader: 'file?name=[name].[ext]',
+    //   include: [
+    //     path.join(__dirname, 'client')
+    //   ],
+    //   exclude: [
+    //     path.join(__dirname, 'client', 'app')
+    //   ]
+    // },
     {
       test: /\.(html|css)$/,
       loader: 'raw',
@@ -61,7 +71,7 @@ module.exports = {
       ]
     },
     {
-      test: /\.ejs$/,
+      test: /index\.ejs$/,
       include: [
         path.join(__dirname, 'client')
       ],
@@ -92,6 +102,7 @@ module.exports = {
       favicon: './client/favicon.ico',
       xhtml: true,
       minify: false,
+      title: config.get('base.headOptions.title'),
       opts: config.get('base.headOptions')
 
     }),

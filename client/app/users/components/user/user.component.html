@@ -1,24 +1,38 @@
-<div class="card card-info" style="max-width: 18rem; width: 15rem;">
+<div class="card card-info">
   <div class="card-block">
-    <strong class="card-title">Name: </strong><em>{{user?.name}}</em>
+    <strong class="card-title">Name: </strong>
+    <em>{{user?.name}}</em>
     <hr />
     <div class="card-text">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-4"><small>Registered: </small></div>
-          <div class="pull-right"><i>{{user?.registered | amUtc | amDateFormat: 'DD.MM.YYY'}}</i></div>
+          <div class="col-3">
+            <small>Registered: </small>
+          </div>
+          <div class="col-9">
+            <i>{{user?.registered | amUtc | amDateFormat: 'DD/MM/YY'}}</i>
+          </div>
         </div>
         <div class="row">
-          <div class="col-4"><small>Username: </small></div>
-          <div class="pull-right"><i>{{user?.username}}</i></div>
+          <div class="col-3">
+            <small>Username: </small>
+          </div>
+          <div class="col-9">
+            <i>{{user?.username}}</i>
+          </div>
         </div>
         <div class="row">
-          <div class="col-4"><small>Email: </small></div>
-          <div class="pull-right"><i>{{user?.email}}</i></div>
+          <div class="col-3">
+            <small>Email: </small>
+          </div>
+          <div class="col-9 pull-right">
+            <i>{{user?.email}}</i>
+          </div>
         </div>
       </div>
     </div>
-    <hr />
-    <a class="btn btn-primary btn-sm btn-block" [routerLink]="['/users', user.id, 'details']" role="button" aria-pressed="true">Details</a>
+    <div class="card-footer">
+      <a class="btn btn-primary btn-sm btn-block" [routerLink]="['/users', user.id, 'details']" role="button" aria-pressed="true">Details</a>
+    </div>
   </div>
 </div>

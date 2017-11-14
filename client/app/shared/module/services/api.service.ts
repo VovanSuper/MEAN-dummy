@@ -3,15 +3,19 @@ import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { IEvent, IUser } from '../../interfaces/';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import { HttpHelpersService } from './http-helpers.service';
 
 @Injectable()
 export class ApiService {
   hostUrl = `${app.host}:${app.port}` || '//localhost:8080';
   eventsUrl = `${this.hostUrl}/events`;
   usersUrl = `${this.hostUrl}/users`;
-  
-  constructor(private http: Http) { }
-  
+  opts: RequestOptions = null;
+
+  constructor(private http: Http, private helpersSvc: HttpHelpersService) {
+    this.opts = this.helpersSvc.getBaseRequestOptions();
+  }
+
   public getEvents(): Promise<IEvent[]> {
     return this.getEventsJson().then(res => {
       if (res.err) throw new Error(res.err);
@@ -54,7 +58,7 @@ export class ApiService {
     }).catch(this.handleError);
   }
 
-    public getUsers(): Promise<IUser[]> {
+  public getUsers(): Promise<IUser[]> {
     return this.getUsersJson().then(res => {
       if (res.err) throw new Error(res.err);
       return Promise.resolve(res.data as IUser[]);
@@ -100,55 +104,58 @@ export class ApiService {
   * Private methods for http crud calls to server wrapping actual server responce object 
   */
   private getEventsJson(): Promise<{ operationStatus: string, data?: IEvent[], err?: string }> {
-    return this.http.get(`${this.eventsUrl}/all`).map((resp: Response) => resp.json()).toPromise();
+    return this.http.get(`${this.eventsUrl}/all`, this.opts)
+      .map((resp: Response) => resp.json()).toPromise();
   }
   private getEventByIdJson(id: string): Promise<{ operationStatus: string, data?: IEvent, err?: string }> {
-    return this.http.get(`${this.eventsUrl}/${id}`).map((resp: Response) => resp.json()).toPromise();
+    return this.http.get(`${this.eventsUrl}/${id}`, this.opts)
+      .map((resp: Response) => resp.json()).toPromise();
   }
   private deleteEventByIdJson(id: string): Promise<{ operationStatus: string, err?: string }> {
-    return this.http.delete(`${this.eventsUrl}/${id}`).map((resp: Response) => resp.json()).toPromise();
-  }
-  private createEventJson(event: IEvent): Promise<{ operationStatus: string, data?: IEvent, err?: string }> {
-    const headers = new Headers({ 'Content-Type': 'application/json;charset=utf-8' });
-    const opts = new RequestOptions({ headers: headers });
-    return this.http.post(`${this.eventsUrl}`, event, opts)
+    return this.http.delete(`${this.eventsUrl}/${id}`, this.opts)
       .map((resp: Response) => resp.json()).toPromise();
   }
-  private changeEventByIdJson(id: string, newEvent: IEvent): Promise<{ operationStatus: string, data?: IEvent, err?: string }> {
-    const headers = new Headers({ 'Content-Type': 'application/json;charset=utf-8' });
-    const opts = new RequestOptions({ headers: headers });
-    return this.http.put(`${this.eventsUrl}/${id}`, newEvent, opts).map((resp: Response) => resp.json()).toPromise();
+  private createEventJson(event: IEvent)
+    : Promise<{ operationStatus: string, data?: IEvent, err?: string }> {
+    return this.http.post(`${this.eventsUrl}`, event, this.opts)
+      .map((resp: Response) => resp.json()).toPromise();
   }
-  private patchEventByIdJson(id: string, newEvent: IEvent): Promise<{ operationStatus: string, data?: IEvent, err?: string }> {
-    const headers = new Headers({ 'Content-Type': 'application/json;charset=utf-8' });
-    const opts = new RequestOptions({ headers: headers });
-    return this.http.patch(`${this.eventsUrl}/${id}`, newEvent, opts).map((resp: Response) => resp.json()).toPromise();
+  private changeEventByIdJson(id: string, newEvent: IEvent)
+    : Promise<{ operationStatus: string, data?: IEvent, err?: string }> {
+    return this.http.put(`${this.eventsUrl}/${id}`, newEvent, this.opts)
+      .map((resp: Response) => resp.json()).toPromise();
+  }
+  private patchEventByIdJson(id: string, newEvent: IEvent)
+    : Promise<{ operationStatus: string, data?: IEvent, err?: string }> {
+    return this.http.patch(`${this.eventsUrl}/${id}`, newEvent, this.opts)
+      .map((resp: Response) => resp.json()).toPromise();
   }
 
-    private getUsersJson(): Promise<{ operationStatus: string, data?: IUser[], err?: string }> {
-    return this.http.get(`${this.usersUrl}/all`).map((resp: Response) => resp.json()).toPromise();
-  }
-  private getUserByIdJson(id: string): Promise<{ operationStatus: string, data?: IUser, err?: string }> {
-    return this.http.get(`${this.usersUrl}/${id}`).map((resp: Response) => resp.json()).toPromise();
-  }
-  private deleteUserByIdJson(id: string): Promise<{ operationStatus: string, err?: string }> {
-    return this.http.delete(`${this.usersUrl}/${id}`).map((resp: Response) => resp.json()).toPromise();
-  }
-  private createUserJson(user: IUser): Promise<{ operationStatus: string, data?: IUser, err?: string }> {
-    const headers = new Headers({ 'Content-Type': 'application/json;charset=utf-8' });
-    const opts = new RequestOptions({ headers: headers });
-    return this.http.post(`${this.usersUrl}`, user, opts)
+  private getUsersJson(): Promise<{ operationStatus: string, data?: IUser[], err?: string }> {
+    return this.http.get(`${this.usersUrl}/all`, this.opts)
       .map((resp: Response) => resp.json()).toPromise();
   }
-  private changeUserByIdJson(id: string, newUser: IUser): Promise<{ operationStatus: string, data?: IUser, err?: string }> {
-    const headers = new Headers({ 'Content-Type': 'application/json;charset=utf-8' });
-    const opts = new RequestOptions({ headers: headers });
-    return this.http.put(`${this.eventsUrl}/${id}`, newUser, opts).map((resp: Response) => resp.json()).toPromise();
+  private getUserByIdJson(id: string): Promise<{ operationStatus: string, data?: IUser, err?: string }> {
+    return this.http.get(`${this.usersUrl}/${id}`, this.opts)
+      .map((resp: Response) => resp.json()).toPromise();
   }
-  private patchUserByIdJson(id: string, newUser: IUser): Promise<{ operationStatus: string, data?: IUser, err?: string }> {
-    const headers = new Headers({ 'Content-Type': 'application/json;charset=utf-8' });
-    const opts = new RequestOptions({ headers: headers });
-    return this.http.patch(`${this.usersUrl}/${id}`, newUser, opts).map((resp: Response) => resp.json()).toPromise();
+  private deleteUserByIdJson(id: string): Promise<{ operationStatus: string, err?: string }> {
+    return this.http.delete(`${this.usersUrl}/${id}`, this.opts)
+      .map((resp: Response) => resp.json()).toPromise();
+  }
+  private createUserJson(user: IUser): Promise<{ operationStatus: string, data?: IUser, err?: string }> {
+    return this.http.post(`${this.usersUrl}`, user, this.opts)
+      .map((resp: Response) => resp.json()).toPromise();
+  }
+  private changeUserByIdJson(id: string, newUser: IUser)
+    : Promise<{ operationStatus: string, data?: IUser, err?: string }> {
+    return this.http.put(`${this.eventsUrl}/${id}`, newUser, this.opts)
+      .map((resp: Response) => resp.json()).toPromise();
+  }
+  private patchUserByIdJson(id: string, newUser: IUser)
+    : Promise<{ operationStatus: string, data?: IUser, err?: string }> {
+    return this.http.patch(`${this.usersUrl}/${id}`, newUser, this.opts)
+      .map((resp: Response) => resp.json()).toPromise();
   }
 
   private handleError(error: Response | any) {

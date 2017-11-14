@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
-import { ApiService } from './';
+import { ApiService } from './api.service';
 import { IUser } from '../../interfaces/';
 
 @Injectable()

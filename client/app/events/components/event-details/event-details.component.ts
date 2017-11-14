@@ -1,15 +1,17 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IEvent } from '../../../shared/';
-import { ApiService } from '../../../shared/module/providers/';
+import { IEvent, IUser } from '../../../shared/';
+import { ApiService } from '../../../shared/module/services/';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-  templateUrl: 'event-details.component.html'
+  templateUrl: 'event-details.component.html',
+  styleUrls: ['event-details.component.css']
 })
 
 export class EventDetailsComponent implements OnInit, OnDestroy {
   event: IEvent;
+  eventCreator: IUser = undefined;
   isDirty = true;                   // TODO: verification logic to be settled in here
   actRouteSubscription: Subscription = null;
 
@@ -25,7 +27,10 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.actRouteSubscription = this.actRoute.params.subscribe(param => {
-      this.api.getEventById(param[ 'id' ]).then(resp => this.event = resp);
+      this.api.getEventById(param[ 'id' ])
+      .then(evnt => this.event = evnt)
+      .then(resp => this.api.getUserById(resp.createdBy))
+      .then(usr => this.eventCreator = usr)
     });
   }
 

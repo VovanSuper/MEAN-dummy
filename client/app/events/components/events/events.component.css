@@ -2,3 +2,12 @@
   margin: .2rem;
   background-color: #fff !important;
 }
+.btn-circle {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 1rem;
+  border-color: 1px solid rgb(53, 18, 18);
+}
+.btn-circle > i.fa {
+  transform: translate(-1.1rem, -1.1rem)
+}

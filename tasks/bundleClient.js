@@ -16,6 +16,7 @@ module.exports = (params) => (callback) => {
     params.gulp.src([
       path.join(params.paths.clientSrc, 'polyfills.ts'),
       path.join(params.paths.clientSrc, 'vendor.ts'),
+      // path.join(params.paths.clientSrc, 'styles.css'),
       path.join(params.paths.clientSrc, 'main.ts')
     ]
       , !isProd ? { since: $.memoryCache.lastMtime('bundleClient') } : {}

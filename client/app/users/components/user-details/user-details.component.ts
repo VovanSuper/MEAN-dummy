@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IEvent, IUser } from '../../../shared/';
-import { ApiService } from '../../../shared/module/providers/';
+import { ApiService } from '../../../shared/module/services/';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
