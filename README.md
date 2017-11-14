@@ -20,7 +20,6 @@ Software Stack used:
 * [ECMA2015](http://www.ecma-international.org/ecma-262/6.0/)
 * [Gulp.js](http://gulpjs.com/)
 * [webpack](http://webpack.github.io/)
-* [Ng2-bootstrap](http://valor-software.com/ng2-bootstrap/)
 * [MongooseJs](http://mongoosejs.com/)
 * [BabelJs](http://babeljs.io/)
 
