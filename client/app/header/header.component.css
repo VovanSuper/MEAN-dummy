@@ -1,10 +1,10 @@
 .header {
     min-height: 4rem;
-    border-bottom: 1px solid #8d3232;
+    border-bottom: .2rem solid #461616;
 }
 .header > button {
-    background-color: #8d323222;
+    background-color: #5e1414;
 }
-.navbar-collapse > ul > li.active > a{
+.navbar-collapse > ul > li.active a{
     color: #e2562f;
 }

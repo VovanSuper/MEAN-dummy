@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { IEvent, IUser } from '../../../shared/';
-import { ApiService } from '../../../shared/module/services/';
+import { ApiService, TOASTR_TOKEN, Toastr } from '../../../shared/module/services/';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -18,7 +18,8 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private actRoute: ActivatedRoute,
-    private api: ApiService
+    private api: ApiService,
+    @Inject(TOASTR_TOKEN) private toastr: Toastr
   ) { }
 
   goBack() {
@@ -27,10 +28,14 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.actRouteSubscription = this.actRoute.params.subscribe(param => {
-      this.api.getEventById(param[ 'id' ])
-      .then(evnt => this.event = evnt)
-      .then(resp => this.api.getUserById(resp.createdBy))
-      .then(usr => this.eventCreator = usr)
+      this.api.getEventById(param['id'])
+        .then(evnt => this.event = evnt)
+        .then(resp => this.api.getUserById(resp.createdBy))
+        .then(usr => this.eventCreator = usr)
+        .catch(err => {
+          console.error(err);
+          this.toastr.error(err, 'Error querying for Creator of the Event')
+        });
     });
   }
 

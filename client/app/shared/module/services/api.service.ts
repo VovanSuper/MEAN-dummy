@@ -24,6 +24,7 @@ export class ApiService {
   }
 
   public getEventById(id: string): Promise<IEvent> {
+    if (id === undefined) throw new Error(`Event id ${id} shouldn't be undefined `);
     return this.getEventByIdJson(id).then(res => {
       if (res.err) throw new Error(res.err);
       return Promise.resolve(res.data as IEvent);
@@ -31,6 +32,7 @@ export class ApiService {
   }
 
   public deleteEventById(id: string): Promise<boolean> {
+    if (id === undefined) throw new Error(`Event id ${id} shouldn't be undefined `);
     return this.deleteEventByIdJson(id).then(res => {
       if (res.err) throw new Error(res.err);
       return Promise.resolve(res.operationStatus.toLowerCase().indexOf('removed') !== -1);
@@ -45,6 +47,7 @@ export class ApiService {
   }
 
   public changeEventById(id: string, newEvent: IEvent): Promise<IEvent> {
+    if (id === undefined) throw new Error(`Event id ${id} shouldn't be undefined `);
     return this.changeEventByIdJson(id, newEvent).then(res => {
       if (res.err) throw new Error(res.err);
       return Promise.resolve(res.data as IEvent);
@@ -52,6 +55,7 @@ export class ApiService {
   }
 
   public patchEventById(id: string, newEvent: IEvent): Promise<IEvent> {
+    if (id === undefined) throw new Error(`Event id ${id} shouldn't be undefined `);
     return this.patchEventByIdJson(id, newEvent).then(res => {
       if (res.err) throw new Error(res.err);
       return Promise.resolve(res.data as IEvent);
@@ -66,6 +70,7 @@ export class ApiService {
   }
 
   public getUserById(id: string): Promise<IUser> {
+    if (id === undefined) throw new Error(`Event id ${id} shouldn't be undefined `);
     return this.getUserByIdJson(id).then(res => {
       if (res.err) throw new Error(res.err);
       return Promise.resolve(res.data as IUser);
@@ -73,6 +78,7 @@ export class ApiService {
   }
 
   public deleteUserById(id: string): Promise<boolean> {
+    if (id === undefined) throw new Error(`Event id ${id} shouldn't be undefined `);
     return this.deleteUserByIdJson(id).then(res => {
       if (res.err) throw new Error(res.err);
       return Promise.resolve(res.operationStatus.toLowerCase().indexOf('removed') !== -1);
@@ -87,6 +93,7 @@ export class ApiService {
   }
 
   public cangeUserById(id: string, newUser: IUser): Promise<IUser> {
+    if (id === undefined) throw new Error(`Event id ${id} shouldn't be undefined `);
     return this.changeUserByIdJson(id, newUser).then(res => {
       if (res.err) throw new Error(res.err);
       return Promise.resolve(res.data as IUser);
@@ -94,6 +101,7 @@ export class ApiService {
   }
 
   public patchUserById(id: string, newUser: IUser): Promise<IUser> {
+    if (id === undefined) throw new Error(`Event id ${id} shouldn't be undefined `);
     return this.patchUserByIdJson(id, newUser).then(res => {
       if (res.err) throw new Error(res.err);
       return Promise.resolve(res.data as IUser);

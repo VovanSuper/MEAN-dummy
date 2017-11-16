@@ -12,10 +12,6 @@ export class EventsComponent implements OnInit {
   constructor(private actRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    //this.api.getEvents().then(resp => {
-    //  if (resp.err) return this.errorService.log(resp.err);
-    //  this.events = resp.data ? resp.data : [];
-    //});
     this.events = this.actRoute.snapshot.data['events'];
   }
 

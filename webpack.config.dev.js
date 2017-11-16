@@ -9,8 +9,9 @@ const webpack = require('webpack'),
 module.exports = {
 
   output: {
-    filename: '[name].[chunkhash].js'
-    , sourceMapFilename: '[name].[chunkhash].map'
+    filename: '[name].[hash].js'
+    , sourceMapFilename: '[name].[hash].map'
+    , chunkFilename: '[id].[name].bundle.[chunkhash].js'
   },
   progress: true,
   watch: true,
@@ -69,13 +70,6 @@ module.exports = {
       include: [
         path.join(__dirname, 'client', 'app')
       ]
-    },
-    {
-      test: /index\.ejs$/,
-      include: [
-        path.join(__dirname, 'client')
-      ],
-      loader: 'ejs'
     }
     ]
   },
@@ -96,9 +90,9 @@ module.exports = {
     }),
     new htmlWebpackPlugin({
       cache: true,
-      hash: false,
+      hash: true,
       inject: 'body',
-      template: './client/index.ejs',
+      template: '!!ejs?name=[name].[ext]!./client/index.ejs',
       favicon: './client/favicon.ico',
       xhtml: true,
       minify: false,

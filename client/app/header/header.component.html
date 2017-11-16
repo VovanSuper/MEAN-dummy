@@ -6,28 +6,28 @@
   </button>  
 
   <div id="navbarContent" class="collapse navbar-collapse navbar-toggleable-xs">
-    <a class="navbar-brand logo">
-      <img class="img-responsive img-fluid logo" src="logo.png" alt="logo" /> 
-      BRAND TEXT
+    <a class="navbar-brand logo" href="/">
+      <img class="img-responsive img-fluid logo" src="logo.png" alt="logo" />
     </a>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-        <a title="Home" [routerLink]="['/']" 
+        <a title="Home" routerLink="/" 
           class="nav-link hvr-underline-from-left1" aria-expanded="false" 
           data-scroll="" data-options="easing: easeOutQuart">
           Home
         </a>
       </li>
       <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-        <a title="Events" [routerLink]="['/events']" class="nav-link">Events</a>
+        <a title="Events" routerLink="/events" class="nav-link">Events</a>
       </li>
-      <!-- <li class="nav-item " routerLink="/agenda">
-          <a title="Agenda" class="nav-link">Agenda</a>
-        </li> -->
+
       <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-        <a title="Speakers" [routerLink]="['/users']" class="nav-link">Users</a>
+        <a title="Speakers" routerLink="/users" class="nav-link">Users</a>
       </li>
     </ul>
+    <div class="pull-right">
       <em-search></em-search>
+      <a title="Authenticate" routerLink="/auth">Authenticate</a>
+    </div>
   </div>
 </nav>

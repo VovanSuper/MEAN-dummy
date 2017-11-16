@@ -1,32 +1,32 @@
 <div class="card card-info">
   <div class="card-block">
     <strong class="card-title">Name: </strong>
-    <em>{{user?.name}}</em>
+    <em class="pull-right">{{user?.name}}</em>
     <hr />
     <div class="card-text">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-3">
+          <div class="col-4">
             <small>Registered: </small>
           </div>
-          <div class="col-9">
-            <i>{{user?.registered | amUtc | amDateFormat: 'DD/MM/YY'}}</i>
+          <div class="col-8">
+            <i class="pull-right">{{user?.registered | amUtc | amDateFormat: 'DD/MM/YY'}}</i>
           </div>
         </div>
         <div class="row">
-          <div class="col-3">
+          <div class="col-4">
             <small>Username: </small>
           </div>
-          <div class="col-9">
-            <i>{{user?.username}}</i>
+          <div class="col-8">
+            <i class="pull-right">{{user?.username}}</i>
           </div>
         </div>
         <div class="row">
-          <div class="col-3">
+          <div class="col-4">
             <small>Email: </small>
           </div>
-          <div class="col-9 pull-right">
-            <i>{{user?.email}}</i>
+          <div class="col-8">
+            <i class="pull-right">{{user?.email}}</i>
           </div>
         </div>
       </div>

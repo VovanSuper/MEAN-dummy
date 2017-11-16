@@ -18,9 +18,15 @@ export class SearchComponent implements OnInit {
     this.searchForm = new FormGroup({
       "searchTerm" : this.searchTerm
     });
+    this.reset();
   }
 
   search() {
     console.log(<string>this.searchForm.value['searchTerm']);
+    this.reset();
+  }
+  
+  private reset() {
+    this.searchForm.reset();
   }
 }

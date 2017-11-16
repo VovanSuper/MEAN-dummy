@@ -1,6 +1,6 @@
 import { Injectable, Inject, OpaqueToken } from '@angular/core';
 import { Router } from '@angular/router';
-import { Toastr } from './';
+import { Toastr } from './toastr.interface';
 
 export const TOASTR_TOKEN = new OpaqueToken('toastr');
 
