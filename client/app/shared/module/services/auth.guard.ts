@@ -8,7 +8,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot) {
     if (!this.authSvc.isAuthenticated())
-      this.router.navigateByUrl('/authenticate');
+      this.router.navigateByUrl('/auth/signin');
 
     return this.authSvc.isAuthenticated();
   }

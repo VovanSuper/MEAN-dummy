@@ -1,1 +1,77 @@
-<h1>Signup cmp works!</h1>
+<form [formGroup]="registrationForm" (ngSubmit)="submit()" novalidate autocomplete="false">
+
+  <h4>Registration</h4>
+
+  <em *ngIf="!validatefield(name)">Name is invalid</em>
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label" for="name">Name: </label>
+    <div class="col-sm-8">
+      <input class="form-control" type="text" id="name" placeholder="User name" formControlName="name" />
+    </div>
+  </div>
+  <br />
+
+  <em *ngIf="!validatefield(username)">Username is invalid</em>
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label" for="username">User Name: </label>
+    <div class="col-sm-8">
+      <input class="form-control" type="text" id="username" placeholder="User name" formControlName="username" />
+    </div>
+  </div>
+  <br />
+
+  <em *ngIf="!validatefield(email)">Email invalide</em>
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label" for="email">Email: </label>
+    <div class="col-sm-8">
+      <input class="form-control" type="email" id="email" placeholder="User email" formControlName="email" />
+    </div>
+  </div>
+  <br />
+
+  <em *ngIf="!validatefield(password)">Password invalide</em>
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label" for="password">Password: </label>
+    <div class="col-sm-8">
+      <input class="form-control" type="password" id="password" placeholder="User password" formControlName="password" />
+    </div>
+  </div>
+  <br />
+
+
+  <em *ngIf="!validatefield(repassword)">Password invalide</em>
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label" for="repassword">Password again: </label>
+    <div class="col-sm-8">
+      <input class="form-control" type="password" id="repassword" placeholder="User password" formControlName="repassword" />
+    </div>
+  </div>
+  <br />
+
+
+  <em *ngIf="!validatefield(workplace)">Work place is invalid</em>
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label" for="workplace">Workplace: </label>
+    <div class="col-sm-8">
+      <input class="form-control" type="text" id="workplace" placeholder="Work place" formControlName="workplace" />
+    </div>
+  </div>
+  <br />
+
+
+  <!-- <p class="emailInformation">
+    Add secondary email address for password recovery
+  </p>
+  <em *ngIf="!validatefield(secondaryEmail)">Password does not meat strength criteria</em>
+  <input [ngClass]="{'error' : !validatefield(secondaryEmail) }" formControlName="secondaryEmail" type="email" name="secondaryEmail"
+    placeholder="Secondary Email" /> -->
+
+  <div class="form-group row">
+    <div class="offset-sm-8 col-sm-4">
+      <button type="submit" class="btn btn-primary" [disabled]="registrationForm.invalid || registrationForm.untouched">
+        <i class="fa fa-user-plus" aria-hidden="true"></i>
+        <span class="hidden-md-up">Sign in</span>
+      </button>
+    </div>
+  </div>
+</form>

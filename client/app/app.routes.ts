@@ -6,7 +6,7 @@ import { EventsResolverService } from './shared/module/services/';
 
 export const ROUTES_DEFINITION: Routes = [
   { path: '', redirectTo: '/events', pathMatch: 'full' },
-  { path: 'authenticate', redirectTo: '/signup' },
+  { path: 'authenticate', redirectTo: '/auth' },
   { path: 'notfound', component: NotfoundComponent },
   { path: '**', redirectTo: '/notfound', pathMatch: 'full' }
 ];

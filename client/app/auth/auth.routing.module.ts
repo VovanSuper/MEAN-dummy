@@ -4,8 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { SignupComponent, SigninComponent } from './components/';
 
 const AUTH_ROUTES: Routes = [
-  { path: 'signup', component: SignupComponent },
-  { path: 'signin', component: SigninComponent }
+  {
+    path: 'auth', children: [
+      { path: '', redirectTo: '/auth/signin', pathMatch: 'full' },
+      { path: 'signup', component: SignupComponent },
+      { path: 'signin', component: SigninComponent }
+    ]
+  }
 ];
 
 @NgModule({
