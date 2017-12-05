@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row" *ngIf="isLoggedIn && currentUser && currentUser !== undefined">
+    <div class="col-6">Hello, {{currentUser.name}}</div>
+    <div class="col-6">
+        <button class="btn btn-primary btn-sm" (click)="logOut()">
+            <i class="fa fa-sign-out" aria-hidden="true"></i>
+            <span class="hidden-sm-down">Log out</span>
+          </button>
+      <!-- <img [src]="currentUser?.avatar || '//portalweb.investigacionesmedicas.com/img/ico_paciente.png'" 
+        [alt]="currentUser?.name"
+        class="img img-responsive rounded" /> -->
+    </div>
+  </div>
+  <div class="row" *ngIf="!isLoggedIn">
+    <div class="col-6">Please Log in</div>
+    <div class="col-6">
+        <button class="btn btn-primary btn-sm" (click)="logIn()">
+            <i class="fa fa-sign-in" aria-hidden="true"></i>
+            <span class="hidden-sm-down">Log in</span>
+          </button>
+      <!-- <img [src]="currentUser?.avatar || '//portalweb.investigacionesmedicas.com/img/ico_paciente.png'" 
+        [alt]="currentUser?.name"
+        class="img img-responsive rounded" /> -->
+    </div>
+  </div>
+</div>

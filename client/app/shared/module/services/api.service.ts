@@ -1,19 +1,25 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { IEvent, IUser } from '../../interfaces/';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import { HttpHelpersService } from './http-helpers.service';
+import { EnvVariables } from '../../environment/variables.token';
+import { EnvironmentVariables } from '../../environment/';
 
 @Injectable()
 export class ApiService {
-  hostUrl = `${app.host}:${app.port}` || '//localhost:8080';
-  eventsUrl = `${this.hostUrl}/events`;
-  usersUrl = `${this.hostUrl}/users`;
-  opts: RequestOptions = null;
 
-  constructor(private http: Http, private helpersSvc: HttpHelpersService) {
-    this.opts = this.helpersSvc.getBaseRequestOptions();
+  baseOpts: RequestOptions = null;
+  authOpts: RequestOptions = null;
+
+  constructor(
+    private http: Http,
+    private helpersSvc: HttpHelpersService,
+    @Inject(EnvVariables) private vars: EnvironmentVariables,
+  ) {
+    this.baseOpts = this.helpersSvc.getBaseRequestOptions();
+    this.authOpts = this.helpersSvc.getBaseRequestOptionsWithAuth();
   }
 
   public getEvents(): Promise<IEvent[]> {
@@ -85,10 +91,10 @@ export class ApiService {
     }).catch(this.handleError);
   }
 
-  public createUser(user: IUser): Promise<IEvent> {
+  public createUser(user: IUser | string): Promise<IUser & {[token: string]: any}> {
     return this.createUserJson(user).then(res => {
       if (res.err) throw new Error(res.err);
-      return Promise.resolve(res.data as IUser);
+      return Promise.resolve(res.data as IUser & {[token: string]: any});
     }).catch(this.handleError);
   }
 
@@ -112,57 +118,58 @@ export class ApiService {
   * Private methods for http crud calls to server wrapping actual server responce object 
   */
   private getEventsJson(): Promise<{ operationStatus: string, data?: IEvent[], err?: string }> {
-    return this.http.get(`${this.eventsUrl}/all`, this.opts)
+    return this.http.get(`${this.vars.eventsUrl}`, this.baseOpts)
       .map((resp: Response) => resp.json()).toPromise();
   }
   private getEventByIdJson(id: string): Promise<{ operationStatus: string, data?: IEvent, err?: string }> {
-    return this.http.get(`${this.eventsUrl}/${id}`, this.opts)
+    return this.http.get(`${this.vars.eventsUrl}/${id}`, this.baseOpts)
       .map((resp: Response) => resp.json()).toPromise();
   }
   private deleteEventByIdJson(id: string): Promise<{ operationStatus: string, err?: string }> {
-    return this.http.delete(`${this.eventsUrl}/${id}`, this.opts)
+    return this.http.delete(`${this.vars.eventsUrl}/${id}`, this.authOpts)
       .map((resp: Response) => resp.json()).toPromise();
   }
   private createEventJson(event: IEvent)
     : Promise<{ operationStatus: string, data?: IEvent, err?: string }> {
-    return this.http.post(`${this.eventsUrl}`, event, this.opts)
+    return this.http.post(`${this.vars.eventsUrl}`, event, this.authOpts)
       .map((resp: Response) => resp.json()).toPromise();
   }
   private changeEventByIdJson(id: string, newEvent: IEvent)
     : Promise<{ operationStatus: string, data?: IEvent, err?: string }> {
-    return this.http.put(`${this.eventsUrl}/${id}`, newEvent, this.opts)
+    return this.http.put(`${this.vars.eventsUrl}/${id}`, newEvent, this.authOpts)
       .map((resp: Response) => resp.json()).toPromise();
   }
   private patchEventByIdJson(id: string, newEvent: IEvent)
     : Promise<{ operationStatus: string, data?: IEvent, err?: string }> {
-    return this.http.patch(`${this.eventsUrl}/${id}`, newEvent, this.opts)
+    return this.http.patch(`${this.vars.eventsUrl}/${id}`, newEvent, this.authOpts)
       .map((resp: Response) => resp.json()).toPromise();
   }
 
   private getUsersJson(): Promise<{ operationStatus: string, data?: IUser[], err?: string }> {
-    return this.http.get(`${this.usersUrl}/all`, this.opts)
+    return this.http.get(`${this.vars.usersUrl}/all`, this.baseOpts)
       .map((resp: Response) => resp.json()).toPromise();
   }
   private getUserByIdJson(id: string): Promise<{ operationStatus: string, data?: IUser, err?: string }> {
-    return this.http.get(`${this.usersUrl}/${id}`, this.opts)
+    return this.http.get(`${this.vars.usersUrl}/${id}`, this.baseOpts)
       .map((resp: Response) => resp.json()).toPromise();
   }
   private deleteUserByIdJson(id: string): Promise<{ operationStatus: string, err?: string }> {
-    return this.http.delete(`${this.usersUrl}/${id}`, this.opts)
+    return this.http.delete(`${this.vars.usersUrl}/${id}`, this.baseOpts)
       .map((resp: Response) => resp.json()).toPromise();
   }
-  private createUserJson(user: IUser): Promise<{ operationStatus: string, data?: IUser, err?: string }> {
-    return this.http.post(`${this.usersUrl}`, user, this.opts)
+  private createUserJson(user: IUser | string)
+    : Promise<{ operationStatus: string, data?: IUser | IUser & { [token: string]: any }, err?: string }> {
+    return this.http.post(`${this.vars.usersUrl}`, user, this.baseOpts)
       .map((resp: Response) => resp.json()).toPromise();
   }
   private changeUserByIdJson(id: string, newUser: IUser)
     : Promise<{ operationStatus: string, data?: IUser, err?: string }> {
-    return this.http.put(`${this.eventsUrl}/${id}`, newUser, this.opts)
+    return this.http.put(`${this.vars.eventsUrl}/${id}`, newUser, this.baseOpts)
       .map((resp: Response) => resp.json()).toPromise();
   }
   private patchUserByIdJson(id: string, newUser: IUser)
     : Promise<{ operationStatus: string, data?: IUser, err?: string }> {
-    return this.http.patch(`${this.usersUrl}/${id}`, newUser, this.opts)
+    return this.http.patch(`${this.vars.usersUrl}/${id}`, newUser, this.baseOpts)
       .map((resp: Response) => resp.json()).toPromise();
   }
 

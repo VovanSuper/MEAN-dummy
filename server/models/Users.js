@@ -12,6 +12,13 @@ module.exports = mongoose => {
     email: { type: String, index: { unique: true }, validate: emailValid },
     registered: { type: Date, default: Date.now },
     work_place: { type: String, default: '' },
+    gender: { type: String },
+    avatarUrl: { type: String },
+    avatar: {
+      data: Buffer,
+      contentType: String,
+      name: String
+    },
     events: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Events', default: [], autopopulate: true }]
   });
 

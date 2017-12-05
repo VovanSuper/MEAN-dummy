@@ -1,3 +1,21 @@
-h1 {
-  color: red;
+em { 
+  float: right;
+  color: #600 ;    
+  padding-left: 1rem;
+  font-size: .4rem;
+}
+
+input.error {
+  background-color: #cf9ba0 ;
+  border-color: #600 ;    
+}
+::-webkit-input-placeholder.error { color: #cf9ba0 ; }
+:-moz-placeholder.error { color: #cf9ba0 ; }
+::-moz-placeholder.error {color: #cf9ba0 ; }
+:ms-input-placeholder.error { color: #cf9ba0 ; }
+
+button[disabled] {
+  border: 1px solid #666 ;
+  background-color: #ccc ;
+  color: #666;
 }

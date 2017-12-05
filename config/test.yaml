@@ -1,5 +1,5 @@
 base:
-  port: 8080,
+  port: 8082,
   headOptions:
     title: 'MEAN2 Dummy (test)'
     desc:  'A sample mean (Angular2, node.js, express.js, mongodb) project'
@@ -29,3 +29,6 @@ database:
   creds:
     user: 'test'
     password: 'test'
+
+secrets:
+  jwtStr: 's0meSupperS9cur9Str1ng'

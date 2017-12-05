@@ -6,6 +6,9 @@
 body {
   background-color: #aaa;
 }
+form input.form-control.ng-invalid.ng-touched {
+  border-right: 1rem solid rgb(122, 2, 2);
+}
 form .btn[disabled] {
   background-color: #80808069 !important;
 }

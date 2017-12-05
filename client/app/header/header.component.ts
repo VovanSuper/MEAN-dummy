@@ -7,5 +7,8 @@ import 'file?name=[name].[ext]!./assets/logo.png';
   styleUrls: ['header.component.css']
 })
 export class HeaderComponent {
-  constructor() { }
+
+  ngOnInit() {
+    
+  }
 }

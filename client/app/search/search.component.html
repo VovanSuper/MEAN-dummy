@@ -1,8 +1,7 @@
 <form [formGroup]="searchForm" class="form-inline my-2 my-lg-0" (ngSubmit)="search()">
-  <input class="form-control mr-sm-2" type="text" placeholder="Search" 
-    formControlName="searchTerm" />
-  <button class="btn btn-secondary my-2 my-sm-0" type="submit" 
-    [disabled]="searchForm.invalid || !searchForm.dirty" >
-    Search
+  <input class="form-control mr-sm-2" type="text" placeholder="Search" formControlName="searchTerm" />
+  <button class="btn btn-secondary btn-sm" type="submit" [disabled]="searchForm.invalid || !searchForm.dirty">
+    <i class="fa fa-search" aria-hidden="true"></i>
+    <span class="hidden-sm-down">Search</span>
   </button>
 </form>

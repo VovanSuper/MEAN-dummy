@@ -4,9 +4,10 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutes } from './app.routes';
 import { SharedServicesModule } from './shared/module/';
+import { EnvironmentsModule } from './shared/environment/';
 import { AppComponent } from './app/app.component';
 import { SearchComponent } from './search/';
-import { HeaderComponent } from './header/';
+import { HeaderComponent, CollapseDirective } from './header/';
 import { NotfoundComponent } from './notfound/';
 import { EventsModule } from './events/';
 import { UsersModule } from './users/';
@@ -16,6 +17,7 @@ import { AuthModule } from './auth/';
 
 @NgModule({
   declarations: [
+    CollapseDirective,
     HeaderComponent,
     NotfoundComponent,
     SearchComponent,
@@ -25,6 +27,7 @@ import { AuthModule } from './auth/';
   ],
   imports: [
     BrowserModule,
+    EnvironmentsModule.forRoot(),
     SharedServicesModule.forRoot(),
     // TabsModule.forRoot(),
     AuthModule,

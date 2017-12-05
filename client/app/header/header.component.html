@@ -5,9 +5,9 @@
     <span class="navbar-toggler-icon"></span>
   </button>  
 
-  <div id="navbarContent" class="collapse navbar-collapse navbar-toggleable-xs">
-    <a class="navbar-brand logo" href="/">
-      <img class="img-responsive img-fluid logo" src="logo.png" alt="logo" />
+  <div id="navbarContent" class="collapse navbar-collapse navbar-toggleable-xs" #collapse>
+    <a class="navbar-brand" routerLink="/" >
+      <img class="img-responsive img-fluid d-block float-left logo" src="logo.png" alt="logo" />
     </a>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
@@ -25,9 +25,9 @@
         <a title="Speakers" routerLink="/users" class="nav-link">Users</a>
       </li>
     </ul>
-    <div class="pull-right">
+    <div class="pull-right search-auth">
       <em-search></em-search>
-      <a title="Authenticate" routerLink="/auth">Authenticate</a>
+      <em-user-auth></em-user-auth>
     </div>
   </div>
 </nav>

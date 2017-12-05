@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class DataStorageService {
-  private storage = null;
+  private storage: Storage = null;
 
   constructor() {
     if (window.localStorage) {
@@ -14,11 +14,22 @@ export class DataStorageService {
 
   save(data: { [name: string]: any }) {
     for (let name in data) {
-      if (name !== '__proto__')
+      if (name !== '__proto__' && data[name] !== undefined && name !== 'avatar')
         this.storage.setItem(name, data[name]);
     }
   }
+
   getByKey(key: string) {
     return this.storage.getItem(key);
   }
+
+  setByKey(key: string, val: string | any) {
+    this.storage.setItem(key, val);
+  }
+
+  clear() {
+    this.storage.clear();
+  }
+
 }
+

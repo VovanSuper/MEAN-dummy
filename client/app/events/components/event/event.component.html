@@ -1,23 +1,23 @@
 <div class="card card-info">
   <div class="card-block">
-    <strong class="card-title">Event : </strong>
+    <strong class="card-title">  Event : </strong>
     <em class="pull-right">{{event.name}}</em>
     <hr />
     <div class="card-text">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-3">
-            <small>Start: </small>
+          <div class="col-4 col-sm-8">
+            <small>Starts: </small>
           </div>
-          <div class="col-9 pull-right">
+          <div class="col-8 col-sm-4 pull-right">
             <i class="pull-right">{{event.startTime | amUtc | amDateFormat: 'DD/MM/YY'}}</i>
           </div>
         </div>
         <div class="row">
-          <div class="col-3">
-            <small>End: </small>
+          <div class="col-4 col-sm-8">
+            <small>Ends </small>
           </div>
-          <div class="col-9 pull-right">
+          <div class="col-8 col-sm-4 pull-right">
             <i class="pull-right">{{event.endTime | amUtc | amDateFormat: 'DD/MM/YY'}}</i>
           </div>
         </div>

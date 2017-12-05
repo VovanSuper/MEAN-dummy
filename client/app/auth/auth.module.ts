@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { CommonModule } from '@angular/common';
 
-import { SigninComponent, SignupComponent } from './components/';
 import { AuthRoutingModule } from './auth.routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SigninComponent, SignupComponent, UserAuthComponent } from './components/';
 
 @NgModule({
   imports: [
@@ -15,7 +15,11 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   declarations: [
     SigninComponent,
-    SignupComponent
+    SignupComponent,
+    UserAuthComponent
+  ],
+  exports: [
+    UserAuthComponent
   ]
 })
 export class AuthModule { }

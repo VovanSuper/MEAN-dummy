@@ -11,7 +11,8 @@ module.exports = app => {
         username: u.username,
         email: u.email,
         registered: u.registered,
-        work_place: u.work_place
+        work_place: u.work_place,
+        gender: u.gender
       }
     });
   }
@@ -36,7 +37,7 @@ module.exports = app => {
       endTime: event.endTime,
       createdAt: event.createdAt,
       createdBy: event.createdBy,
-      participants: attachParticipantsToEvent(event)
+      participants: attachParticipantsToEvent(event) || []
     }
   }
 
@@ -48,7 +49,7 @@ module.exports = app => {
       email: user.email,
       registered: user.registered,
       work_place: user.work_place,
-      events: attachEventsToUser(user)
+      events: attachEventsToUser(user) || []
     }
   }
 

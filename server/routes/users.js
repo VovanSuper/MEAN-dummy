@@ -5,6 +5,7 @@ module.exports = app => {
   let splitSubParams = app.utils.Helpers.splitSubParams;
   let Handler = app.utils.Handlers;
   let idParamHandler = app.middlewares.IdParamHandler;
+  let makeJwt = app.utils.Jwt;
 
   const usersRouter = require('express').Router();
 
@@ -29,14 +30,14 @@ module.exports = app => {
         username: req.body.username,
         email: req.body.email,
         password: req.body.password,
-        registered: req.body.registered,
         work_place: req.body.work_place
       });
       newUser.save().then((user) => {
+        let token = makeJwt(user['_id']);
         if (!user) throw `Error saving user ${user}`;
-        return Handler.Ok(resp, 201, user, `Created user id ${user['_id']}`);
+        return Handler.Ok(resp, 201, Object.assign({}, user['_doc'], { token }), `Created user id ${user['_id']}`);
       })
-        .catch((err) => { return Handler.Error(resp, 412, err, `Error trying to save user: ${err.toString()}`) });
+        .catch((err) => { return Handler.Error(resp, 412, err, `Error trying to save user: ${err.message || err.toString()}`) });
     });
 
   usersRouter

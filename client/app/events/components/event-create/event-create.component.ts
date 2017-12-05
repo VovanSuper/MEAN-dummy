@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { IUser } from '../../../shared/';
+import { Router } from '@angular/router';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+
+import { IUser } from '../../../shared/';
 import { ApiService } from '../../../shared/module/services/';
-import { Date } from 'core-js/library/web/timers';
 
 @Component({
   templateUrl: 'event-create.component.html',
@@ -10,7 +11,6 @@ import { Date } from 'core-js/library/web/timers';
 })
 
 export class EventCreateComponent implements OnInit {
-  allUsers: IUser[];
   eventForm: FormGroup;
   name: FormControl;
   startTime: FormControl;
@@ -18,14 +18,13 @@ export class EventCreateComponent implements OnInit {
   description: FormControl;
   participants: FormArray;
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService, private router: Router) { }
 
   ngOnInit() {
-    this.api.getUsers().then(users => this.allUsers = users);
-
+    let now = new Date().toLocaleDateString();
     this.name = new FormControl('', [Validators.required, Validators.minLength(5)]);
-    this.startTime = new FormControl(Date.now().toLocaleString(), [Validators.required]);
-    this.endTime = new FormControl(Date.now().toLocaleString(), [Validators.required]);
+    this.startTime = new FormControl(now, [Validators.required]);
+    this.endTime = new FormControl(now, [Validators.required]);
     this.description = new FormControl('');
     this.participants = new FormArray([
     ]);
@@ -40,13 +39,13 @@ export class EventCreateComponent implements OnInit {
   }
 
   create() {
-    console.log(`Sending eventForm data to server `);
     console.log(JSON.stringify(this.eventForm.value));
-    console.dir(this.eventForm.value);
-    // this.api.createEvent(this.eventForm.value);
+    this.api.createEvent(this.eventForm.value).then(resp => {
+      this.router.navigateByUrl('/events');
+    })
   }
 
-  private reset() {
+  reset() {
     this.eventForm.reset();
   }
 }

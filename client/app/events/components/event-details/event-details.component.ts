@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { IEvent, IUser } from '../../../shared/';
-import { ApiService, TOASTR_TOKEN, Toastr } from '../../../shared/module/services/';
+import { ApiService, TOASTR_TOKEN, IToastr } from '../../../shared/module/services/';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -19,7 +19,7 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
     private router: Router,
     private actRoute: ActivatedRoute,
     private api: ApiService,
-    @Inject(TOASTR_TOKEN) private toastr: Toastr
+    @Inject(TOASTR_TOKEN) private toastr: IToastr
   ) { }
 
   goBack() {
