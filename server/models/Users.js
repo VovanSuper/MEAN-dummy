@@ -1,7 +1,7 @@
 import autopopulate from 'mongoose-autopopulate';
 import errorHandler from './plugins/errorHandler';
 import { notEmpty, emailValid } from './helpers/validators';
-import { passHasher, passValidator, preUserRemoveHook } from './plugins/userHooks';
+import { passHasher, passValidator, upsertUser, preUserRemoveHook } from './plugins/userHooks';
 import { fullName, userInfo } from './plugins/userVirts';
 
 module.exports = mongoose => {
@@ -19,6 +19,10 @@ module.exports = mongoose => {
       contentType: String,
       name: String
     },
+    facebookProvider: {
+      id: { type: String },
+      email: { type: String }
+    },
     events: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Events', default: [], autopopulate: true }]
   });
 
@@ -26,6 +30,7 @@ module.exports = mongoose => {
     .plugin(errorHandler)
     .plugin(passHasher)
     .plugin(passValidator)
+    .plugin(upsertUser)
     .plugin(fullName)
     .plugin(userInfo)
     .plugin(preUserRemoveHook)

@@ -32,3 +32,6 @@ database:
 
 secrets:
   jwtStr: 's0meSupperS9cur9Str1ng'
+  fb: 
+    appId: '1112331'
+    appSecret: 'someSuperSecret111'

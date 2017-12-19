@@ -14,23 +14,23 @@ export class UserAuthComponent implements OnInit, OnDestroy {
   isLoggedIn = false;
 
   constructor(
-    private authSvc: AuthService, 
+    private authSvc: AuthService,
     private errorSvc: ErrorService,
     private router: Router) { }
 
   ngOnInit() {
     this.authSvc.isLoggedChange$.subscribe(val => {
+      this.isLoggedIn = val;
       if (val) {
-        this.isLoggedIn = true;
         this.currentUser = this.authSvc.currentUser;
       } else {
-        this.errorSvc.error('Authentication faild', 'User-Auth Cmp', '/auth/signin');
+        this.currentUser = null;
       }
-    })
+    });
   }
 
   ngOnDestroy() {
-    this.authSvc.isLoggedChange$.unsubscribe();
+    // this.authSvc.isLoggedChange$.unsubscribe();
   }
 
   logIn() {
@@ -39,8 +39,6 @@ export class UserAuthComponent implements OnInit, OnDestroy {
 
   logOut() {
     this.authSvc.logout();
-    this.isLoggedIn = false;
-    this.currentUser = null;
     this.router.navigateByUrl('/auth/signin');
   }
 }

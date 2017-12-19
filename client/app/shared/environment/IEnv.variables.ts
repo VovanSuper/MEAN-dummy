@@ -4,5 +4,6 @@ export interface EnvironmentVariables {
   usersUrl          : string;
   loginUrl          : string;
   forgotPasswordUrl : string;
-
+  fbLoginUrl        : string;
+  fbMeInfoUrl       : string;
 }

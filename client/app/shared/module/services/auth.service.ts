@@ -1,12 +1,14 @@
 import { Injectable, Inject } from '@angular/core';
 import { UserStoreService } from './user-store.service';
 import { Http, Response } from '@angular/http';
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelper, AuthHttp } from 'angular2-jwt';
 import { IUser } from '../../interfaces/';
-import { IToastr, HttpHelpersService } from './';
+import { IToastr, HttpHelpersService, FB_TOKEN } from './';
 import { TOASTR_TOKEN } from './tokens.libs';
 import { EnvVariables, EnvironmentVariables } from '../../environment/';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
+declare const FB: any;
 
 @Injectable()
 export class AuthService {
@@ -16,18 +18,29 @@ export class AuthService {
   constructor(
     private userStoreSvc: UserStoreService,
     private http: Http,
+    private authHttp: AuthHttp,
     private httpHelpers: HttpHelpersService,
     @Inject(EnvVariables) private vars: EnvironmentVariables,
-    @Inject(TOASTR_TOKEN) private toastr: IToastr) {
+    @Inject(TOASTR_TOKEN) private toastr: IToastr,
+    @Inject(FB_TOKEN) private FB: any
+  ) {
     this.init();
   }
-   get currentUser(): IUser {
-     return this.getUser();
-   }
+  get currentUser(): IUser {
+    return this.getUser() || null;
+  }
 
-  isAuthenticated(): boolean {
+  get isAuthenticated(): boolean {
     let token = this.userStoreSvc.getToken();
     return (token !== null);
+  }
+
+  getCurrentUser() {
+    return new Promise((resolve, reject) => {
+      return this.authHttp.get(this.vars.fbMeInfoUrl).toPromise().then(response => {
+        resolve(response.json());
+      }).catch(() => reject());
+    });
   }
 
   getUser(): IUser {
@@ -41,6 +54,29 @@ export class AuthService {
   logout(): void {
     this.userStoreSvc.erase();
     this.isLoggedChange$.next(false);
+  }
+
+  fbLogin() {
+    return new Promise((resolve, reject) => {
+      FB.login(result => {
+        if (result.status === 'connected') {
+          if (result.authResponse) {
+            return this.authHttp.post(this.vars.fbLoginUrl, { access_token: result.authResponse.accessToken })
+              .toPromise()
+              .then(response => {
+                var token = response.headers.get('x-auth-token');
+                if (token) {
+                  this.userStoreSvc.setToken(token);
+                }
+                resolve(response.json());
+              })
+              .catch(() => reject(null));
+          } else {
+            reject(null);
+          }
+        }
+      }, { scope: 'public_profile,email' })
+    });
   }
 
   login(username: string, password: string): Promise<boolean> {
@@ -58,7 +94,7 @@ export class AuthService {
             reject(false);
           }
         },
-        (error) => { 
+        (error) => {
           console.log(error);
           reject(false);
         }
@@ -95,6 +131,14 @@ export class AuthService {
   }
 
   private init() {
+    FB.init({
+      appId: 'YOUR-APP-ID',
+      status: false, // the SDK will attempt to get info about the current user immediately after init
+      cookie: false,  // enable cookies to allow the server to access
+      // the session
+      xfbml: false,  // With xfbml set to true, the SDK will parse your page's DOM to find and initialize any social plugins that have been added using XFBML
+      version: 'v2.8' // use graph api version 2.5
+    });
     this.isLoggedChange$ = (this.userStoreSvc.getToken()) ? new BehaviorSubject(true) : new BehaviorSubject(false);
   }
 

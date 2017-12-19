@@ -11,6 +11,10 @@ export class UserStoreService {
     return this.dataStoreSvc.getByKey('token') || null;
   }
 
+  setToken(token: string) {
+    return this.dataStoreSvc.setByKey('token', token);
+  }
+
   getUserInfo(): IUser {
     let name = this.dataStoreSvc.getByKey('name');
     // let id = this.dataStoreSvc.getByKey('id');

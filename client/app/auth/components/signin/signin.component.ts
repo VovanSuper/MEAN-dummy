@@ -15,7 +15,7 @@ export class SigninComponent implements OnInit {
   username: FormControl;
   password: FormControl;
 
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(private authSvc: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.username = new FormControl('', [Validators.required, Validators.minLength(4)]);
@@ -30,12 +30,18 @@ export class SigninComponent implements OnInit {
 
   signIn() {
     console.dir(this.signinForm.value);
-    this.auth.login(this.signinForm.value['username'], this.signinForm.value['password']).then(isloged => {
+    this.authSvc.login(this.signinForm.value['username'], this.signinForm.value['password']).then(isloged => {
       this.router.navigateByUrl('/events');
     })
     .catch(err => console.error(err));
     this.reset();
   }
+
+  fbLogin() {
+    this.authSvc.fbLogin().then(() => {
+      console.log('User has been logged in');
+      this.router.navigate(['/dashboard']);
+    });  }
 
 
   private reset() {

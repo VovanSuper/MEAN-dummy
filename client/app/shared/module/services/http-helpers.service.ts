@@ -58,6 +58,7 @@ export class HttpHelpersService {
     if (token != null) {
       this.token = this.userStoreSvc.getToken();
     }
+    console.log(`[http-helpers.svc->reloadToke()]:: token is::  ${this.token}`);
   }
 
 }

@@ -16,6 +16,36 @@ const passHasher = function (schema, opts) {
   });
 };
 
+const upsertUser = function (schema, opts) {
+  schema.methods.upsertFbUser = function (accessToken, refreshToken, profile, cb) {
+    var that = this;
+    return this.findOne({
+      'facebookProvider.id': profile.id
+    }, function (err, user) {
+      // no user was found, lets create a new one
+      if (!user) {
+        var newUser = new that({
+          fullName: profile.displayName,
+          email: profile.emails[0].value,
+          facebookProvider: {
+            id: profile.id,
+            token: accessToken
+          }
+        });
+
+        newUser.save(function (error, savedUser) {
+          if (error) {
+            console.log(error);
+          }
+          return cb(error, savedUser);
+        });
+      } else {
+        return cb(err, user);
+      }
+    });
+  };
+}
+
 const passValidator = function (schema, opts) {
   schema.methods.comparePassword = function (pass, cb) {
     bcrypt.compare(pass, this.password, function (err, isMatch) {
@@ -41,4 +71,4 @@ const preRemoveHook = function (next) {
 }
 
 
-export { passHasher, passValidator, preUserRemoveHook };
+export { passHasher, passValidator, upsertUser, preUserRemoveHook };
