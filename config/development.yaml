@@ -30,3 +30,6 @@ database:
   creds:
     user: 'test'
     password: 'test'
+
+secrets:
+  jwtStr: 's0meSupperS9cur9Str1ng'

@@ -1,7 +1,18 @@
-<div class="container-fluid">
+<div class="container-fluid h-100 justify-content-center align-items-center">
+  <div class="row events-header">
+    <div class="col-10 col-offset-1">
+      <p class="d-inline text-primary">
+        <strong>All events:</strong>
+      </p>
+    </div>
+    <div class="col-2">
+      <button class="btn btn-primary btn-circle" (click)="gotoCreate()">
+        <i class="fa fa-plus-circle fa-inverse fa-3x"></i>
+      </button>
+    </div>
+  </div>
   <div class="row d-sm-flex">
     <div class="col-10 col-xs-12">
-      <p class="d-inline text-primary"> <strong>All events:</strong> </p>
       <div class="card-group">
         <div class="bg-info" *ngFor="let event of events">
           <em-event [event]="event"></em-event>

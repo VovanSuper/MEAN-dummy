@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UserComponent, UserDetailsComponent, NotSelectedComponent, UsersComponent } from './components/';
-import { UsersResolverService } from '../shared/module/providers/users-resolve.service';
-import { UserRouteValidService } from '../shared/module/providers/';
+import { UsersResolverService } from '../shared/module/services/users-resolve.service';
+import { UserRouteValidService } from '../shared/module/services/';
 
 export const USERS_ROUTES: Routes = [
   {

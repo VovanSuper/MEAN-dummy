@@ -9,8 +9,9 @@ const webpack = require('webpack'),
 module.exports = {
 
   output: {
-    filename: '[name].[chunkhash].js'
-    , sourceMapFilename: '[name].[chunkhash].map'
+    filename: '[name].[hash].js'
+    , sourceMapFilename: '[name].[hash].map'
+    , chunkFilename: '[id].[name].bundle.[chunkhash].js'
   },
   progress: true,
   watch: true,
@@ -38,12 +39,41 @@ module.exports = {
         path.join(__dirname, 'client')
       ]
     },
+<<<<<<< HEAD
+=======
+    // {
+    //   test: /\.ts$/,
+    //   loader: 'awesome-typescript',
+    //   include: [
+    //     path.join(__dirname, 'client')
+    //   ],
+    //   exclude: /\.component\.ts$/
+    // },
+    // {
+    //   test: /routes\.ts/,
+    //   loader: 'awesome-typescript!angular2-router',
+    //   include: [
+    //     path.resolve(__dirname, 'client', 'app')
+    //   ]
+    // },
+    // {
+    //   test: /styles\.css$/,
+    //   loader: 'file?name=[name].[ext]',
+    //   include: [
+    //     path.join(__dirname, 'client')
+    //   ],
+    //   exclude: [
+    //     path.join(__dirname, 'client', 'app')
+    //   ]
+    // },
+>>>>>>> dev
     {
       test: /\.(html|css)$/,
       loader: 'raw',
       include: [
         path.join(__dirname, 'client', 'app')
       ]
+<<<<<<< HEAD
     },
     {
       test: /styles\.css$/,
@@ -54,6 +84,8 @@ module.exports = {
       exlude: [
         path.join(__dirname, 'client', 'app')
       ]
+=======
+>>>>>>> dev
     }
 
     // , {
@@ -83,9 +115,15 @@ module.exports = {
     }),
     new htmlWebpackPlugin({
       cache: true,
+<<<<<<< HEAD
       hash: false,
       inject: 'head',
       template: './client/index.ejs',
+=======
+      hash: true,
+      inject: 'body',
+      template: '!!ejs?name=[name].[ext]!./client/index.ejs',
+>>>>>>> dev
       favicon: './client/favicon.ico',
       xhtml: true,
       // showErrors: true,

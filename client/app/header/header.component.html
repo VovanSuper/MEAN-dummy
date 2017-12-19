@@ -1,32 +1,28 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark header">
-  <a class="navbar-brand" href="/">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-    
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent"
+    aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
-  <div id="navbarContent" class="collapse navbar-collapse">
+  <div id="navbarContent" class="collapse navbar-collapse navbar-toggleable-xs" #collapse>
+    <a class="navbar-brand" routerLink="/">
+      <img class="img-responsive img-fluid d-block float-left logo" src="logo.png" alt="logo" />
+    </a>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-        <a title="Home" routerLink="/" class="nav-link hvr-underline-from-left1" aria-expanded="false" data-scroll="" data-options="easing: easeOutQuart">
           Home
         </a>
       </li>
       <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-        <a title="Events" [routerLink]="['/events']" class="nav-link">Events</a>
+        <a title="Events" routerLink="/events" class="nav-link">Events</a>
       </li>
-      <!-- <li class="nav-item " routerLink="/agenda">
-          <a title="Agenda" class="nav-link">Agenda</a>
-        </li> -->
+
       <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-        <a title="Speakers" [routerLink]="['/users']" class="nav-link">Users</a>
+        <a title="Speakers" routerLink="/users" class="nav-link">Users</a>
       </li>
-      <!-- <li class="nav-item pull-right" routerLink="/login">
-          <a title="Log in" class="nav-link">Speakers</a>
-        </li>
-        <li class="nav-item pull-right" routerLink="/logout">
-          <a title="Log out" class="nav-link">Speakers</a>
-        </li> -->
     </ul>
+    <div class="pull-right search-auth">
+      <em-search></em-search>
+      <em-user-auth></em-user-auth>
+    </div>
   </div>
 </nav>

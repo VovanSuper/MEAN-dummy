@@ -1,6 +1,6 @@
 {
   "name": "events-manager",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "author": {
     "email": "ovsyukov@yandex.com",
     "name": "Vladimir Ovsyukov"
@@ -13,7 +13,7 @@
     "url": "git+https://github.com/VovanSuper/MEAN-dummy.git"
   },
   "bugs": {
-    "email": "vovansuper@mail.ru",
+    "email": "ovsyukov@yandex.com",
     "url": "https://github.com/VovanSuper/MEAN-dummy/issues"
   },
   "engines": {
@@ -52,7 +52,8 @@
     "@angular/platform-browser": "^2.2.4",
     "@angular/platform-browser-dynamic": "^2.2.4",
     "@angular/router": "^3.4.3",
-    "angular2-moment": "^1.4.0",
+    "angular2-jwt": "^0.1.26",
+    "angular2-moment": "^1.0.0",
     "async": "^0.2.8",
     "bcryptjs": "^2.4.0",
     "bluebird": "^3.4.6",
@@ -65,17 +66,22 @@
     "cross-env": "^4.0.0",
     "express": "^4.14.0",
     "forever": "^0.15.0",
-    "jquery": "^3.2.1",
+    "jquery": "^3.1.1",
     "js-yaml": "^3.7.0",
-    "mongodb": "^2.2.33",
+    "jwt-simple": "^0.5.1",
+    "moment": "^2.15.1",
+    "mongodb": "^2.2.0",
     "mongoose": "~4.6.6",
     "mongoose-autopopulate": "^0.5.0",
     "multer": "^1.2.0",
     "ng2-bootstrap": "^1.4.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^2.2.0",
+    "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.9",
     "rxjs": "^5.0.3",
     "serve-favicon": "^2.3.0",
-    "toastr": "^2.1.2",
+    "toastr": "^2.1.1",
     "webpack-sources": "^0.1.4",
     "zone.js": "^0.7.5"
   },

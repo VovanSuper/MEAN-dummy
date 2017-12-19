@@ -11,10 +11,10 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
 // other
+
 import 'file?name=[name].[ext]!toastr/build/toastr.css';
+import 'file?name=[name].[ext]!./styles.css';
 
-import 'jquery/dist/jquery.min';
-
-import 'toastr';
 
 import 'bootstrap/dist/js/bootstrap.min';
+import 'toastr';

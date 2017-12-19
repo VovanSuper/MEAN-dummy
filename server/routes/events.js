@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 module.exports = app => {
   let Events = app.db.models.Events;
   let retEvent = app.utils.Helpers.retEventJson;
@@ -7,35 +9,35 @@ module.exports = app => {
 
   const eventsRouter = require('express').Router();
 
-  eventsRouter.route('/all')
+  eventsRouter.route('/')
     .get((req, resp) => {
       Events.find({}, '-__v')
         .populate('Users')
         .then((events) => {
           return Handler.Ok(resp, 200, events.map(retEvent), 'Found');
+          // return Handler.Ok(resp, 200, events, 'Found');
         })
         .catch((err) => {
           return Handler.Error(resp, 404, err, 'Not found');
         });
-    });
-
-  eventsRouter.route('/')
-    .get((req, resp) => {
-      resp.status(301).redirect('/events/all');
     })
+
+  // eventsRouter.route('/')
+  //   .get((req, resp) => {
+  //     resp.status(301).redirect('/events/all');
+  //   })
 
     .post((req, resp) => {
       // console.log(`\nPOST DONE ${req.body} type is: ${typeof req.body} `)
       
-      let postedUsers = splitSubParams(req.body.participants);
-      console.log(`\nPOST DONE users : ${postedUsers} type is: ${typeof postedUsers} `)
+      // let postedUsers = splitSubParams(req.body.participants);
+      // console.log(`\nPOST DONE users : ${postedUsers} type is: ${typeof postedUsers} `)
       let newEvent = new Events({
         name: req.body.name,
-        startTime: req.body.startTime,
-        endTime: req.body.endTime,
-        createdAt: req.body.createdAt,
-        createdBy: req.body.createdBy,
-        participants: postedUsers
+        startTime: Date.parse(req.body.startTime).toLocaleString(),
+        endTime: Date.parse(req.body.endTime).toLocaleString(),
+        createdBy: req.body.createdBy
+        // participants: postedUsers
       });
       console.log(`\nPOST DONE newEvent : ${newEvent} type is: ${typeof newEvent} `)
 

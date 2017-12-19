@@ -1,5 +1,5 @@
-import path                from 'path';
-import chalk               from 'chalk';
+import path from 'path';
+import chalk from 'chalk';
 import { log, wpReporter } from './helpers/functions';
 
 const $ = require('gulp-load-plugins')({
@@ -37,5 +37,5 @@ module.exports = (params) => (callback) => {
         FullError: JSON.stringify(err)
       }));
     })
-    // .on('change', () => { if (!isProd) $.memoryCache.update('bundleClient') });
+  // .on('change', () => { if (!isProd) $.memoryCache.update('bundleClient') });
 }

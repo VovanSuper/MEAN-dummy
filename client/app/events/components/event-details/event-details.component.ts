@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { IEvent, IUser } from '../../../shared/';
-import { ApiService } from '../../../shared/module/providers/';
+import { ApiService, TOASTR_TOKEN, IToastr } from '../../../shared/module/services/';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -10,15 +11,17 @@ import { Subscription } from 'rxjs/Subscription';
 })
 
 export class EventDetailsComponent implements OnInit, OnDestroy {
-  event: IEvent = null;
-  eventCreator: IUser = null;
+
+  event: IEvent;
+  eventCreator: IUser = undefined;
   isDirty = true;                   // TODO: verification logic to be settled in here
   actRouteSubscription: Subscription = null;
 
   constructor(
     private router: Router,
     private actRoute: ActivatedRoute,
-    private api: ApiService
+    private api: ApiService,
+    @Inject(TOASTR_TOKEN) private toastr: IToastr
   ) { }
 
   goBack() {
@@ -29,12 +32,13 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
     this.actRouteSubscription = this.actRoute.params.subscribe(param => {
       this.api.getEventById(param['id'])
         .then(evnt => this.event = evnt)
-        .then(evnt => {
-          if (this.event.createdBy && this.event.createdBy !== undefined) {
-            this.api.getUserById(evnt.createdBy)
-              .then(creator => this.eventCreator = creator);
-          }
-        })
+
+        .then(resp => this.api.getUserById(resp.createdBy))
+        .then(usr => this.eventCreator = usr)
+        .catch(err => {
+          console.error(err);
+          this.toastr.error(err, 'Error querying for Creator of the Event')
+        });
     });
   }
 

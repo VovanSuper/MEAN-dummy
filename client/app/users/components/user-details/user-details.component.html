@@ -1,65 +1,58 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-10 col-xs-12">
-      <!-- <div class="card"> -->
-      <div class="card-block">
-        <h2 class="card-title">{{user?.name}}</h2>
-        <strong class="card-text">{{user?.name}}</strong>
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-4">
-              <i>ID: </i>
-            </div>
-            <div class="col-8">{{user?.id}}</div>
-          </div>
+<div class="card">
+  <div class="card-block">
+    <h2 class="card-title text-muted">{{user?.name}}</h2>
+    <i class="card-text">{{user?.name}}</i>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-4">
+          <i>ID: </i>
         </div>
-        <div class="row">
-          <div class="col-4">
-            <small>Registered: </small>
-          </div>
-          <div class="col-8">{{user?.registered | amUtc | amDateFormat: 'DD/MM/YYYY'}}</div>
-        </div>
-        <div class="row">
-          <div class="col-4">
-            <small>Email:</small>
-          </div>
-          <div class="col-8">{{user?.email}}</div>
-        </div>
-        <div class="row">
-          <div class="col-4">
-            <small>Username:</small>
-          </div>
-          <div class="col-8">{{user?.username}}</div>
-        </div>
-        <div class="row">
-          <div class="col-4">
-            <small>WorkPlace:</small>
-          </div>
-          <div class="col-8">{{user?.work_place}}</div>
-        </div>
-        <div class="row" *ngIf="user?.events?.length > 0">
-          <div class="col-12">
-            <i>
-              <small>Users : </small>
-            </i>
-          </div>
-          <ng-template *ngIf="user?.events && user?.events?.length > 0">
-            <div *ngFor="let event of user?.events">
-              <ul class="list-group">
-                <li class="list-group-item">
-                  <em>{{event?.name}}</em>
-                </li>
-              </ul>
-            </div>
-          </ng-template>
-        </div>
-        <div class="card-footer">
-          <button type="button" (click)="goBack()" class="btn btn-lg btn-block btn-warning" role="button">
-            <i class="fa fa-backward" aria-hidden="true"></i>
-          </button>
+        <div class="col-8 text-muted">
+          <small>{{user?.id}}</small>
         </div>
       </div>
-      <!-- </div> -->
+      <div class="row">
+        <div class="col-4">
+          <small>Registered: </small>
+        </div>
+        <div class="col-8">{{user?.registered | amUtc | amDateFormat: 'DD/MM/YYYY'}}</div>
+      </div>
+
+      <div class="row">
+        <div class="col-4">
+          <small>Email:</small>
+        </div>
+        <div class="col-8">{{user?.email}}</div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <small>Username:</small>
+        </div>
+        <div class="col-8">{{user?.username}}</div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <small>WorkPlace:</small>
+        </div>
+        <div class="col-8">{{user?.work_place}}</div>
+      </div>
+      <div class="row" *ngIf="user?.events?.length > 0">
+        <div class="col-12">
+          <small>Users : </small>
+        </div>
+        <div *ngFor="let event of user?.events">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <em>{{event?.name}}</em>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
+  </div>
+  <div class="card-footer">
+    <button type="button" (click)="goBack()" class="btn btn-lg btn-block btn-warning" role="button">
+      <i class="fa fa-backward" aria-hidden="true"></i>
+    </button>
   </div>
 </div>

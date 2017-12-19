@@ -4,3 +4,6 @@
 .cursor-hand:hover {
   background-color: red;
 }
+.card {
+  min-width: 15rem;
+}

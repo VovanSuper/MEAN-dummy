@@ -8,9 +8,9 @@ const webpack = require('webpack'),
 
 module.exports = {
   output: {
-    // path: 'dist',
     filename: '[name].bundle.js'
   },
+
   module: {
     loaders: [
       {
@@ -42,9 +42,12 @@ module.exports = {
   devtool: 'inline-source-map',
   plugins: [
     new webpack.ContextReplacementPlugin(
-      // The (\\|\/) piece accounts for path separators in *nix and Windows
-      /angular(\\|\/)core(\\|\/)@angular/,
-      path.join('client')
+
+     // The (\\|\/) piece accounts for path separators in *nix and Windows
+     /angular(\\|\/)core(\\|\/)@angular/,
+     path.resolve(__dirname, './client'), // location of your src
+     {} // a map of your routes
+
     ),
     new V8LazyParseWebpackPlugin(),
     new webpack.optimize.DedupePlugin(),
@@ -92,7 +95,6 @@ module.exports = {
         collapseInlineTagWhitespace: true,
         keepClosingSlash: false,
         minifyCSS: true,
-        minifyJS: false,
         removeComments: true,
         removeRedundantAttributes: true,
         removeEmptyAttributes: false,

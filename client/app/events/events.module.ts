@@ -1,17 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MomentModule } from 'angular2-moment';
 
-import { EventsComponent, EventComponent, EventDetailsComponent, NotSelectedComponent } from './components/';
 import { EventsRoutingModule } from './events.routing.module';
+import {
+  EventsComponent,
+  EventComponent,
+  EventDetailsComponent,
+  NotSelectedComponent,
+  EventCreateComponent
+} from './components/';
 
 @NgModule({
   imports: [
     CommonModule,
     HttpModule,
-    FormsModule,
+    ReactiveFormsModule,
     MomentModule,
     EventsRoutingModule
   ],
@@ -19,6 +25,7 @@ import { EventsRoutingModule } from './events.routing.module';
     EventsComponent,
     EventComponent,
     EventDetailsComponent,
+    EventCreateComponent,
     NotSelectedComponent
   ]
 })

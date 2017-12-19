@@ -1,35 +1,36 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { MomentModule } from 'angular2-moment';
 // import { TabsModule } from 'ng2-bootstrap';
 
 import { AppRoutes } from './app.routes';
 import { SharedServicesModule } from './shared/module/';
+import { EnvironmentsModule } from './shared/environment/';
 import { AppComponent } from './app/app.component';
-import { HeaderComponent } from './header/';
+import { SearchComponent } from './search/';
+import { HeaderComponent, CollapseDirective } from './header/';
 import { NotfoundComponent } from './notfound/';
 import { EventsModule } from './events/';
 import { UsersModule } from './users/';
+import { AuthModule } from './auth/';
 // import { TabsComponent } from './tabs/';
 // import { MainComponent } from './main/';
 
 @NgModule({
   declarations: [
+    CollapseDirective,
     HeaderComponent,
     NotfoundComponent,
+    SearchComponent,
     // TabsComponent,
     // MainComponent,
     AppComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule,
-    HttpModule,
-    MomentModule,
+    EnvironmentsModule.forRoot(),
     SharedServicesModule.forRoot(),
     // TabsModule.forRoot(),
+    AuthModule,
     EventsModule,
     UsersModule,
     AppRoutes
